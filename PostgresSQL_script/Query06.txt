@@ -1,0 +1,456 @@
+Use Pronacej;
+--SELECT *FROM Sabana
+CREATE TABLE Indicadores(
+	Id int Identity(1,1) NOT NULL,
+	Descripcion VARCHAR(MAX) NULL,
+	Enabled bit
+);
+
+CREATE TABLE TablaTablas(
+	Id int Identity(1,1) NOT NULL,
+	IdTabla int NOT NULL,
+	NombreTabla varchar(80) NULL,
+	IdCampo int NOT NULL,
+	Valor varchar(80) NULL,
+	Enabled bit
+);
+
+CREATE TABLE Sabana(
+	Id int Identity(1,1) NOT NULL,
+	IndicadorId int,
+	Valor varchar(80) null,
+	ProcessHeaderId int null,
+	Enabled bit
+)
+
+
+CREATE TABLE ProcessHeader(
+	Id int Identity(1,1) NOT NULL,
+	[ProcessType] [nvarchar](100) NOT NULL,
+	[StartTime] [datetime] NULL,
+	[EndTime] [datetime] NULL,
+	CreatedOn date not null,
+	UpdatedOn date not null,
+	UpdatedBy varchar(50) NULL,
+	Enabled bit
+);
+
+DROP TABLE ProcessHeader;
+
+
+SELECT *FROM Sabana;
+
+
+SELECT *FROM Indicadores
+
+SELECT *FROM TablaTablas
+
+
+
+DROP TABLE TablaTablas;
+TRUNCATE TABLE Indicadores;
+TRUNCATE TABLE TablaTablas;
+
+--POBLACION SEGUN EDAD SIMPLE
+SELECT *FROM Indicadores;
+INSERT INTO Indicadores VALUES('Centro_Juvenil',1);
+INSERT INTO Indicadores VALUES('Situacion_Juridica',1);
+
+--TRATAMIENTO DIFERENCIADO
+INSERT INTO Indicadores VALUES('Participa_Programa',1);
+INSERT INTO Indicadores VALUES('Justica_Terapeutica',1);
+INSERT INTO Indicadores VALUES('Agresores_Sexuales',1);
+INSERT INTO Indicadores VALUES('Salud_Mental',1);
+INSERT INTO Indicadores VALUES('Adn_Familiar',1);
+INSERT INTO Indicadores VALUES('Inervencion_terapeutica',1);
+INSERT INTO Indicadores VALUES('Firmes_adelante',1);
+
+--INSERCION EDUCATIVA
+INSERT INTO Indicadores VALUES('Situacion_Edu_Actual',1);
+INSERT INTO Indicadores VALUES('Rol_Reinser_Edu_Mes',1);
+INSERT INTO Indicadores VALUES('Tipo_Centro_Educativo',1);
+
+--INSERCION LABORAL
+INSERT INTO Indicadores VALUES('Resp_Inser_Lab_Mes',1);
+INSERT INTO Indicadores VALUES('Situacion_Laboral_Actual',1);
+
+--INFRACCIONES COMETIDAS
+INSERT INTO Indicadores VALUES('Situacion_Juridica_Actual',1);
+INSERT INTO Indicadores VALUES('Delito_Especifico_1',1);
+
+SELECT *FROM TablaTablas;
+
+--POBLACION SEGUN EDAD SIMPLE
+--CJDR
+INSERT INTO TablaTablas VALUES ('1','Centro_Juvenil_CJDR',1,'CJ LIMA',1);
+INSERT INTO TablaTablas VALUES ('1','Centro_Juvenil_CJDR',2,'CJ SANTA MARGARITA',1);
+INSERT INTO TablaTablas VALUES ('1','Centro_Juvenil_CJDR',3,'CJ ALFONSO UGARTE',1);
+INSERT INTO TablaTablas VALUES ('1','Centro_Juvenil_CJDR',4,'CJ JOSE QUIÑONES',1);
+INSERT INTO TablaTablas VALUES ('1','Centro_Juvenil_CJDR',5,'CJ ALFONSO UGARTE',1);
+INSERT INTO TablaTablas VALUES ('1','Centro_Juvenil_CJDR',6,'CJ MARCAVALLE',1);
+INSERT INTO TablaTablas VALUES ('1','Centro_Juvenil_CJDR',7,'CJ MIGUEL GRAU',1);
+INSERT INTO TablaTablas VALUES ('1','Centro_Juvenil_CJDR',8,'CJ PUCALLPA',1);
+INSERT INTO TablaTablas VALUES ('1','Centro_Juvenil_CJDR',9,'CJ TRUJILLO',1);
+-- SOAS							'1','Centro_Juvenil',1,'
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',10,'SOA RIMAC',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',11,'SOA TUMBES',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',12,'SOA HUAURA',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',13,'SOA CAÑETE',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',14,'SOA IQUITOS',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',15,'SOA ICA',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',16,'SOA AREQUIPA',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',17,'SOA LIMA NORTE',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',18,'SOA LIMA ESTE',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',19,'SOA CHICLAYO',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',20,'SOA TRUJILLO',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',21,'SOA CALLAO',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',22,'SOA HUANCAYO',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',23,'SOA CHIMBOTE',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',24,'SOA SULLANA',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',25,'SOA HUANCAVELI',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',26,'SOA HUANUCO',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',27,'SOA PAUCARPATA',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',28,'SOA PUNO',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',29,'SOA CUZCO',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',30,'SOA MADRE DE DIOS',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',31,'SOA AYACUCHO',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',32,'SOA VENTANILLA',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',33,'SOA HUARAZ',1);
+INSERT INTO TablaTablas VALUES ('2','Centro_Juvenil_SOA',34,'SOA PUCALLPA',1);
+
+INSERT INTO TablaTablas VALUES ('3','Situacion_Juridica',1,'SENTENCIADO',1);
+INSERT INTO TablaTablas VALUES ('3','Situacion_Juridica',2,'PROCESADO',1);
+
+
+--TRATAMIENTO DIFERENCIADO
+INSERT INTO TablaTablas VALUES ('4','Participa_Programa',1,'SI, EN 1',1);
+INSERT INTO TablaTablas VALUES ('4','Participa_Programa',2,'SI, EN 2',1);
+INSERT INTO TablaTablas VALUES ('4','Participa_Programa',3,'SI, EN 3',1);
+INSERT INTO TablaTablas VALUES ('4','Participa_Programa',4,'SI, EN 4',1);
+INSERT INTO TablaTablas VALUES ('4','Participa_Programa',5,'SI, EN 5',1);
+INSERT INTO TablaTablas VALUES ('4','Participa_Programa',6,'NO',1);
+
+INSERT INTO TablaTablas VALUES ('5','Justica_Terapeutica',1,'SI',1);
+INSERT INTO TablaTablas VALUES ('5','Justica_Terapeutica',2,'NO',1);
+
+INSERT INTO TablaTablas VALUES ('6','Agresores_Sexuales',1,'SI',1);
+INSERT INTO TablaTablas VALUES ('6','Agresores_Sexuales',2,'NO',1);
+
+INSERT INTO TablaTablas VALUES ('7','Salud_Mental',1,'SI',1);
+INSERT INTO TablaTablas VALUES ('7','Salud_Mental',2,'NO',1);
+
+INSERT INTO TablaTablas VALUES ('8','Adn_Familiar',1,'SI',1);
+INSERT INTO TablaTablas VALUES ('8','Adn_Familiar',2,'NO',1);
+
+INSERT INTO TablaTablas VALUES ('9','Inervencion_terapeutica',1,'APLICA',1);
+INSERT INTO TablaTablas VALUES ('9','Inervencion_terapeutica',2,'NO APLICA',1);
+
+INSERT INTO TablaTablas VALUES ('10','Firmes_adelante',1,'APLICA',1);
+INSERT INTO TablaTablas VALUES ('10','Firmes_adelante',2,'NO APLICA',1);
+
+--INSERCION EDUCATIVA
+INSERT INTO TablaTablas VALUES ('11','Situacion_Edu_Actual',1,'ESTUDIA',1);
+INSERT INTO TablaTablas VALUES ('11','Situacion_Edu_Actual',2,'NO ESTUDIA',1);
+INSERT INTO TablaTablas VALUES ('11','Situacion_Edu_Actual',3,'TERMINO EDUCACION BASICA',1);
+INSERT INTO TablaTablas VALUES ('11','Situacion_Edu_Actual',4,'TERMINO Y NO REGULARIZO DOCUMENTOS',1);
+
+INSERT INTO TablaTablas VALUES ('12','Rol_Reinser_Edu_Mes',1,'GESTIÓN PARA LA REINSERCIÓN EDUCATIVA BÁSICA',1);
+INSERT INTO TablaTablas VALUES ('12','Rol_Reinser_Edu_Mes',2,'GESTIÓN PARA LA INSERCIÓN EDUCATIVA PRODUCTIVA SUPERIOR',1);
+INSERT INTO TablaTablas VALUES ('12','Rol_Reinser_Edu_Mes',3,'SEGUIMIENTO A LA CONTINUIDAD EDUCATIVA',1);
+INSERT INTO TablaTablas VALUES ('12','Rol_Reinser_Edu_Mes',4,'APOYO PARA LA REGULARIZACIÓN DOCUMENTARIA',1);
+
+INSERT INTO TablaTablas VALUES ('13','Tipo_Centro_Educativo',1,'CEBR',1);
+INSERT INTO TablaTablas VALUES ('13','Tipo_Centro_Educativo',2,'CEBA',1);
+INSERT INTO TablaTablas VALUES ('13','Tipo_Centro_Educativo',3,'CEPRE',1);
+INSERT INTO TablaTablas VALUES ('13','Tipo_Centro_Educativo',4,'ACADEMIA',1);
+INSERT INTO TablaTablas VALUES ('13','Tipo_Centro_Educativo',5,'CETPRO',1);
+INSERT INTO TablaTablas VALUES ('13','Tipo_Centro_Educativo',6,'INSTITUTO SUPERIOR',1);
+
+
+--INSERCION LABORAL
+INSERT INTO TablaTablas VALUES ('14','Resp_Inser_Lab_Mes',1,'SI',1);
+INSERT INTO TablaTablas VALUES ('14','Resp_Inser_Lab_Mes',2,'NO',1);
+
+INSERT INTO TablaTablas VALUES ('15','Situacion_Laboral_Actual',1,'INSERCIÓN LABORAL INTERNA',1);
+INSERT INTO TablaTablas VALUES ('15','Situacion_Laboral_Actual',2,'INSERCIÓN LABORAL EXTERNA',1);
+INSERT INTO TablaTablas VALUES ('15','Situacion_Laboral_Actual',3,'NO TRABAJA',1);
+
+--INFRACCIONES COMETIDAS
+INSERT INTO TablaTablas VALUES ('16','Situacion_Juridica_Actual',1,'PROCESADO',1);
+INSERT INTO TablaTablas VALUES ('16','Situacion_Juridica_Actual',2,'SENTENCIADO',1);
+
+INSERT INTO TablaTablas VALUES ('17','Delito_Especifico_1',1,'AUTOABORTO',1);
+INSERT INTO TablaTablas VALUES ('17','Delito_Especifico_1',2,'EXPOSICION A PELIGRO O ABANDONO A PERSONAS EN PELIGRO',1);
+INSERT INTO TablaTablas VALUES ('17','Delito_Especifico_1',3,'FEMINICIDIO',1);
+INSERT INTO TablaTablas VALUES ('17','Delito_Especifico_1',4,'HOMICIDIO CALIFICADO',1);
+INSERT INTO TablaTablas VALUES ('17','Delito_Especifico_1',5,'HOMICIDIO SIMPLE',1);
+INSERT INTO TablaTablas VALUES ('17','Delito_Especifico_1',6,'LESIONES GRAVES',1);
+INSERT INTO TablaTablas VALUES ('17','Delito_Especifico_1',7,'LESIONES LEVES',1);
+INSERT INTO TablaTablas VALUES ('17','Delito_Especifico_1',8,'PARRICIDIO',1);
+INSERT INTO TablaTablas VALUES ('17','Delito_Especifico_1',9,'SICARIATO',1);
+INSERT INTO TablaTablas VALUES ('17','Delito_Especifico_1',10,'OTROS',1);
+
+
+-- QUERY VOLCADO
+
+
+CREATE TABLE #Sabana(
+-----Matriz: DATOS GENERALES--------------------
+Id int Identity(1,1) NOT NULL,
+Id_Centro_Juvenil VARCHAR(MAX),--Falta: 2 - Falta Centro juvenil
+Id_Estado VARCHAR(MAX),
+FechaIngreso VARCHAR(MAX),
+Numdoc VARCHAR(MAX),
+Nombres VARCHAR(MAX),
+FechaNac VARCHAR(MAX),
+Edad_Actual VARCHAR(MAX),--Edad_Actual varchar(3) null, Esta en el Primer Indicador
+Id_Sexo VARCHAR(MAX),
+Id_Estad_Civil VARCHAR(MAX),
+NumHijos VARCHAR(MAX),
+Id_Estado_Situacion_Hijo VARCHAR(MAX),
+Id_Orient_Sexual VARCHAR(MAX),
+Id_Lengua_Materna VARCHAR(MAX),
+Id_Religion VARCHAR(MAX),
+Id_Seguro_Medico VARCHAR(MAX),
+Id_Enfermedad VARCHAR(MAX),
+Id_Discapacidad VARCHAR(MAX),
+Id_Tipo_Discapacidad VARCHAR(MAX),
+Id_Departamento_Origen VARCHAR(MAX),
+Id_Pais VARCHAR(MAX),
+Id_Departamento_Residencia VARCHAR(MAX),
+Id_Provincia_Residencia VARCHAR(MAX),
+Id_Distrito_Residencia VARCHAR(MAX),
+Id_Tipo_Familia VARCHAR(MAX),
+Id_Estructura_Familiar VARCHAR(MAX),
+Id_Estado_Civil_Padres VARCHAR(MAX),
+Id_Zona_Vivienda VARCHAR(MAX),
+Id_Condicion_Vivienda VARCHAR(MAX),
+
+
+------MATRIZ: DATOS AL INGRESO-------------
+Id_Tipo_Ingreso VARCHAR(MAX),
+Id_Reincidencia VARCHAR(MAX),
+Id_Edad_Infraccion VARCHAR(MAX),
+Id_Edad_Ingreso VARCHAR(MAX),
+Id_Situacion_Academica_Ingreso VARCHAR(MAX),
+Id_Nivel_Educativo_Ingreso VARCHAR(MAX), ---Falta: 35- Nivel Educativo al Ingreso
+Id_Grado_Educativo_Ingreso VARCHAR(MAX),---Falta: 36- Grado Educativo al Ingreso
+Id_Situacion_Laboral VARCHAR(MAX),
+Ocupacion_PreIngreso VARCHAR(MAX),
+Especifique_Ocupacion_Actividad VARCHAR(MAX),---Falta: 39- Especifique la ocupacion o actividad
+Id_Tipo_Consumo_Droga VARCHAR(MAX),
+Id_Tipo_Droga VARCHAR(MAX),
+Id_Consumo_Alcohol VARCHAR(MAX),
+Id_Distrito_Judicial_Procedencia VARCHAR(MAX),
+Id_Juzgado_Origen VARCHAR(MAX),
+Id_Situacion_Juridica_Ingreso VARCHAR(MAX), --Esta en el 1 Indicador
+
+------MATRIZ: INFORMACION DE INFRACCION--------
+Id_Juzgado_Actual VARCHAR(MAX),
+Num_Expediente VARCHAR(MAX),
+Id_Situacion_Juridica_Actual VARCHAR(MAX),-- 5to Indicador
+Id_Medida_Impuesta VARCHAR(MAX),
+Duracion_Medida VARCHAR(MAX),
+Cant_Serv_Jornada VARCHAR(MAX),
+Inicio_Medida VARCHAR(MAX),
+Termino_Medida VARCHAR(MAX),
+Meses_Permanencia VARCHAR(MAX),
+Id_Frecuencia_Ingreso VARCHAR(MAX),
+Id_Cantidad_sentencias VARCHAR(MAX),
+Anotacion1 VARCHAR(MAX),
+Id_Traslado_Centro_Origen VARCHAR(MAX),
+Id_Motivo_Traslado VARCHAR(MAX),
+Id_Depart_Delito VARCHAR(MAX),
+Id_Provincia_Delito VARCHAR(MAX),---Falta: 61- Provincia del delito 
+Id_Distrito_Delito VARCHAR(MAX),---Falta: 62- Distrito del delito
+Delito_Generico_1 VARCHAR(MAX),
+Delito_Especifico_1 VARCHAR(MAX),--Esta en el 1 Indicador
+Delito_Generico_2 VARCHAR(MAX),
+Delito_Especifico_2 VARCHAR(MAX),
+
+---MATRIZ: ATENCION, INTERVENCION Y TRATAMIENTO--------
+Id_Situacion_Edu_Actual VARCHAR(MAX), --Esta en el 3 Indicador
+Id_Rol_Reinser_Edu VARCHAR(MAX),
+Id_Rol_Reinser_Edu_Mes VARCHAR(MAX), --Esta en el 3 Indicador
+Id_Tipo_Centro_Educativo VARCHAR(MAX), --COLLATE SQL_Latin1_General_CP1_CI_AI, --Esta en el 3 Indicador
+Id_Centro_Educativo_Actual VARCHAR(MAX),
+Especificar_Carrera VARCHAR(MAX),
+Nom_Centro_Estudios VARCHAR(MAX),
+Id_Cant_Taller_Form VARCHAR(MAX),
+Noms_Taller_Form VARCHAR(MAX),
+Cantidad_Talleres_Pronacej VARCHAR(MAX),--Falta: 75- Cantidad de talleres productivos Pronacej
+Noms_Taller_Form_Pronacej VARCHAR(MAX),
+Id_Cant_Taller_Product_Cetpro VARCHAR(MAX),
+Noms_Taller_Product_CetPro VARCHAR(MAX),
+Id_Resp_Serv_Militar VARCHAR(MAX),
+Id_Resp_Inser_Lab_Mes VARCHAR(MAX),--Esta en el 4 Indicador
+Id_Situacion_Laboral_Actual VARCHAR(MAX),-- Esta en el 4 Indicador
+Lugar_Empresa VARCHAR(MAX),
+Id_Ocupacion_Actual VARCHAR(MAX),
+Esp_Ocupacion_Actual VARCHAR(MAX),
+Id_Nvl_Riesgo_Ingreso VARCHAR(MAX),
+Id_Nvl_Riesgo_Tratamiento VARCHAR(MAX),
+Id_Nvl_Riesgo_Egreso VARCHAR(MAX),
+Id_Plan_Tratamiento VARCHAR(MAX),
+Id_Informe_Seguimiento VARCHAR(MAX),
+Id_Adn_Familiar VARCHAR(MAX), --Esta en el 2 Indicador
+Id_Participa_Programa VARCHAR(MAX), --Esta en el 2 Indicador
+Id_Justica_Terapeutica VARCHAR(MAX), --Esta en el 2 Indicador
+Id_Agresores_Sexuales VARCHAR(MAX), --Esta en el 2 Indicador
+Id_Salud_Mental VARCHAR(MAX), --Esta en el 2 Indicador
+Id_Programa_Graduales VARCHAR(MAX),
+Inervencion_terapeutica VARCHAR(MAX), --Esta en el 2 Indicador
+Firmes_adelante VARCHAR(MAX),
+--Inervencion_terapeutica VARCHAR(MAX) COLLATE SQL_Latin1_General_CP1_CI_AI, --Esta en el 2 Indicador
+Id_Trabajo_Comunidad VARCHAR(MAX),
+Id_Tratamiento_Drogas_Mes VARCHAR(MAX),
+--Id_Consumo_Drogas_Tratamiento VARCHAR(MAX) COLLATE SQL_Latin1_General_CP1_CI_AI, --SOBRANTE
+Id_Tipo_Droga_Tratamiento VARCHAR(MAX),
+Id_Acciones_Preventivas VARCHAR(MAX),
+Id_Consumo_Droga_Tratamiento VARCHAR(MAX),
+--Id_Tratamiento_Drogas VARCHAR(MAX) COLLATE SQL_Latin1_General_CP1_CI_AI,
+Id_Estado_Tratamiento VARCHAR(MAX),
+
+
+---MATRIZ: PREPARACION PARA EL EGRESO--------
+
+Id_Recibio_Orientacion VARCHAR(MAX),
+Id_Firmo_Acta_Consentimiento VARCHAR(MAX),
+Id_Resultado_Evaluacion VARCHAR(MAX),
+Id_Inf_Apreciacion_Final VARCHAR(MAX),
+Id_fich_Eva_Retorno VARCHAR(MAX),
+Id_Doc_Entidad VARCHAR(MAX),
+Id_Cert_Estudios VARCHAR(MAX),
+Id_Const_Trab VARCHAR(MAX),
+Id_Cert_Capacitacion VARCHAR(MAX),
+Id_Multas_Electorales VARCHAR(MAX),
+Id_Informe_Final VARCHAR(MAX),
+Id_Estado_Nutricional_Egreso VARCHAR(MAX),
+Tipo_Egreso VARCHAR(MAX),
+Fecha_Egreso VARCHAR(MAX),
+Id_Autoridad_Judicial VARCHAR(MAX),
+Num_Ofi_Info_Final VARCHAR(MAX),
+Responsable_Egreso VARCHAR(MAX),
+Datos_Padre VARCHAR(MAX),
+Datos_Madre VARCHAR(MAX),
+Numero_Telefono_Contacto VARCHAR(MAX),
+Observaciones_Generales VARCHAR(MAX),
+Id_Plan_Asist_Post_Egre VARCHAR(MAX),
+Id_Ejec_Plan_Asist_Post_Egre VARCHAR(MAX),
+Derivacion_Adolescente_Instituciones_Receptoras VARCHAR(MAX),---Falta: 125- DERIVACIÓN DEL ADOLESCENTE A INSTITUCIONES RECEPTORAS
+Fecha_Ingreso_Post_Seguimiento VARCHAR(MAX),
+Fecha_Egreso_Post_Seguimiento VARCHAR(MAX),
+);
+
+SELECT *FROM #Sabana
+DROP TABLE Sabana;
+DROP TABLE #Sabana;
+
+--CREATE TABLE #LoadFile834_A ( Datos nvarchar(max), RowsId int identity(1, 1) not null );
+--TRUNCATE TABLE #LoadFile834_A ;
+
+
+--CREATE TABLE Sabana ( Datos nvarchar(max), RowsId int identity(1, 1) not null );
+--DROP TABLE Sabana;
+
+SELECT Table_Name, COUNT(*) As NumeroCampos
+FROM Information_Schema.Columns
+WHERE Table_Name = 'Sabana'
+GROUP BY Table_Name;
+
+--SET @SqlStatement = 'BULK INSERT #TEMP FROM ''' + @Csv_FilePath +           
+--SET @SqlStatement = 'BULK INSERT #TEMP FROM ''' + @Csv_FilePath +           
+--''' WITH(FIELDTERMINATOR = ''' + '|' + ''', CHECK_CONSTRAINTS, CODEPAGE = ''' + 'ACP' + ''', DATAFILETYPE = ''' + 'WIDECHAR' + ''')'          
+--SET @SqlStatement = 'BULK INSERT #TEMP FROM ''E:\PRONACEJ\15.CSV'' WITH(FIELDTERMINATOR = ''' + ',' + ''', CHECK_CONSTRAINTS, CODEPAGE = ''' + 'ACP' + ''', DATAFILETYPE = ''' + 'WIDECHAR' + ''')'          
+
+ --EXECUTE ('BULK INSERT #Sabana FROM ''E:\PRONACEJ\15.CSV'' WITH(FIELDTERMINATOR = ''' + ',' + ''', CHECK_CONSTRAINTS, CODEPAGE = ''' + 'ACP' + ''', DATAFILETYPE = ''' + 'WIDECHAR' + ''')');
+ --EXECUTE ('INSERT INTO #LoadFile834_A(Datos) SELECT Column1 FROM OPENROWSET(BULK ''' + @Exp_FilePath  + ''','+                
+   -- ' FORMATFILE = N''C:\\834\FilesExp\\Receive from ASES\\XML\\formato834u.xml'') AS DATA');
+
+SELECT *FROM #Sabana
+SELECT *FROM Sabana;
+BULK INSERT 
+			#Sabana
+	FROM 
+		'E:\ALEXANDER\PRONACEJ\15.CSV'
+	WITH(
+		FIELDTERMINATOR = ';',
+		ROWTERMINATOR = '\n',
+		FIRSTROW = 4
+	)
+	--- PASAR DATA TEMPORAL A DATA LIMPIA
+
+
+	SELECT 
+
+	INSERT INTO Sabana
+	SELECT 'Centro_Juvenil_CJDR' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS Centro_Juvenil 
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Centro_Juvenil,'')) 
+							 AND [Enabled] = 1),0),					 
+		   'Centro_Juvenil_SOA' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS Centro_Juvenil 
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Centro_Juvenil,'')) 
+							 AND [Enabled] = 1),0)
+
+	FROM #Sabana as Mensual
+
+	
+	INSERT INTO Sabana
+	SELECT 'Id_Situacion_Juridica_Ingreso' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS Situacion_Juridica
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Situacion_Juridica_Ingreso,'')) 
+							 AND [Enabled] = 1),0)		
+
+	INSERT INTO Sabana
+	SELECT 'Id_Situacion_Juridica_Actual' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS Situacion_Juridica 
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Situacion_Juridica_Actual,'')) 
+							 AND [Enabled] = 1),0)			
+
+	INSERT INTO Sabana
+	   	    'Id_Frecuencia_Ingreso' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS Frecuencia_Ingreso
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Frecuencia_Ingreso,'')) 
+							 AND [Enabled] = 1),0)			
+	INSERT INTO Sabana
+		   'Id_Situacion_Edu_Actual' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS Situacion_Educativa
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Situacion_Edu_Actual,'')) 
+							 AND [Enabled] = 1),0)
+	INSERT INTO Sabana							 
+		   'Id_Rol_Reinser_Edu_Mes' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS Resp
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Rol_Reinser_Edu_Mes,'')) 
+							 AND [Enabled] = 1),0)
+	INSERT INTO Sabana
+		   'Id_Tipo_Centro_Educativo' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS TIPO_CENTRO_EDUCATIVO 
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Tipo_Centro_Educativo,'')) 
+								 AND [Enabled] = 1),0)
+	INSERT INTO Sabana
+		   'Id_Resp_Inser_Lab_Mes' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS Resp
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Resp_Inser_Lab_Mes,'')) 
+							 AND [Enabled] = 1),0)
+	INSERT INTO Sabana
+		   'Id_Situacion_Laboral_Actual' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS Situacion_Laboral_Actual
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Situacion_Laboral_Actual,'')) 
+							 AND [Enabled] = 1),0)
+	INSERT INTO Sabana
+		   'Id_Adn_Familiar' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS Resp
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Adn_Familiar,'')) 
+							 AND [Enabled] = 1),0)
+	INSERT INTO Sabana
+		   'Id_Participa_Programa' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS Participa_Programa
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Participa_Programa,'')) 
+								 AND [Enabled] = 1),0)
+	INSERT INTO Sabana
+		   'Id_Justica_Terapeutica' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS Resp
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Justica_Terapeutica,'')) 
+							 AND [Enabled] = 1),0)
+	INSERT INTO Sabana
+		   'Id_Agresores_Sexuales' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS Resp
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Agresores_Sexuales,'')) 
+							 AND [Enabled] = 1),0)
+
+	INSERT INTO Sabana
+		   'Id_Salud_Mental' = coalesce((SELECT TOP (1) Id FROM TablaTablas AS Resp
+								 WHERE (RTRIM(LTRIM(UPPER(ISNULL(Valor,'')))) = ISNULL(Mensual.Id_Salud_Mental,'')) 
+							 AND [Enabled] = 1),0)
+
+	FROM #Sabana AS Mensual
+
+	SELECT Id_Tipo_Centro_Educativo FROM Sabana ORDER BY Id_Tipo_Centro_Educativo DESC
+
