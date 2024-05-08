@@ -1,0 +1,38 @@
+CREATE TABLE indicators(
+	id SERIAL PRIMARY KEY,
+	nameindicator VARCHAR(30) NOT NULL,
+	state INT
+)
+
+
+CREATE TABLE tabletables (
+	id SERIAL PRIMARY KEY,
+	idindicator INT NOT NULL REFERENCES Indicators(id),
+	nametable VARCHAR(30) NOT NULL,
+	idfield INT NOT NULL,
+	value VARCHAR(30) NOT NULL,
+	state INT
+)
+
+INSERT INTO Indicators (nameindicator, state)
+VALUES 
+    ('Indicador 1', 1),
+    ('Indicador 2', 1),
+    ('Indicador 3', 1),
+    ('Indicador 4', 1),
+    ('Indicador 5', 1);
+
+
+INSERT INTO TableTables (idindicator, nametable, idfield, value, state)
+VALUES 
+    (1, 'Centro Juvenil', 1, 'Soa Ayacucho', 1),
+    (1, 'Centro Juvenil', 2, 'Soa Cañete', 1),
+    (1, 'Centro Juvenil', 3, 'Soa Callao', 1),
+    (2, 'Enfermedades', 1, 'Alcohol', 1),
+    (2, 'Enfermedades', 2, 'Pasta', 1)
+
+
+
+
+
+

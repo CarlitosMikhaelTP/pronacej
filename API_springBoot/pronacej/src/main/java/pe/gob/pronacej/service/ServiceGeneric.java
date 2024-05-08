@@ -8,13 +8,13 @@ import java.util.Optional;
 
 public interface ServiceGeneric<T>{
 
-    T registrar(T t);
+    T register(T t);
 
-    T editar(Integer id, T t);
+    T edit(Integer id, T t);
 
-    List<T> mostrarTodos();
+    List<T> showAll();
 
-    Optional<T> mostrarPorId(Integer id);
+    Optional<T> showById(Integer id);
 
-    boolean eliminarPorId(Integer id);
+    boolean deleteById(Integer id);
 }
