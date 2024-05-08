@@ -3,11 +3,12 @@ package pe.gob.pronacej.service;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.gob.pronacej.dto.IndicatorDTO;
 import pe.gob.pronacej.entity.Indicator;
 import pe.gob.pronacej.exceptions.NotFoundException;
-import pe.gob.pronacej.repository.RepositoryGeneric;
+import pe.gob.pronacej.repository.IndicatorRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,10 +17,11 @@ import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
-public class IndicatorServiceImpl implements ServiceGeneric<IndicatorDTO>{
+public class IndicatorServiceImpl implements IndicatorService {
 
-    private final RepositoryGeneric<Indicator> crudIndicator;
+    private final IndicatorRepository crudIndicator;
 
+    @Autowired
     private ModelMapper modelMapper;
 
     @Override

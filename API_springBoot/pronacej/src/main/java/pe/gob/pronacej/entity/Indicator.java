@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,4 +26,8 @@ public class Indicator {
 
     @Column(name = "state", columnDefinition = "TINYINT DEFAULT 1", nullable = false)
     private Integer state;
+
+    // Definiendo la cardinalidad
+    @OneToMany(mappedBy = "idIndicator", cascade = CascadeType.ALL)
+    private List<TableTables> tableTablesList;
 }

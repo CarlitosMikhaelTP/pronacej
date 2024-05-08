@@ -5,8 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.gob.pronacej.dto.IndicatorDTO;
-import pe.gob.pronacej.entity.Indicator;
-import pe.gob.pronacej.repository.RepositoryGeneric;
 import pe.gob.pronacej.service.IndicatorServiceImpl;
 
 import java.util.List;
@@ -39,8 +37,9 @@ public class IndicatorWeb {
 
     // Endpoint for list all indicators
     @GetMapping("/findAllIndicator")
-    public List<IndicatorDTO> showAllIndicator(){
-        return indicatorService.showAll();
+    public ResponseEntity<List<IndicatorDTO>> showAllIndicator(){
+        List<IndicatorDTO> indicatorDTOList = indicatorService.showAll();
+        return ResponseEntity.ok(indicatorDTOList);
     }
 
     // Endpoint for list one indicator byId
