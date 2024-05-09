@@ -24,7 +24,7 @@ CREATE TABLE Sabana(
 )
 
 
-CREATE TABLE ProcessHeader(
+CREATE TABLE ProcessHeader(Tipo de Proceso)(
 	Id int Identity(1,1) NOT NULL,
 	[ProcessType] [nvarchar](100) NOT NULL,
 	[StartTime] [datetime] NULL,
@@ -33,7 +33,7 @@ CREATE TABLE ProcessHeader(
 	UpdatedOn date not null,
 	UpdatedBy varchar(50) NULL,
 	Enabled bit
-);
+)
 
 DROP TABLE ProcessHeader;
 
