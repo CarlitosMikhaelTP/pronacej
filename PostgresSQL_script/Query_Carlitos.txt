@@ -1,35 +1,484 @@
+-- use pronacej
+-- Insertar Tabla por Tabla en el siguiente orden para evitar problemas relacionales
+-- Creación de la Tabla Tipo de Usuario
+CREATE TABLE type_user(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,	
+	description VARCHAR(50) NOT NULL,
+	state INT NOT NULL, 
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	created_by INT,
+	updated_by INT,
+	CONSTRAINT fk_created_by
+	FOREIGN KEY(created_by) REFERENCES type_user(id),
+	CONSTRAINT fk_updated_by
+	FOREIGN KEY(updated_by) REFERENCES type_user(id)
+)
+--DROP TABLE type_user CASCADE;
+-- Insercion de tipos de usuario en la tabla type_user
+INSERT INTO type_user(name, description, state)
+VALUES('Admin', 'Administrador', 1);
+INSERT INTO type_user(name, description, state)
+VALUES('Viewer', 'Visualizador', 1);
+
+-- Verificando y seleccionando la tabla type_user
+SELECT * FROM type_user;
+
+-- Creación de tabla person en vez de user debido a que 'user' es una palabra reservada en postgres
+CREATE TABLE person(
+	id SERIAL PRIMARY KEY,
+	type_user_id INT NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	email VARCHAR(50) NOT NULL,
+	password VARCHAR(50) NOT NULL,
+	state INT NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	created_by INT,
+	updated_by INT,
+	CONSTRAINT fk_type_user_id
+	FOREIGN KEY (type_user_id) REFERENCES type_user(id),
+	CONSTRAINT fk_created_by
+	FOREIGN KEY (created_by) REFERENCES person(id),
+	CONSTRAINT fk_updated_by
+	FOREIGN KEY (updated_by) REFERENCES person(id)
+)
+--DROP TABLE person CASCADE;
+
+-- Insertando registros en la Tabla Usuarios
+INSERT INTO person (type_user_id, name, last_name, email, password, state)
+VALUES 
+    (1, 'John', 'Doe', 'john@example.com', 'password1', 1),
+    (2, 'Jane', 'Smith', 'jane@example.com', 'password2', 1),
+    (1, 'Michael', 'Johnson', 'michael@example.com', 'password3', 1),
+    (2, 'Emily', 'Williams', 'emily@example.com', 'password4', 1),
+    (2, 'David', 'Brown', 'david@example.com', 'password5', 1),
+    (1, 'Sarah', 'Taylor', 'sarah@example.com', 'password6', 1),
+    (2, 'Daniel', 'Martinez', 'daniel@example.com', 'password7', 1),
+    (2, 'Emma', 'Garcia', 'emma@example.com', 'password8', 1),
+    (1, 'Olivia', 'Lopez', 'olivia@example.com', 'password9', 1),
+    (2, 'Alexander', 'Rodriguez', 'alexander@example.com', 'password10', 1);
+
+-- Seleccionando el contenido de la tabla person(user)
+select * from person;
+
+-- Creando la tabla ADMIN 
+CREATE TABLE admin(
+	id SERIAL PRIMARY KEY,
+	person_id INT NOT NULL,
+	description VARCHAR(50) NOT NULL,
+	state INT NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	created_by INT,
+	updated_by INT,
+	CONSTRAINT fk_person_id
+	FOREIGN KEY (person_id) REFERENCES person(id),
+	CONSTRAINT fk_created_by
+	FOREIGN KEY (created_by) REFERENCES admin(id),
+	CONSTRAINT fk_updated_by
+	FOREIGN KEY (updated_by) REFERENCES admin(id)
+)
+--DROP TABLE admin CASCADE;
+
+-- Realizando inserción de la tabla admin
+INSERT INTO admin (person_id, description, state)
+VALUES 
+    (1, 'Administrator 1', 1),
+    (3, 'Administrator 2', 1),
+    (6, 'Administrator 3', 1),
+    (9, 'Administrator 4', 1);
+
+-- Seleccionando tabla de Admin
+SELECT * FROM Admin;
+
+-- Crea la tabla Viewer
+CREATE TABLE viewer(
+	id SERIAL PRIMARY KEY,
+	person_id INT NOT NULL,
+	description VARCHAR(50) NOT NULL,
+	state INT NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	created_by INT,
+	updated_by INT,
+	CONSTRAINT fk_person_id
+	FOREIGN KEY (person_id) REFERENCES person(id),
+	CONSTRAINT fk_created_by 
+	FOREIGN KEY (created_by) REFERENCES viewer(id),
+	CONSTRAINT fk_updated_by
+	FOREIGN KEY (updated_by) REFERENCES viewer(id)
+)
+--DROP TABLE viewer cascade;
+
+-- Insercion de data en tabla Viewer
+INSERT INTO viewer (person_id, description, state, created_by, updated_by)
+VALUES 
+    (2, 'Viewer 1', 1, 1, 1),
+    (4, 'Viewer 2', 1, 1, 1),
+    (5, 'Viewer 3', 1, 1, 1),
+    (7, 'Viewer 4', 1, 1, 1),
+    (8, 'Viewer 5', 1, 1, 1),
+    (10, 'Viewer 6', 1, 1, 1);
+
+-- Seleccionando la tabla viewer
+SELECT * FROM viewer;
+
+-- Creando la tabla type_section_record
+CREATE TABLE type_section_record(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(150) NOT NULL,
+	description VARCHAR(100) NOT NULL,
+	state INT NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	created_by INT,
+	updated_by INT,
+	CONSTRAINT fk_created_by
+	FOREIGN KEY (created_by) REFERENCES type_section_record(id),
+	CONSTRAINT fk_updated_by 
+	FOREIGN KEY (updated_by) REFERENCES type_section_record(id)
+)
+--DROP TABLE type_section_record CASCADE;
+
+-- Realizando la inserción de datos para type_section_record
+INSERT INTO type_section_record (name, description, state)
+VALUES 
+    ('Datos generales del Adolescente en Conflicto con la ley Penal', 'Descripción de datos generales', 1),
+    ('Datos al Ingreso', 'Descripción de datos al ingreso', 1),
+    ('Información de la Infracción', 'Descripción de información de la infracción', 1),
+    ('Atención, Intervención y Tratamiento', 'Descripción de atención, intervención y tratamiento', 1),
+    ('Preparación para el Egreso', 'Descripción de preparación para el egreso', 1),
+    ('Egreso', 'Descripción de egreso', 1);
+
+-- Seleccionando la tabla type_section_record
+SELECT * FROM type_section_record;
+
+-- Creando la tabla section_record
+CREATE TABLE section_record(
+	id SERIAL PRIMARY KEY,
+	type_section_record_id INT NOT NULL,
+	description VARCHAR(100) NOT NULL,
+	state INT NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	created_by INT,
+	updated_by INT,
+	CONSTRAINT fk_type_section_record
+	FOREIGN KEY (type_section_record_id) REFERENCES type_section_record(id),
+	CONSTRAINT fk_created_by
+	FOREIGN KEY (created_by) REFERENCES section_record(id),
+	CONSTRAINT fk_updated_by
+	FOREIGN KEY (updated_by) REFERENCES section_record(id)
+)
+-- DROP TABLE section_record CASCADE;
+
+-- Realizando registros a la tabla section_record
+INSERT INTO section_record (type_section_record_id, description, state)
+VALUES 
+    (1, 'Descripción de la sección para Datos generales del Adolescente en Conflicto con la ley Penal', 1),
+    (2, 'Descripción de la sección para Datos al Ingreso', 1),
+    (3, 'Descripción de la sección para Información de la Infracción', 1),
+    (4, 'Descripción de la sección para Atención, Intervención y Tratamiento', 1),
+    (5, 'Descripción de la sección para Preparación para el Egreso', 1),
+    (6, 'Descripción de la sección para Egreso', 1);
+
+-- Realizando consulta de la tabla section_record
+SELECT * FROM section_record;
+
+-- Creando registro de Indicators
 CREATE TABLE indicators(
 	id SERIAL PRIMARY KEY,
-	nameindicator VARCHAR(30) NOT NULL,
-	state INT
+	section_record_id INT NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	state INT NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	created_by INT,
+	updated_by INT,
+	CONSTRAINT fk_section_record_id
+	FOREIGN KEY (section_record_id) REFERENCES section_record(id),
+	CONSTRAINT fk_created_by
+	FOREIGN KEY (created_by) REFERENCES indicators(id),
+	CONSTRAINT fk_updated_by
+	FOREIGN KEY (updated_by) REFERENCES indicators(id)
 )
+-- DROP TABLE INDICATORS CASCADE;
 
+-- Realizando inserciones a la tabla Indicators
+INSERT INTO indicators(section_record_id, name, state)
+VALUES 
+	(1, 'Centro_Juvenil_CJDR', 1 ),
+	(1, 'Centro_Juvenil_SOA', 1 ),
+	(1, 'Centro_Juvenil_PASPE', 1 ),
+	(1, 'Poblacion', 1 ),
+	(1, 'Capacidad_Albergue', 1 ),
+	(1, 'Capacidad_Instalada', 1 ),
+	(2, 'Situacion_Juridica_Ingreso', 1 ),
+	(2, 'Edad', 1),
+	(3, 'Situacion_Juridica_Actual', 1 ),
+	(3, 'Delito_Especifico', 1 ),
+    (4, 'Participa_Programa', 1 ),
+	(4, 'Justicia_Terapeutica', 1 ),
+	(4, 'Agresores_Sexuales', 1 ),
+	(4, 'Salud_Mental', 1 ),
+	(4, 'Adn_Familiar', 1 ),
+	(4, 'Intervencion_Terapeutica', 1 ),
+	(4, 'Firmes_Adelante', 1 ),
+	(4, 'Situacion_Edu_Actual', 1 ),
+	(4, 'Rol_Reinser_Edu_Mes', 1 ),
+	(4, 'Tipo_Centro_Educativo', 1 ),
+	(4, 'Resp_Inser_Lab_Mes', 1 ),
+	(4, 'Situacion_Laboral_Actual', 1 );
 
-CREATE TABLE tabletables (
+-- Realizando consulta de la tabla Indicators
+SELECT * FROM indicators;
+
+--Creando la tabla type_process_header
+CREATE TABLE type_process_header(
 	id SERIAL PRIMARY KEY,
-	idindicator INT NOT NULL REFERENCES Indicators(id),
-	nametable VARCHAR(30) NOT NULL,
-	idfield INT NOT NULL,
-	value VARCHAR(30) NOT NULL,
-	state INT
+	name VARCHAR(50) NOT NULL,
+	description VARCHAR(50) NOT NULL,
+	state INT NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	created_by INT,
+	updated_by INT,
+	CONSTRAINT fk_created_by
+	FOREIGN KEY (created_by) REFERENCES type_process_header(id),
+	CONSTRAINT fk_updated_by
+	FOREIGN KEY (updated_by) REFERENCES type_process_header(id)
+)
+--DROP TABLE type_process_header CASCADE;
+-- Realizando la insercion de data en tabla type_process_header
+INSERT INTO type_process_header (name, description, state)
+	VALUES 
+	 ('Proceso A', 'Descripción del Proceso A', 1),
+	 ('Proceso B', 'Descripción del Proceso B', 1),
+	 ('Proceso C', 'Descripción del Proceso C', 1);
+
+-- Consultando la tabla type_process_header
+SELECT * FROM type_process_header;
+
+-- Creando la tabla process_header
+CREATE TABLE process_header(
+	id SERIAL PRIMARY KEY,
+	type_process_header_id INT NOT NULL,
+	start_time TIMESTAMP,
+	end_time TIMESTAMP,
+	state INT NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	created_by INT,
+	updated_by INT,
+	CONSTRAINT fk_type_process_header
+	FOREIGN KEY (type_process_header_id) REFERENCES type_process_header(id),
+	CONSTRAINT fk_created_by
+	FOREIGN KEY (created_by) REFERENCES process_header(id),
+	CONSTRAINT fk_updated_by
+	FOREIGN KEY (updated_by) REFERENCES process_header(id)
+)
+--DROP TABLE process_header CASCADE;
+-- Realizando inserciones a la tabla process_header
+INSERT INTO process_header (type_process_header_id, start_time, end_time, state)
+VALUES 
+    (1, '2024-05-11 08:00:00', '2024-05-11 10:00:00', 1),
+    (2, '2024-05-11 09:00:00', '2024-05-11 11:00:00', 1),
+    (3, '2024-05-11 10:00:00', '2024-05-11 12:00:00', 1);
+
+-- Seleccionando tabla process_header
+SELECT * FROM process_header;
+
+-- Creando Tabla 'table_tables'
+CREATE TABLE table_tables(
+	id SERIAL PRIMARY KEY,
+	admin_id INT NOT NULL,
+	id_indicator INT NOT NULL,
+	name_table VARCHAR(100) NOT NULL,
+	id_field INT NOT NULL,
+	value VARCHAR(100) NOT NULL,
+	state INT NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	created_by INT, 
+	updated_by INT,
+	CONSTRAINT fk_admin_id
+	FOREIGN KEY (admin_id) REFERENCES admin(id),
+	CONSTRAINT fk_id_indicator
+	FOREIGN KEY (id_indicator) REFERENCES indicators(id),
+	CONSTRAINT fk_created_by
+	FOREIGN KEY (created_by) REFERENCES table_tables(id),
+	CONSTRAINT fk_updated_by
+	FOREIGN KEY (updated_by) REFERENCES table_tables(id)
+)
+--DROP TABLE table_tables ;
+-- insertando registros en la tabla TablaTablas
+INSERT INTO table_tables(admin_id, id_indicator, name_table, id_field, value, state)
+VALUES
+	--CJDR
+	(1, 1,'Centro_Juvenil_CJDR',1,'CJ LIMA',1),
+	(2, 1, 'Centro_Juvenil_CJDR', 2, 'CJ ANEXO N°3-ANCÓN II', 1),
+	(3, 1,'Centro_Juvenil_CJDR', 3,'CJ SANTA MARGARITA',1),
+	(4, 1,'Centro_Juvenil_CJDR', 4,'CJ ALFONSO UGARTE',1),
+	(1, 1,'Centro_Juvenil_CJDR', 5,'CJ JOSE QUIÑONES',1),
+	(2, 1, 'Centro_Juvenil_CJDR', 6,'CJ ALFONSO UGARTE',1),
+	(3, 1,'Centro_Juvenil_CJDR', 7,'CJ MARCAVALLE',1),
+	(4, 1,'Centro_Juvenil_CJDR', 8,'CJ MIGUEL GRAU',1),
+	(1, 1,'Centro_Juvenil_CJDR', 9,'CJ PUCALLPA',1),
+	(2, 1,'Centro_Juvenil_CJDR', 10,'CJ TRUJILLO',1),
+	-- SOA	
+	(3, 2,'Centro_Juvenil_SOA',1,'SOA RIMAC',1),
+	(4, 2,'Centro_Juvenil_SOA',2,'SOA TUMBES',1),
+	(1, 2,'Centro_Juvenil_SOA',3,'SOA HUAURA',1),
+	(2, 2,'Centro_Juvenil_SOA',4,'SOA CAÑETE',1),
+	(3, 2,'Centro_Juvenil_SOA',5,'SOA IQUITOS',1),
+	(4, 2,'Centro_Juvenil_SOA',6,'SOA ICA',1),
+	(1, 2,'Centro_Juvenil_SOA',7,'SOA AREQUIPA',1),
+	(2, 2,'Centro_Juvenil_SOA',8,'SOA LIMA NORTE',1),
+	(3, 2,'Centro_Juvenil_SOA',9,'SOA LIMA ESTE',1),
+	(4, 2,'Centro_Juvenil_SOA',10,'SOA CHICLAYO',1),
+	(1, 2,'Centro_Juvenil_SOA',11,'SOA TRUJILLO',1),
+	(2, 2,'Centro_Juvenil_SOA',12,'SOA CALLAO',1),
+	(3, 2,'Centro_Juvenil_SOA',13,'SOA HUANCAYO',1),
+	(4, 2,'Centro_Juvenil_SOA',14,'SOA CHIMBOTE',1),
+	(1, 2,'Centro_Juvenil_SOA',15,'SOA SULLANA',1),
+	(2, 2,'Centro_Juvenil_SOA',16,'SOA HUANCAVELI',1),
+	(3, 2,'Centro_Juvenil_SOA',17,'SOA HUANUCO',1),
+	(4, 2,'Centro_Juvenil_SOA',18,'SOA PAUCARPATA',1),
+	(1, 2,'Centro_Juvenil_SOA',19,'SOA PUNO',1),
+	(2, 2,'Centro_Juvenil_SOA',20,'SOA CUZCO',1),
+	(3, 2,'Centro_Juvenil_SOA',21,'SOA MADRE DE DIOS',1),
+	(4, 2,'Centro_Juvenil_SOA',22,'SOA AYACUCHO',1),
+	(1, 2,'Centro_Juvenil_SOA',23,'SOA VENTANILLA',1),
+	(2, 2,'Centro_Juvenil_SOA',24,'SOA HUARAZ',1),
+	(3, 2,'Centro_Juvenil_SOA',25,'SOA PUCALLPA',1),
+    -- PASPE
+    (4, 3,'Centro_Juvenil_PASPE', 1,'PASPE PISCO',1),
+	(1, 3,'Centro_Juvenil_PASPE', 2,'PASPE SULLANA',1),
+	(2, 3,'Centro_Juvenil_PASPE', 3,'PASPE HUANCAVELICA',1),
+	(3, 3,'Centro_Juvenil_PASPE', 4,'PASPE CALLAO',1),
+	(4, 3,'Centro_Juvenil_PASPE', 5,'PASPE APURIMAC',1),
+	(1, 3,'Centro_Juvenil_PASPE', 6,'PASPE HUANUCO',1),
+	(2, 3,'Centro_Juvenil_PASPE', 7,'PASPE CUZCO',1),
+	(3, 3,'Centro_Juvenil_PASPE', 8,'PASPE MADRE DE DIOS',1),
+	(4, 3,'Centro_Juvenil_PASPE', 9,'PASPE AYACUCHO',1),
+	(1, 3,'Centro_Juvenil_PASPE', 10,'PASPE VENTANILLA',1),
+	(2, 3,'Centro_Juvenil_PASPE', 11,'PASPE HUARAZ',1),
+	(3, 3,'Centro_Juvenil_PASPE', 12,'PASPE ICA',1),
+	(4, 3,'Centro_Juvenil_PASPE', 13,'PASPE PUNO',1),
+	--POBLACION
+	(1, 4,'Poblacion', 1,'100',1),
+	(2, 4,'Poblacion', 2,'200',1),
+	(3, 4,'Poblacion', 3,'300',1),
+	(4, 4,'Poblacion', 4,'400',1),
+	-- CAPACIDAD ALBERGUE
+	(1, 5,'Capacidad_Albergue', 1,'500',1),
+	(2, 5,'Capacidad_Albergue', 2,'400',1),
+	(3, 5,'Capacidad_Albergue', 3,'600',1),
+	(4, 5,'Capacidad_Albergue', 4,'700',1),
+	-- CAPACIDAD INSTALADA
+	(1, 6,'Capacidad_Instalada', 1,'1000',1),
+	(2, 6,'Capacidad_Instalada', 2,'1500',1),
+	(3, 6,'Capacidad_Instalada', 3,'2000',1),
+	(4, 6,'Capacidad_Instalada', 4,'1700',1),
+    -- SITUACIÓN JURÍDICA INGRESO
+	(1, 7,'Situacion_Juridica_Ingreso',1,'SENTENCIADO',1),
+	(2, 7,'Situacion_Juridica_Ingreso',2,'PROCESADO',1),
+	-- EDAD
+	(3, 8, 'Edad', 1, '25', 1),
+	(4, 8, 'Edad', 2,'20', 1),
+	(1, 8, 'Edad', 3,'18', 1),
+	(2, 8, 'Edad', 4,'15', 1),
+	-- SITUACION JURIDICA ACTUAL
+	(3, 9,'Situacion_Juridica_Actual', 1, 'SENTENCIADO',1 ),
+	(4, 9,'Situacion_Juridica_Actual', 2, 'PROCESADO',1),
+	-- DELITO ESPECIFICO
+	(1, 10, 'Delito_Especifico',1,'AUTOABORTO',1),
+	(2, 10, 'Delito_Especifico',2,'EXPOSICION A PELIGRO O ABANDONO A PERSONAS EN PELIGRO',1),
+	(3, 10, 'Delito_Especifico',3,'FEMINICIDIO',1),
+	(4, 10, 'Delito_Especifico',4,'HOMICIDIO CALIFICADO',1),
+	(1, 10, 'Delito_Especifico',5,'HOMICIDIO SIMPLE',1),
+	(2, 10, 'Delito_Especifico',6,'LESIONES GRAVES',1),
+	(3, 10, 'Delito_Especifico',7,'LESIONES LEVES',1),
+	(4, 10, 'Delito_Especifico',8,'PARRICIDIO',1),
+	(1, 10, 'Delito_Especifico',9,'SICARIATO',1),
+	(2, 10, 'Delito_Especifico',10,'OTROS',1),
+	-- PARTICIPA DE PROGRAMAS
+	(3, 11,'Participa_Programa',1,'SI, EN 1',1),
+	(4, 11,'Participa_Programa',2,'SI, EN 2',1),
+	(1, 11,'Participa_Programa',3,'SI, EN 3',1),
+	(2, 11,'Participa_Programa',4,'SI, EN 4',1),
+	(3, 11,'Participa_Programa',5,'SI, EN 5',1),
+	(4, 11,'Participa_Programa',6,'NO',1),
+	-- JUSTICIA TERAPEUTICA
+	(1, 12, 'Justica_Terapeutica',1,'SI',1),
+	(2, 12, 'Justica_Terapeutica',1,'SI',1),
+    -- AGRESORES SEXUALES
+	(3, 13,'Agresores_Sexuales',1,'SI',1),
+	(4, 13,'Agresores_Sexuales',2,'NO',1),
+	-- SALUD MENTAL
+	(1, 14,'Salud_Mental',1,'SI',1),
+    (2, 14,'Salud_Mental',2,'NO',1),
+	-- ADN FAMILIAR
+	(3, 15, 'Adn_Familiar',1,'SI',1),
+	(4, 15, 'Adn_Familiar',2,'NO',1),
+    -- INTERVENCION TERAPEUTICA
+	(1, 16,'Intervencion_Terapeutica',1,'APLICA',1),
+	(2, 16,'Intervencion_Terapeutica',2,'NO APLICA',1),
+	-- FIRMES ADELANTE
+	(3, 17, 'Firmes_Adelante',1,'APLICA',1),
+	(4, 17, 'Firmes_Adelante',2,'NO APLICA',1),
+	-- SITUACION EDU ACTUAL
+	(1, 18, 'Situacion_Edu_Actual',1,'ESTUDIA',1),
+	(2, 18, 'Situacion_Edu_Actual',3,'TERMINO EDUCACION BASICA',1),
+	(3, 18, 'Situacion_Edu_Actual',4,'TERMINO Y NO REGULARIZO DOCUMENTOS',1),
+    -- ROL REINSER EDU MES
+    (4, 19, 'Rol_Reinser_Edu_Mes',1,'GESTIÓN PARA LA REINSERCIÓN EDUCATIVA BÁSICA',1),
+	(1, 19,'Rol_Reinser_Edu_Mes',2,'GESTIÓN PARA LA INSERCIÓN EDUCATIVA PRODUCTIVA SUPERIOR',1),
+	(2, 19,'Rol_Reinser_Edu_Mes',3,'SEGUIMIENTO A LA CONTINUIDAD EDUCATIVA',1),
+	(3, 19, 'Rol_Reinser_Edu_Mes',4,'APOYO PARA LA REGULARIZACIÓN DOCUMENTARIA',1),
+    -- SITUACION LABORAL ACTUAL
+	(4, 20,'Situacion_Laboral_Actual',1,'INSERCIÓN LABORAL INTERNA',1),
+	(1, 20,'Situacion_Laboral_Actual',2,'INSERCIÓN LABORAL EXTERNA',1),
+	(2, 20,'Situacion_Laboral_Actual',3,'NO TRABAJA',1);
+
+-- SELECCIONANDO TABLA 'TableTables'
+SELECT * FROM table_tables;
+
+-- CREANDO TABLA SABANA
+CREATE TABLE sabana(
+	id SERIAL PRIMARY KEY,
+	id_admin INT NOT NULL,
+	id_indicator INT NOT NULL,
+	process_header_id INT NOT NULL,
+	valor VARCHAR(50) NOT NULL,
+	state INT NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	created_by INT,
+	updated_by INT,
+	CONSTRAINT fk_id_admin
+	FOREIGN KEY (id_admin) REFERENCES admin(id),
+	CONSTRAINT fk_id_indicator
+	FOREIGN KEY (id_indicator) REFERENCES indicators(id),
+	CONSTRAINT fk_process_header_id
+	FOREIGN KEY (process_header_id) REFERENCES process_header(id)
 )
 
-INSERT INTO Indicators (nameindicator, state)
+-- Insertando registros en la tabla Sabana
+INSERT INTO sabana (id_admin, id_indicator, process_header_id, valor, state)
 VALUES 
-    ('Indicador 1', 1),
-    ('Indicador 2', 1),
-    ('Indicador 3', 1),
-    ('Indicador 4', 1),
-    ('Indicador 5', 1);
+    (1, 1, 1, 'Valor 1', 1),
+    (2, 2, 2, 'Valor 2', 2),
+    (3, 3, 3, 'Valor 3', 3);
+    
+-- Consultando la tabla Sabana
+SELECT * FROM SABANA;
 
 
-INSERT INTO TableTables (idindicator, nametable, idfield, value, state)
-VALUES 
-    (1, 'Centro Juvenil', 1, 'Soa Ayacucho', 1),
-    (1, 'Centro Juvenil', 2, 'Soa Cañete', 1),
-    (1, 'Centro Juvenil', 3, 'Soa Callao', 1),
-    (2, 'Enfermedades', 1, 'Alcohol', 1),
-    (2, 'Enfermedades', 2, 'Pasta', 1)
+
 
 
 
