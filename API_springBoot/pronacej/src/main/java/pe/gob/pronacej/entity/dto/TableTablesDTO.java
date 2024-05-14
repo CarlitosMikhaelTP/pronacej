@@ -1,4 +1,4 @@
-package pe.gob.pronacej.dto;
+package pe.gob.pronacej.entity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,13 +15,17 @@ import javax.validation.constraints.Size;
 @Builder
 public class TableTablesDTO {
 
-    @NotNull(message = "El id del idIndicator no puede ser nulo")
-    @NotBlank(message = "El id del idIndicator no puede estar vacía")
-    private Integer idIndicator;
+    @NotNull(message = "El id del Admin no puede ser nulo")
+    @NotBlank(message = "El id del Admin no puede estar vacía")
+    private Integer adminId;
+
+    @NotNull(message = "El id del idIndicators no puede ser nulo")
+    @NotBlank(message = "El id del idIndicators no puede estar vacía")
+    private Integer indicatorId;
 
     @NotNull(message = "El nameTable no puede ser nula")
     @NotBlank(message = "EL namTable no puede estar vacía")
-    @Size(max = 30, message = "La descripción debe tener entre 1 y 30 caracteres")
+    @Size(max = 100, message = "El nameTable debe tener entre 1 y 30 caracteres")
     private String nameTable;
 
     @NotNull(message = "El id Field no puede ser nulo")
@@ -30,6 +34,10 @@ public class TableTablesDTO {
 
     @NotNull(message = "El value no puede ser nula")
     @NotBlank(message = "El value no puede estar vacía")
-    @Size(max = 30, message = "El campo value debe tener entre 1 y 30 caracteres")
+    @Size(max = 100, message = "El campo value debe tener entre 1 y 30 caracteres")
     private String value;
+
+    @NotNull(message = "El state no puede ser nulo")
+    @NotBlank(message = "El state no puede estar vacía")
+    private Integer state;
 }

@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.gob.pronacej.dto.TableTablesDTO;
-import pe.gob.pronacej.service.TableTablesServiceImpl;
+import pe.gob.pronacej.entity.dto.TableTablesDTO;
+import pe.gob.pronacej.service.impl.TableTablesServiceImpl;
 import java.util.List;
 import java.util.Optional;
 

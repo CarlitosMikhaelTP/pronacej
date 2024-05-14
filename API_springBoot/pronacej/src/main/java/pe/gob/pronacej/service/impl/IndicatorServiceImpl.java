@@ -1,14 +1,15 @@
-package pe.gob.pronacej.service;
+package pe.gob.pronacej.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pe.gob.pronacej.dto.IndicatorDTO;
-import pe.gob.pronacej.entity.Indicator;
+import pe.gob.pronacej.entity.dto.IndicatorDTO;
+import pe.gob.pronacej.entity.graphic.Indicators;
 import pe.gob.pronacej.exceptions.NotFoundException;
-import pe.gob.pronacej.repository.IndicatorRepository;
+import pe.gob.pronacej.repository.impl.IndicatorRepository;
+import pe.gob.pronacej.service.IndicatorService;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,24 +27,24 @@ public class IndicatorServiceImpl implements IndicatorService {
 
     @Override
     public IndicatorDTO register(IndicatorDTO indicatorDTO) {
-        Indicator newIndicator = Indicator.builder()
-                .nameIndicator(indicatorDTO.getNameIndicator())
+        Indicators newIndicators = Indicators.builder()
+                //.nameIndicator(indicatorDTO.getNameIndicator())
                 .build();
-        crudIndicator.save(newIndicator);
+        crudIndicator.save(newIndicators);
         return indicatorDTO;
     }
 
     @Override
     public IndicatorDTO edit(Integer id, IndicatorDTO indicatorDTO) {
-        Indicator existsIndicator = crudIndicator.findById(id)
-                .orElseThrow(()-> new NotFoundException("Indicator no encontrado"));
+        Indicators existsIndicators = crudIndicator.findById(id)
+                .orElseThrow(()-> new NotFoundException("Indicators no encontrado"));
 
         // Verifyng the fields
-        if (indicatorDTO.getNameIndicator() != null){
-            existsIndicator.setNameIndicator(indicatorDTO.getNameIndicator());
+        if (indicatorDTO.getName() != null){
+            //existsIndicators.setNameIndicator(indicatorDTO.getNameIndicator());
         }
 
-        existsIndicator = crudIndicator.save(existsIndicator);
+        existsIndicators = crudIndicator.save(existsIndicators);
 
         return indicatorDTO;
     }
@@ -59,10 +60,10 @@ public class IndicatorServiceImpl implements IndicatorService {
 
     @Override
     public Optional<IndicatorDTO> showById(Integer id) {
-        Optional<Indicator> indicatorOptional = crudIndicator.findById(id);
-        return indicatorOptional.map(indicator -> {
+        Optional<Indicators> indicatorOptional = crudIndicator.findById(id);
+        return indicatorOptional.map(indicators -> {
             IndicatorDTO indicatorDTO = new IndicatorDTO();
-            indicatorDTO.setNameIndicator(indicator.getNameIndicator());
+           // indicatorDTO.setNameIndicator(indicators.getNameIndicator());
 
             return indicatorDTO;
         });
@@ -70,27 +71,32 @@ public class IndicatorServiceImpl implements IndicatorService {
 
     @Override
     public boolean deleteById(Integer id) {
-        Indicator indicator = crudIndicator.findById(id)
+        Indicators indicators = crudIndicator.findById(id)
                 .orElseThrow(()-> new NotFoundException("ID del Indicador no encontrado"));
-        crudIndicator.delete(indicator);
+        crudIndicator.delete(indicators);
         return true;
     }
 
-
     // Creating methods using ModelMapper
-    private IndicatorDTO convertEntityToDto(Indicator indicator){
+    @Override
+    public IndicatorDTO convertEntityToDto(Indicators indicators) {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
         IndicatorDTO indicatorDTO = new IndicatorDTO();
-        indicatorDTO = modelMapper.map(indicator, IndicatorDTO.class);
+        indicatorDTO = modelMapper.map(indicators, IndicatorDTO.class);
         return indicatorDTO;
     }
 
-    private IndicatorDTO convertDtoToEntity(IndicatorDTO indicatorDTO){
+    @Override
+    public IndicatorDTO convertDtoToEntity(IndicatorDTO indicatorDTO) {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
-        Indicator indicator = new Indicator();
-        indicator = modelMapper.map(indicatorDTO, Indicator.class);
+        Indicators indicators = new Indicators();
+        indicators = modelMapper.map(indicatorDTO, Indicators.class);
         return indicatorDTO;
     }
+
+
+
+
 }

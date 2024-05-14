@@ -1,4 +1,4 @@
-package pe.gob.pronacej.dto;
+package pe.gob.pronacej.entity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,5 +18,9 @@ public class IndicatorDTO {
     @NotNull(message = "El nameIndicator no puede ser nula")
     @NotBlank(message = "El nameIndicator no puede estar vacía")
     @Size(max = 30, message = "El campo nameIndicator debe tener entre 1 y 30 caracteres")
-    private String nameIndicator;
+    private String name;
+
+    @NotNull(message = "El state no puede ser nulo")
+    @NotBlank(message = "El state no puede estar vacía")
+    private Integer state;
 }

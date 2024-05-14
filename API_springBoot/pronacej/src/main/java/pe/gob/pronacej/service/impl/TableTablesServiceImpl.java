@@ -1,16 +1,16 @@
-package pe.gob.pronacej.service;
+package pe.gob.pronacej.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pe.gob.pronacej.dto.TableTablesDTO;
-import pe.gob.pronacej.entity.Indicator;
-import pe.gob.pronacej.entity.TableTables;
+import pe.gob.pronacej.entity.dto.TableTablesDTO;
+import pe.gob.pronacej.entity.graphic.TableTables;
 import pe.gob.pronacej.exceptions.NotFoundException;
-import pe.gob.pronacej.repository.IndicatorRepository;
-import pe.gob.pronacej.repository.TableTablesRepository;
+import pe.gob.pronacej.repository.impl.IndicatorRepository;
+import pe.gob.pronacej.repository.impl.TableTablesRepository;
+import pe.gob.pronacej.service.TableTablesService;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +19,7 @@ import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
-public class TableTablesServiceImpl implements TableTablesService{
+public class TableTablesServiceImpl implements TableTablesService {
 
     private final TableTablesRepository crudTableTables;
     private final IndicatorRepository crudIndicator;
@@ -29,10 +29,10 @@ public class TableTablesServiceImpl implements TableTablesService{
 
     @Override
     public TableTablesDTO register(TableTablesDTO tableTablesDTO) {
-        Indicator indicator = crudIndicator.findById(tableTablesDTO.getIdIndicator())
-                .orElseThrow(()-> new NotFoundException("ID del campo IdIndicador no encontrado."));
+      //  Indicators indicators = crudIndicator.findById(tableTablesDTO.getIdIndicator())
+        //        .orElseThrow(()-> new NotFoundException("ID del campo IdIndicador no encontrado."));
         TableTables newTableTables = TableTables.builder()
-                .idIndicator(indicator)
+                //.idIndicators(indicators)
                 .nameTable(tableTablesDTO.getNameTable())
                 .idField(tableTablesDTO.getIdField())
                 .value(tableTablesDTO.getValue())
@@ -47,11 +47,11 @@ public class TableTablesServiceImpl implements TableTablesService{
         TableTables existsTableTables = crudTableTables.findById(id)
                 .orElseThrow(()-> new NotFoundException("TableTables no encontrada"));
 
-        Indicator indicator = existsTableTables.getIdIndicator();
-        if (tableTablesDTO.getIdIndicator() != null){
-            indicator = crudIndicator.findById(tableTablesDTO.getIdIndicator())
-                    .orElseThrow(()-> new NotFoundException("ID del IdIndicator no encontrado"));
-        }
+       // Indicators indicators = existsTableTables.getIdIndicators();
+        //if (tableTablesDTO.getIdIndicator() != null){
+            //indicators = crudIndicator.findById(tableTablesDTO.getIdIndicator())
+                    //.orElseThrow(()-> new NotFoundException("ID del IdIndicator no encontrado"));
+        //}
         // Verifyng the fields
         if (tableTablesDTO.getNameTable() != null){
             existsTableTables.setNameTable(tableTablesDTO.getNameTable());
@@ -82,7 +82,7 @@ public class TableTablesServiceImpl implements TableTablesService{
         Optional<TableTables> tableTablesOptional = crudTableTables.findById(id);
         return tableTablesOptional.map(tableTables -> {
             TableTablesDTO tableTablesDTO = new TableTablesDTO();
-            tableTablesDTO.setIdIndicator(tableTables.getIdIndicator().getId());
+         //   tableTablesDTO.setIdIndicator(tableTables.getIdIndicators().getId());
             tableTablesDTO.setNameTable(tableTables.getNameTable());
             tableTablesDTO.setIdField(tableTables.getIdField());
             tableTablesDTO.setValue(tableTables.getValue());
@@ -99,9 +99,9 @@ public class TableTablesServiceImpl implements TableTablesService{
         return true;
     }
 
-
     // Creating methods using ModelMapper
-    private TableTablesDTO convertEntityToDto(TableTables tableTables){
+    @Override
+    public TableTablesDTO convertEntityToDto(TableTables tableTables) {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
         TableTablesDTO tableTablesDTO = new TableTablesDTO();
@@ -109,11 +109,13 @@ public class TableTablesServiceImpl implements TableTablesService{
         return tableTablesDTO;
     }
 
-    private TableTables convertDtoToEntity(TableTablesDTO tableTablesDTO){
+    @Override
+    public TableTables convertDtoToEntity(TableTablesDTO tableTablesDTO) {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
         TableTables tableTables = new TableTables();
         tableTables = modelMapper.map(tableTablesDTO, TableTables.class);
         return tableTables;
     }
+
 }

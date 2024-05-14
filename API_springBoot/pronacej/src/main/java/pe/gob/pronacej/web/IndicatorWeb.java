@@ -4,12 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.gob.pronacej.dto.IndicatorDTO;
-import pe.gob.pronacej.service.IndicatorServiceImpl;
+import pe.gob.pronacej.entity.dto.IndicatorDTO;
+import pe.gob.pronacej.service.impl.IndicatorServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
 
+// Implementar después salida personalizada
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/pronacej/v1/indicator")
@@ -54,7 +55,7 @@ public class IndicatorWeb {
         boolean deleted = indicatorService.deleteById(id);
 
         if (deleted) {
-            return ResponseEntity.ok("Indicator was deleted");
+            return ResponseEntity.ok("Indicators was deleted");
         }else {
             return ResponseEntity.
                     status(HttpStatus.NOT_FOUND).

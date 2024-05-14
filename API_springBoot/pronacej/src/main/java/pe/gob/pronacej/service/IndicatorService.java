@@ -1,7 +1,7 @@
 package pe.gob.pronacej.service;
 
-import pe.gob.pronacej.dto.IndicatorDTO;
-import pe.gob.pronacej.entity.Indicator;
+import pe.gob.pronacej.entity.dto.IndicatorDTO;
+import pe.gob.pronacej.entity.graphic.Indicators;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,4 +18,10 @@ public interface IndicatorService{
     Optional<IndicatorDTO> showById(Integer id);
 
     boolean deleteById(Integer id);
+
+    // Declarando método Model Mapper
+    IndicatorDTO convertEntityToDto(Indicators indicators);
+
+    IndicatorDTO convertDtoToEntity(IndicatorDTO indicatorDTO);
+
 }
