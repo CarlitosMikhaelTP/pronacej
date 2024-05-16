@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.gob.pronacej.entity.dto.IndicatorDTO;
 import pe.gob.pronacej.entity.graphic.Indicators;
+import pe.gob.pronacej.entity.graphic.SectionRecord;
+import pe.gob.pronacej.entity.sabana.ProcessHeader;
 import pe.gob.pronacej.exceptions.NotFoundException;
+import pe.gob.pronacej.repository.base.BaseRepository;
 import pe.gob.pronacej.repository.impl.IndicatorRepository;
 import pe.gob.pronacej.service.IndicatorService;
 
@@ -21,30 +24,48 @@ import java.util.stream.StreamSupport;
 public class IndicatorServiceImpl implements IndicatorService {
 
     private final IndicatorRepository crudIndicator;
+    private final BaseRepository<SectionRecord, Integer> crudSectionRecord;
 
     @Autowired
     private ModelMapper modelMapper;
 
     @Override
     public IndicatorDTO register(IndicatorDTO indicatorDTO) {
+
+        SectionRecord sectionRecord = crudSectionRecord.findById(indicatorDTO.getSectionRecordId())
+                .orElseThrow(()-> new NotFoundException("ID del SectionRecord no encontrado"));
+
         Indicators newIndicators = Indicators.builder()
-                //.nameIndicator(indicatorDTO.getNameIndicator())
+                .sectionRecordId(sectionRecord)
+                .name(indicatorDTO.getName())
+                .state(indicatorDTO.getState())
                 .build();
+
         crudIndicator.save(newIndicators);
         return indicatorDTO;
     }
 
     @Override
     public IndicatorDTO edit(Integer id, IndicatorDTO indicatorDTO) {
-        Indicators existsIndicators = crudIndicator.findById(id)
-                .orElseThrow(()-> new NotFoundException("Indicators no encontrado"));
 
-        // Verifyng the fields
+        Indicators indicators = crudIndicator.findById(id)
+                .orElseThrow(()-> new NotFoundException("Id de la tabla Indicators no encontrado"));
+
+        SectionRecord sectionRecord = crudSectionRecord.findById(id)
+                .orElseThrow(()-> new NotFoundException("ID de la tabla SectionRecord no encontrado. "));
+
+        // Verificando campos en caso sean nulos
+        if (indicatorDTO.getSectionRecordId() != null){
+            indicators.setSectionRecordId(sectionRecord);
+        }
         if (indicatorDTO.getName() != null){
-            //existsIndicators.setNameIndicator(indicatorDTO.getNameIndicator());
+            indicators.setName(indicatorDTO.getName());
+        }
+        if (indicatorDTO.getState() != null){
+            indicators.setState(indicatorDTO.getState());
         }
 
-        existsIndicators = crudIndicator.save(existsIndicators);
+        indicators = crudIndicator.save(indicators);
 
         return indicatorDTO;
     }
@@ -61,9 +82,12 @@ public class IndicatorServiceImpl implements IndicatorService {
     @Override
     public Optional<IndicatorDTO> showById(Integer id) {
         Optional<Indicators> indicatorOptional = crudIndicator.findById(id);
+
         return indicatorOptional.map(indicators -> {
             IndicatorDTO indicatorDTO = new IndicatorDTO();
-           // indicatorDTO.setNameIndicator(indicators.getNameIndicator());
+            indicatorDTO.setSectionRecordId(indicators.getSectionRecordId().getId());
+            indicatorDTO.setName(indicators.getName());
+            indicatorDTO.setState(indicators.getState());
 
             return indicatorDTO;
         });

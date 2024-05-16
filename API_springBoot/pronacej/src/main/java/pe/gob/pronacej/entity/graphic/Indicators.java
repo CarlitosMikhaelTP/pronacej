@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pe.gob.pronacej.entity.user.Person;
-import pe.gob.pronacej.entity.user.TypeUser;
 
 import java.sql.Timestamp;
 import java.util.List;

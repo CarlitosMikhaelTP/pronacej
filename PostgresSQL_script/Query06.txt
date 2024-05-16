@@ -65,6 +65,62 @@ INSERT INTO Indicadores VALUES('Adn_Familiar',1);
 INSERT INTO Indicadores VALUES('Inervencion_terapeutica',1);
 INSERT INTO Indicadores VALUES('Firmes_adelante',1);
 
+
+TABLA SABANA = A TODA LA MATRIZ PERO CON LA DIFERENCIA QUE SEPARAMOS LOS BLOQUES DE TODA LA MATRIZ 
+select SABANAS ( MENSUAL)
+         fk PROCESS_HEADER ( para saber el rango que pediremos de toooooda la matriz)
+             fk "tablatablas"   ( buscamos el campo del que queremos sacar total o diario - programa)
+                    by name = "Participa_Programa" 
+                                       where value "En mas de 2 programas" 
+                                                   TRAE DEPENDIENDO DEL RANGO POCOS O MUCHOS RESULTADOS
+                                                      100 personas
+
+select SABANAS (MENSUAL)
+         fk PROCESS_HEADER ( para saber el rango que pediremos de toooooda la matriz)
+             fk "tablatablas"   ( buscamos el campo del que queremos sacar total o diario - programa)
+                    by name = "Participa_Programa" 
+                                       where value "En mas de 5 programas" 
+                                                   TRAE DEPENDIENDO DEL RANGO POCOS O MUCHOS RESULTADOS
+                                                      50 personas
+
+select SABANAS (MENSUAL)
+         fk PROCESS_HEADER ( para saber el rango que pediremos de toooooda la matriz)
+             fk "tablatablas"   ( buscamos el campo del que queremos sacar total o diario - programa)
+                    by name = "Participa_Programa" 
+                                       where value "En mas de 3 programas" 
+                                                   TRAE DEPENDIENDO DEL RANGO POCOS O MUCHOS RESULTADOS
+                                                      70 personas
+
+TABLA = 220 ingresos al mes
+SOA = 100
+CJDR = 50
+PASPE = 70
+
+
+
+
+
+
+-- BUSCANDO A PERSONAS QUE PARTICIPAN EN MAS DE 2 PROGRAMAS Y TIENEN SALUD MENTAL
+
+ adolescente = participa, salud mental
+id = 1
+valor_participa = En 2 programas
+valor_salud = En salud mental
+
+
+
+Select sabana 
+    fk process (TIEMPO)
+         fk de tablaTablas 
+                   busca id_adolescente 
+                                where value "mas de 2 programas" 
+                                          And where value "Tiene Salud mental"
+                                                        
+
+
+
+
 --INSERCION EDUCATIVA
 INSERT INTO Indicadores VALUES('Situacion_Edu_Actual',1);
 INSERT INTO Indicadores VALUES('Rol_Reinser_Edu_Mes',1);

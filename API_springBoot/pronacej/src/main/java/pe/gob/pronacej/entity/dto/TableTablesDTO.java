@@ -39,5 +39,5 @@ public class TableTablesDTO {
 
     @NotNull(message = "El state no puede ser nulo")
     @NotBlank(message = "El state no puede estar vacía")
-    private Integer state;
+    private Short state;
 }

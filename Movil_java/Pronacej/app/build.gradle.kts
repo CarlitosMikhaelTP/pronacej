@@ -1,15 +1,17 @@
 plugins {
     id("com.android.application")
+    id ("com.android.application' version '8.1.2' apply false")
 }
 
 android {
     namespace = "com.carlitos.Pronacej"
-    compileSdk = 34
+    compileSdk = 34 //34
 
     defaultConfig {
         applicationId = "com.carlitos.pronacej"
-        minSdk = 24
+        minSdk = 22 //24
         targetSdk = 33
+        // targetSdk = 33 29
         versionCode = 1
         versionName = "1.0"
 
@@ -25,14 +27,18 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 
+
 dependencies {
-    implementation("androidx.core:core-ktx:1.9.0")
+    
+    implementation ("com.squareup.retrofit2:retrofit:2.5.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.5.0")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation ("org.apache.poi:poi:4.0.0")
@@ -47,6 +53,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
     implementation ("com.android.volley:volley:1.2.1")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

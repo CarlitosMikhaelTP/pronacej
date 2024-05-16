@@ -20,42 +20,45 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pronacej"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".OpcionUnoActivity"
+            android:name=".OptionsActivitys.OpcionUnoActivity"
             android:exported="false" />
         <activity
-            android:name=".OpcionDosActivity"
+            android:name=".OptionsActivitys.OpcionDosActivity"
             android:exported="false" />
         <activity
-            android:name=".OpcionTresActivity"
+            android:name=".OptionsActivitys.OpcionTresActivity"
             android:exported="false" />
         <activity
-            android:name=".OpcionCuatroActivity"
+            android:name=".OptionsActivitys.OpcionCuatroActivity"
             android:exported="false" />
         <activity
-            android:name=".GraficoUnoActivity"
+            android:name=".GraphicsActivitys.GraficoUnoActivity"
             android:exported="false" />
         <activity
-            android:name=".GraficoDosActivity"
+            android:name=".GraphicsActivitys.GraficoDosActivity"
             android:exported="false" />
         <activity
-            android:name=".OpcionCincoActivity"
+            android:name=".OptionsActivitys.OpcionCincoActivity"
             android:exported="false" />
         <activity
-            android:name=".OpcionSeisActivity"
+            android:name=".OptionsActivitys.OpcionSeisActivity"
             android:exported="false" />
-
         <activity
-            android:name=".MenuActivity"
+            android:name=".SabanaActivity"
             android:exported="false" />
-
         <activity
-            android:name=".OptionTypeActivity"
+            android:name=".InicioActivitys.MenuActivity"
             android:exported="false" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".InicioActivitys.OptionTypeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".InicioActivitys.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

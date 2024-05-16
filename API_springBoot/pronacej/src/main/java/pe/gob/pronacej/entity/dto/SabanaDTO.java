@@ -16,6 +16,7 @@ import javax.validation.constraints.Size;
 @Builder
 public class SabanaDTO {
 
+
     @NotNull(message = "El id del admin no puede ser nulo")
     @NotBlank(message = "El id del admin no puede estar vacio")
     private Integer adminId;

@@ -5,15 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.gob.pronacej.entity.dto.SabanaDTO;
-import pe.gob.pronacej.entity.dto.TableTablesDTO;
 import pe.gob.pronacej.service.impl.SabanaServiceImpl;
-
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/pronacej/vi/sabana")
+@RequestMapping("/pronacej/v1/sabana")
 public class SabanaWeb {
 
     private final SabanaServiceImpl sabanaService;

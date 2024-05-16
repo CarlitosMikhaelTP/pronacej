@@ -15,6 +15,11 @@ import javax.validation.constraints.Size;
 @Builder
 public class IndicatorDTO {
 
+    @NotNull(message = "El id de person no puede ser nulo")
+    @NotBlank(message = "El id de person no puede estar vacio")
+    private Integer sectionRecordId;
+
+
     @NotNull(message = "El nameIndicator no puede ser nula")
     @NotBlank(message = "El nameIndicator no puede estar vacía")
     @Size(max = 30, message = "El campo nameIndicator debe tener entre 1 y 30 caracteres")
@@ -22,5 +27,5 @@ public class IndicatorDTO {
 
     @NotNull(message = "El state no puede ser nulo")
     @NotBlank(message = "El state no puede estar vacía")
-    private Integer state;
+    private Short state;
 }

@@ -6,7 +6,6 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.gob.pronacej.entity.dto.SabanaDTO;
-import pe.gob.pronacej.entity.dto.TableTablesDTO;
 import pe.gob.pronacej.entity.graphic.TableTables;
 import pe.gob.pronacej.entity.sabana.ProcessHeader;
 import pe.gob.pronacej.entity.sabana.Sabana;
@@ -133,6 +132,7 @@ public class SabanaServiceImpl implements SabanaService {
         return true;
     }
 
+    // Creating methods using ModelMapper
     @Override
     public SabanaDTO convertEntityToDto(Sabana sabana) {
         modelMapper.getConfiguration()

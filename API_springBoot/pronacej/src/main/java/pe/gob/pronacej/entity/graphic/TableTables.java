@@ -43,7 +43,7 @@ public class TableTables {
     private String value;
 
     @Column(name = "state", columnDefinition = "TINYINT DEFAULT 1", nullable = false)
-    private Integer state;
+    private Short state;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;

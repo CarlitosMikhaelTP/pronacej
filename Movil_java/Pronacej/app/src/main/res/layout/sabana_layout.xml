@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    tools:context=".SabanaActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/labelAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Escoge al usuario Administrador :" />
+
+        <Spinner
+            android:id="@+id/txtAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="42dp" />
+
+        <TextView
+            android:id="@+id/labelTableTables"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Escoge el centro juvenil a escoger ::" />
+
+        <Spinner
+            android:id="@+id/txtTableTables"
+            android:layout_width="match_parent"
+            android:layout_height="43dp" />
+
+        <TextView
+            android:id="@+id/labelProcess"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Escoge el tipo de reporte :" />
+
+        <Spinner
+            android:id="@+id/txtProcess"
+            android:layout_width="match_parent"
+            android:layout_height="41dp" />
+
+        <TextView
+            android:id="@+id/labelValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agrega el número de jóvenes :" />
+
+        <EditText
+            android:id="@+id/txtValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/labelCapacidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agrega la capacidad del centro Juvenil" />
+
+        <EditText
+            android:id="@+id/txtCapacidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/labelSentenciados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agrega el número de sentenciados" />
+
+        <EditText
+            android:id="@+id/txtSentenciados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/labelProcesados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agrega el número de procesados :" />
+
+        <EditText
+            android:id="@+id/txtProcesados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/labelMenores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agrega el número de menores de edad :" />
+
+        <EditText
+            android:id="@+id/txtMenores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/labelMayores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agrega el número de mayores de edad :" />
+
+        <EditText
+            android:id="@+id/txtMayores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/labelState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agrega el estado" />
+
+        <Spinner
+            android:id="@+id/txtState"
+            android:layout_width="match_parent"
+            android:layout_height="43dp" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar" />
+
+        <Button
+            android:id="@+id/btnVolver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Volver" />
+
+
+
+    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
