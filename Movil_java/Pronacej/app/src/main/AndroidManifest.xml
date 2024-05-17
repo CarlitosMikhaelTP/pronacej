@@ -56,6 +56,10 @@
             android:name=".InicioActivitys.MenuActivity"
             android:exported="false" />
 
+        <activity android:name=".ResultadoDosActivity"
+            android:exported="false" />
+
+
         <activity
             android:name=".InicioActivitys.OptionTypeActivity"
             android:exported="false" />

@@ -60,6 +60,7 @@ public class SabanaActivity extends AppCompatActivity {
     Integer[] stateIds = {1, 2};
     // Incializando botón para generar gráfico
     Button btnGraphic;
+    Button btnPastel;
     // Inicializando propiedades de librería BarChart
     BarChart barChart;
     @Override
@@ -103,6 +104,7 @@ public class SabanaActivity extends AppCompatActivity {
         // Butones
         Button btnSave = (Button)findViewById(R.id.btnSave);
         Button btnGraphic = (Button)findViewById(R.id.btnGraphic);
+        Button btnPastel = (Button) findViewById(R.id.btnGraphicPastel);
 
         // Inicializando el servicio
         service = Apis.getSabanaService();
@@ -140,6 +142,17 @@ public class SabanaActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnPastel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SabanaActivity.this, ResultadoDosActivity.class);
+                intent.putExtra("sentenciados", txtSentenciados.getText().toString());
+                intent.putExtra("procesados", txtProcesados.getText().toString());
+                startActivity(intent);
+            }
+        });
+
     }
 
 
