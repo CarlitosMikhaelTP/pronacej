@@ -47,6 +47,9 @@
             android:name=".OptionsActivitys.OpcionSeisActivity"
             android:exported="false" />
         <activity
+            android:name=".ResultadosUnoActivity"
+            android:exported="false" />
+        <activity
             android:name=".SabanaActivity"
             android:exported="false" />
         <activity

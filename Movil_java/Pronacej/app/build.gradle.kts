@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    id ("com.android.application' version '8.1.2' apply false")
+
 }
 
 android {
@@ -35,10 +35,10 @@ android {
 }
 
 
+
+
 dependencies {
-    
-    implementation ("com.squareup.retrofit2:retrofit:2.5.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.5.0")
+
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation ("org.apache.poi:poi:4.0.0")

@@ -20,6 +20,16 @@ import com.carlitos.Pronacej.GraphicsActivitys.GraficoUnoActivity;
 import com.carlitos.Pronacej.Model.Sabana;
 import com.carlitos.Pronacej.Utils.Apis;
 import com.carlitos.Pronacej.Utils.SabanaService;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +39,7 @@ public class SabanaActivity extends AppCompatActivity {
 
     // Declarar variables
     EditText txtValue, txtSentenciados, txtProcesados, txtCapacidad;
+   // Inicando el servicio con los métodos
     SabanaService service;
 
 
@@ -47,8 +58,10 @@ public class SabanaActivity extends AppCompatActivity {
 
     String[] stateOptions = {"Habilitar", "Deshabilitar"};
     Integer[] stateIds = {1, 2};
-
-    Button btnBack;
+    // Incializando botón para generar gráfico
+    Button btnGraphic;
+    // Inicializando propiedades de librería BarChart
+    BarChart barChart;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +72,7 @@ public class SabanaActivity extends AppCompatActivity {
         txtSentenciados = findViewById(R.id.txtSentenciados);
         txtProcesados = findViewById(R.id.txtProcesados);
         txtCapacidad = findViewById(R.id.txtCapacidad);
-        btnBack = findViewById(R.id.btnVolver);
+        btnGraphic = findViewById(R.id.btnGraphic);
 
         // Inicializar Spinners
         spinnerAdmin = findViewById(R.id.txtAdmin);
@@ -89,7 +102,7 @@ public class SabanaActivity extends AppCompatActivity {
 
         // Butones
         Button btnSave = (Button)findViewById(R.id.btnSave);
-        Button btnBack = (Button)findViewById(R.id.btnVolver);
+        Button btnGraphic = (Button)findViewById(R.id.btnGraphic);
 
         // Inicializando el servicio
         service = Apis.getSabanaService();
@@ -99,20 +112,59 @@ public class SabanaActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Sabana s =new Sabana();
+                Sabana s = new Sabana();
                 s.setAdminId(getSelectedAdminId());
                 s.setTableTablesId(getSelectedTableId());
                 s.setProcessHeaderId(getSelectedProcessId());
                 s.setValue(txtValue.getText().toString());
                 s.setState(getSelectedState());
-                addSabana(s);
 
-                loadSpinnerData();
-                Intent intent = new Intent(SabanaActivity.this, GraficoUnoActivity.class);
+                // Llamada a método para agregar Sabana y actualizar la lista
+                addSabanaAndUpdateList(s);
+            }
+        });
+
+        btnGraphic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Obtener los valores de los campos de texto
+                String valueText = txtValue.getText().toString();
+                String menoresText = txtMenores.getText().toString();
+                String mayoresText = txtMayores.getText().toString();
+
+                // Crear un Intent y pasar los valores a ResultadosUnoActivity
+                Intent intent = new Intent(SabanaActivity.this, ResultadosUnoActivity.class);
+                intent.putExtra("value", valueText);
+                intent.putExtra("menores", menoresText);
+                intent.putExtra("mayores", mayoresText);
                 startActivity(intent);
             }
         });
     }
+
+
+    private void addSabanaAndUpdateList(Sabana s) {
+        service.addSabana(s).enqueue(new Callback<Sabana>() {
+            @Override
+            public void onResponse(Call<Sabana> call, Response<Sabana> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(SabanaActivity.this, "Se registró con éxito", Toast.LENGTH_LONG).show();
+                    loadSpinnerData(); // Actualiza la lista
+                    Intent intent = new Intent(SabanaActivity.this, GraficoUnoActivity.class);
+                    startActivity(intent); // Inicia la actividad después de actualizar la lista
+                } else {
+                    Toast.makeText(SabanaActivity.this, "Error al registrar", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Sabana> call, Throwable t) {
+                Log.e("Error:", t.getMessage());
+                Toast.makeText(SabanaActivity.this, "Error al registrar", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
 
     // Métodos para obtener el ID seleccionado en cada opción desplegable

@@ -146,10 +146,10 @@
             android:text="Guardar" />
 
         <Button
-            android:id="@+id/btnVolver"
+            android:id="@+id/btnGraphic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Volver" />
+            android:text="Generar Gráficos" />
 
 
 
