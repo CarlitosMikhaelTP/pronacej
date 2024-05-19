@@ -5,6 +5,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.carlitos.Pronacej.LoginActivity;
 import com.carlitos.Pronacej.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         // Se establecen las funciones del botón
         btncomenzar.setOnClickListener(view -> {
             // Intent para pasar a otro activity
-            Intent intent = new Intent(MainActivity.this, OptionTypeActivity.class);
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             // Llamado a la acción de intent
             startActivity(intent);
         });

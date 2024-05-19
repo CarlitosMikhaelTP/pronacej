@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.carlitos.Pronacej.R;
 
@@ -16,9 +17,9 @@ public class OptionTypeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option);
 
-        LinearLayout buttonUserA = findViewById(R.id.Opcion1);
-        LinearLayout buttonUserB = findViewById(R.id.Opcion2);
-        LinearLayout buttonUserC = findViewById(R.id.Opcion3);
+        ConstraintLayout buttonUserA = findViewById(R.id.Opcion1);
+        ConstraintLayout buttonUserB = findViewById(R.id.Opcion2);
+        ConstraintLayout buttonUserC = findViewById(R.id.Opcion3);
 
         buttonUserA.setOnClickListener(view -> {
             startActivity(new Intent(OptionTypeActivity.this, MenuActivity.class));

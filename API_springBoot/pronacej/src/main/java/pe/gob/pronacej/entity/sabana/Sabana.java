@@ -30,6 +30,10 @@ public class Sabana {
     private Admin adminId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_indicator", nullable = false)
+    private Indicators idIndicator;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_table_tables", nullable = false)
     private TableTables tableTablesId;
 

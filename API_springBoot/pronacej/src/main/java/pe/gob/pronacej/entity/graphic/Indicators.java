@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pe.gob.pronacej.entity.sabana.Sabana;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -49,5 +50,8 @@ public class Indicators {
     // Mapando la cardinalidad
     @OneToMany(mappedBy = "indicatorId", cascade = CascadeType.ALL)
     private List<TableTables> tableTablesList;
+
+    @OneToMany(mappedBy = "idIndicator", cascade = CascadeType.ALL)
+    private List<Sabana> sabanaList;
 
 }

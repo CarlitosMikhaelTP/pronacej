@@ -213,11 +213,7 @@ VALUES
 	(1, 'Centro_Juvenil_CJDR', 1 ),
 	(1, 'Centro_Juvenil_SOA', 1 ),
 	(1, 'Centro_Juvenil_PASPE', 1 ),
-	(1, 'Poblacion', 1 ),
-	(1, 'Capacidad_Albergue', 1 ),
-	(1, 'Capacidad_Instalada', 1 ),
 	(2, 'Situacion_Juridica_Ingreso', 1 ),
-	(2, 'Edad', 1),
 	(3, 'Situacion_Juridica_Actual', 1 ),
 	(3, 'Delito_Especifico', 1 ),
     (4, 'Participa_Programa', 1 ),
@@ -230,7 +226,7 @@ VALUES
 	(4, 'Situacion_Edu_Actual', 1 ),
 	(4, 'Rol_Reinser_Edu_Mes', 1 ),
 	(4, 'Tipo_Centro_Educativo', 1 ),
-	(4, 'Resp_Inser_Lab_Mes', 1 ),
+	(4, 'Seguro_Medico', 1 ),
 	(4, 'Situacion_Laboral_Actual', 1 );
 
 -- Realizando consulta de la tabla Indicators
@@ -255,9 +251,9 @@ CREATE TABLE type_process_header(
 -- Realizando la insercion de data en tabla type_process_header
 INSERT INTO type_process_header (name, description, state)
 	VALUES 
-	 ('Proceso A', 'Descripción del Proceso A', 1),
-	 ('Proceso B', 'Descripción del Proceso B', 1),
-	 ('Proceso C', 'Descripción del Proceso C', 1);
+	 ('Reporte Diario', 'Descripción del Proceso A', 1),
+	 ('Reporte Mensual', 'Descripción del Proceso B', 1),
+	 ('Reporte Anual', 'Descripción del Proceso C', 1);
 
 -- Consultando la tabla type_process_header
 SELECT * FROM type_process_header;
@@ -368,81 +364,75 @@ VALUES
 	(2, 3,'Centro_Juvenil_PASPE', 11,'PASPE HUARAZ',1),
 	(3, 3,'Centro_Juvenil_PASPE', 12,'PASPE ICA',1),
 	(4, 3,'Centro_Juvenil_PASPE', 13,'PASPE PUNO',1),
-	--POBLACION
-	(1, 4,'Poblacion', 1,'100',1),
-	(2, 4,'Poblacion', 2,'200',1),
-	(3, 4,'Poblacion', 3,'300',1),
-	(4, 4,'Poblacion', 4,'400',1),
-	-- CAPACIDAD ALBERGUE
-	(1, 5,'Capacidad_Albergue', 1,'500',1),
-	(2, 5,'Capacidad_Albergue', 2,'400',1),
-	(3, 5,'Capacidad_Albergue', 3,'600',1),
-	(4, 5,'Capacidad_Albergue', 4,'700',1),
-	-- CAPACIDAD INSTALADA
-	(1, 6,'Capacidad_Instalada', 1,'1000',1),
-	(2, 6,'Capacidad_Instalada', 2,'1500',1),
-	(3, 6,'Capacidad_Instalada', 3,'2000',1),
-	(4, 6,'Capacidad_Instalada', 4,'1700',1),
     -- SITUACIÓN JURÍDICA INGRESO
-	(1, 7,'Situacion_Juridica_Ingreso',1,'SENTENCIADO',1),
-	(2, 7,'Situacion_Juridica_Ingreso',2,'PROCESADO',1),
-	-- EDAD
-	(3, 8, 'Edad', 1, '25', 1),
-	(4, 8, 'Edad', 2,'20', 1),
-	(1, 8, 'Edad', 3,'18', 1),
-	(2, 8, 'Edad', 4,'15', 1),
+	(1, 4,'Situacion_Juridica_Ingreso',1,'SENTENCIADO',1),
+	(2, 4,'Situacion_Juridica_Ingreso',2,'PROCESADO',1),
 	-- SITUACION JURIDICA ACTUAL
-	(3, 9,'Situacion_Juridica_Actual', 1, 'SENTENCIADO',1 ),
-	(4, 9,'Situacion_Juridica_Actual', 2, 'PROCESADO',1),
+	(3, 5,'Situacion_Juridica_Actual', 1, 'SENTENCIADO',1 ),
+	(4, 5,'Situacion_Juridica_Actual', 2, 'PROCESADO',1),
 	-- DELITO ESPECIFICO
-	(1, 10, 'Delito_Especifico',1,'AUTOABORTO',1),
-	(2, 10, 'Delito_Especifico',2,'EXPOSICION A PELIGRO O ABANDONO A PERSONAS EN PELIGRO',1),
-	(3, 10, 'Delito_Especifico',3,'FEMINICIDIO',1),
-	(4, 10, 'Delito_Especifico',4,'HOMICIDIO CALIFICADO',1),
-	(1, 10, 'Delito_Especifico',5,'HOMICIDIO SIMPLE',1),
-	(2, 10, 'Delito_Especifico',6,'LESIONES GRAVES',1),
-	(3, 10, 'Delito_Especifico',7,'LESIONES LEVES',1),
-	(4, 10, 'Delito_Especifico',8,'PARRICIDIO',1),
-	(1, 10, 'Delito_Especifico',9,'SICARIATO',1),
-	(2, 10, 'Delito_Especifico',10,'OTROS',1),
+	(1, 6, 'Delito_Especifico',1,'AUTOABORTO',1),
+	(2, 6, 'Delito_Especifico',2,'EXPOSICION A PELIGRO O ABANDONO A PERSONAS EN PELIGRO',1),
+	(3, 6, 'Delito_Especifico',3,'FEMINICIDIO',1),
+	(4, 6, 'Delito_Especifico',4,'HOMICIDIO CALIFICADO',1),
+	(1, 6, 'Delito_Especifico',5,'HOMICIDIO SIMPLE',1),
+	(2, 6, 'Delito_Especifico',6,'LESIONES GRAVES',1),
+	(3, 6, 'Delito_Especifico',7,'LESIONES LEVES',1),
+	(4, 6, 'Delito_Especifico',8,'PARRICIDIO',1),
+	(1, 6, 'Delito_Especifico',9,'SICARIATO',1),
+	(2, 6, 'Delito_Especifico',10,'OTROS',1),
 	-- PARTICIPA DE PROGRAMAS
-	(3, 11,'Participa_Programa',1,'SI, EN 1',1),
-	(4, 11,'Participa_Programa',2,'SI, EN 2',1),
-	(1, 11,'Participa_Programa',3,'SI, EN 3',1),
-	(2, 11,'Participa_Programa',4,'SI, EN 4',1),
-	(3, 11,'Participa_Programa',5,'SI, EN 5',1),
-	(4, 11,'Participa_Programa',6,'NO',1),
+	(3, 7,'Participa_Programa',1,'SI, EN 1',1),
+	(4, 7,'Participa_Programa',2,'SI, EN 2',1),
+	(1, 7,'Participa_Programa',3,'SI, EN 3',1),
+	(2, 7,'Participa_Programa',4,'SI, EN 4',1),
+	(3, 7,'Participa_Programa',5,'SI, EN 5',1),
+	(4, 7,'Participa_Programa',6,'NO',1),
 	-- JUSTICIA TERAPEUTICA
-	(1, 12, 'Justica_Terapeutica',1,'SI',1),
-	(2, 12, 'Justica_Terapeutica',1,'SI',1),
+	(1, 8, 'Justica_Terapeutica',1,'SI',1),
+	(2, 8, 'Justica_Terapeutica',1,'SI',1),
     -- AGRESORES SEXUALES
-	(3, 13,'Agresores_Sexuales',1,'SI',1),
-	(4, 13,'Agresores_Sexuales',2,'NO',1),
+	(3, 9,'Agresores_Sexuales',1,'SI',1),
+	(4, 9,'Agresores_Sexuales',2,'NO',1),
 	-- SALUD MENTAL
-	(1, 14,'Salud_Mental',1,'SI',1),
-    (2, 14,'Salud_Mental',2,'NO',1),
+	(1, 10,'Salud_Mental',1,'SI',1),
+    (2, 10,'Salud_Mental',2,'NO',1),
 	-- ADN FAMILIAR
-	(3, 15, 'Adn_Familiar',1,'SI',1),
-	(4, 15, 'Adn_Familiar',2,'NO',1),
+	(3, 11, 'Adn_Familiar',1,'SI',1),
+	(4, 11, 'Adn_Familiar',2,'NO',1),
     -- INTERVENCION TERAPEUTICA
-	(1, 16,'Intervencion_Terapeutica',1,'APLICA',1),
-	(2, 16,'Intervencion_Terapeutica',2,'NO APLICA',1),
+	(1, 12,'Intervencion_Terapeutica',1,'APLICA',1),
+	(2, 12,'Intervencion_Terapeutica',2,'NO APLICA',1),
 	-- FIRMES ADELANTE
-	(3, 17, 'Firmes_Adelante',1,'APLICA',1),
-	(4, 17, 'Firmes_Adelante',2,'NO APLICA',1),
+	(3, 13, 'Firmes_Adelante',1,'APLICA',1),
+	(4, 13, 'Firmes_Adelante',2,'NO APLICA',1),
 	-- SITUACION EDU ACTUAL
-	(1, 18, 'Situacion_Edu_Actual',1,'ESTUDIA',1),
-	(2, 18, 'Situacion_Edu_Actual',3,'TERMINO EDUCACION BASICA',1),
-	(3, 18, 'Situacion_Edu_Actual',4,'TERMINO Y NO REGULARIZO DOCUMENTOS',1),
+	(1, 14, 'Situacion_Edu_Actual',1,'ESTUDIA',1),
+	(2, 14, 'Situacion_Edu_Actual',3,'TERMINO EDUCACION BASICA',1),
+	(3, 14, 'Situacion_Edu_Actual',4,'TERMINO Y NO REGULARIZO DOCUMENTOS',1),
     -- ROL REINSER EDU MES
-    (4, 19, 'Rol_Reinser_Edu_Mes',1,'GESTIÓN PARA LA REINSERCIÓN EDUCATIVA BÁSICA',1),
-	(1, 19,'Rol_Reinser_Edu_Mes',2,'GESTIÓN PARA LA INSERCIÓN EDUCATIVA PRODUCTIVA SUPERIOR',1),
-	(2, 19,'Rol_Reinser_Edu_Mes',3,'SEGUIMIENTO A LA CONTINUIDAD EDUCATIVA',1),
-	(3, 19, 'Rol_Reinser_Edu_Mes',4,'APOYO PARA LA REGULARIZACIÓN DOCUMENTARIA',1),
-    -- SITUACION LABORAL ACTUAL
-	(4, 20,'Situacion_Laboral_Actual',1,'INSERCIÓN LABORAL INTERNA',1),
-	(1, 20,'Situacion_Laboral_Actual',2,'INSERCIÓN LABORAL EXTERNA',1),
-	(2, 20,'Situacion_Laboral_Actual',3,'NO TRABAJA',1);
+    (4, 15, 'Rol_Reinser_Edu_Mes',1,'GESTIÓN PARA LA REINSERCIÓN EDUCATIVA BÁSICA',1),
+	(1, 15,'Rol_Reinser_Edu_Mes',2,'GESTIÓN PARA LA INSERCIÓN EDUCATIVA PRODUCTIVA SUPERIOR',1),
+	(2, 15,'Rol_Reinser_Edu_Mes',3,'SEGUIMIENTO A LA CONTINUIDAD EDUCATIVA',1),
+	(3, 15, 'Rol_Reinser_Edu_Mes',4,'APOYO PARA LA REGULARIZACIÓN DOCUMENTARIA',1),
+    -- TIPO CENTRO EDUCATIVO
+	(4, 16, 'Tipo_Centro_Educativo', 1, 'CEBR',1),
+	(1, 16, 'Tipo_Centro_Educativo', 2, 'SEBA',1),
+	(2, 16, 'Tipo_Centro_Educativo', 3, 'CEPRE',1),
+	(3, 16, 'Tipo_Centro_Educativo', 4, 'ACADEMIA',1),
+	(4, 16, 'Tipo_Centro_Educativo', 5, 'CETPRO',1),
+	(1, 16, 'Tipo_Centro_Educativo', 6, 'INSTITUTO SUPERIOR',1),
+	(2, 16, 'Tipo_Centro_Educativo', 7, 'UNIVERSIDAD',1),
+	(3, 16, 'Tipo_Centro_Educativo', 8, 'NINGUNO',1),
+	-- SEGURO MEDICO
+	(4, 17, 'Seguro_Medico', 1, 'SIS', 1),
+	(1, 17, 'Seguro_Medico', 2, 'ESSALUD', 1),
+	(2, 17, 'Seguro_Medico', 3, 'PARTICULAR', 1),
+	(3, 17, 'Seguro_Medico', 4, 'NINGUNO', 1),
+	-- SITUACION LABORAL ACTUAL
+	(4, 18,'Situacion_Laboral_Actual',1,'INSERCIÓN LABORAL INTERNA',1),
+	(1, 18,'Situacion_Laboral_Actual',2,'INSERCIÓN LABORAL EXTERNA',1),
+	(2, 18,'Situacion_Laboral_Actual',3,'NO TRABAJA',1);
 
 -- SELECCIONANDO TABLA 'TableTables'
 SELECT * FROM table_tables;
@@ -476,6 +466,32 @@ VALUES
     
 -- Consultando la tabla Sabana
 SELECT * FROM SABANA;
+
+
+CREATE TABLE matriz (
+	id SERIAL PRIMARY KEY, 
+	numero_registro INT NOT NULL,
+	fecha TIMESTAMP NOT NULL,
+	centro_juvenil VARCHAR(100) NOT NULL,
+	situacion_juridica_ingreso VARCHAR(100) NOT NULL,
+	situacion_juridica_actual VARCHAR(100) NOT NULL,
+	delito_especifico VARCHAR(100) NOT NULL,
+	participa_programa VARCHAR(100) NOT NULL, 
+	justicia_terapeutica VARCHAR(100) NOT NULL,
+	agresores_sexuales VARCHAR(100) NOT NULL,
+	salud_mental VARCHAR(100) NOT NULL,
+	adn_familiar VARCHAR(100) NOT NULL,
+	intervencion_terapeutica VARCHAR(100) NOT NULL,
+	firmes_adelante VARCHAR(100) NOT NULL,
+	situacion_edu_actual VARCHAR(100) NOT NULL,
+	rol_reinser_edu_mes VARCHAR(100) NOT NULL,
+	tipo_centro_educativo VARCHAR(100) NOT NULL,
+	seguro_medico VARCHAR(100) NOT NULL,
+	situacion_laboral_actual VARCHAR(100) NOT NULL
+)
+select * from matriz;
+commit;
+
 
 
 

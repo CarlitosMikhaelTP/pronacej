@@ -55,6 +55,12 @@
         <activity
             android:name=".InicioActivitys.MenuActivity"
             android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActMenu"
+            android:exported="false" />
 
         <activity android:name=".ResultadoDosActivity"
             android:exported="false" />

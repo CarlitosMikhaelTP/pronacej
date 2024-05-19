@@ -1,0 +1,730 @@
+--SELECT proname 
+--FROM pg_catalog.pg_namespace n 
+--JOIN pg_catalog.pg_proc p ON pronamespace = n.oid 
+--WHERE nspname = 'public';
+--DROP PROCEDURE IF EXISTS procedimiento_infracciones_cometidas_cjdr;
+--DROP PROCEDURE public.procedimiento_insercion_educativa_cjdr;
+--DROP PROCEDURE schema_name2.procedure_name;
+--SELECT schema_name
+--FROM information_schema.schemata;
+
+--commit;
+
+------------------------------------------------------------------------------------------------
+CREATE OR REPLACE PROCEDURE procedimiento_tratamiento_diferenciado_cjdr(fecha_inicio TIMESTAMP, fecha_fin TIMESTAMP DEFAULT NULL)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+	-- variables para campo de Participa Programa
+    participa_programa_uno INT;
+	participa_programa_dos INT;
+	participa_programa_tres INT;
+	participa_programa_cuatro INT;
+	participa_programa_cinco INT;
+	participa_programa_no INT;
+	-- Variables para campos justicia terapeutica
+	justicia_no INT;
+	justicia_si INT;
+	-- Variables para agresores sexuales
+	agresor_si INT;
+	agresor_no INT;
+	-- Variables para salud mental
+	salud_si INT;
+	salud_no INT;
+	-- Variables ADN familiar
+	adn_si INT;
+	adn_no INT;
+	-- Variables intervencion terapeutica
+	intervencion_aplica INT;
+	intervencion_no_aplica INT;
+	-- Variables Firmes y adelante
+	firmes_aplica INT;
+	firmes_no_aplica INT;
+
+BEGIN
+    -- Creamos una tabla temporal para almacenar filtros
+    IF EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'resultados') THEN
+        DROP TABLE resultados;
+    END IF;
+	
+    CREATE TEMP TABLE resultados AS
+    SELECT participa_programa, justicia_terapeutica, agresores_sexuales, salud_mental, adn_familiar, intervencion_terapeutica, firmes_adelante, centro_juvenil
+    FROM matriz 
+    WHERE fecha::DATE BETWEEN fecha_inicio::DATE AND COALESCE(fecha_fin::DATE, fecha_inicio::DATE) 
+    AND centro_juvenil LIKE 'CJ%';
+    
+    -- Si se proporciona fecha_fin, se expande el rango de fechas
+    IF fecha_fin IS NOT NULL THEN
+        DELETE FROM resultados WHERE fecha_inicio::DATE > fecha_fin::DATE;
+    END IF;
+    
+	--Contamos las ocurrencias de cada opcion en la columna ´participa_programa'
+	SELECT COUNT(*) INTO participa_programa_uno FROM resultados WHERE participa_programa = 'SI EN 1';
+	SELECT COUNT(*) INTO participa_programa_dos FROM resultados WHERE participa_programa = 'SI EN 2';
+	SELECT COUNT(*) INTO participa_programa_tres FROM resultados WHERE participa_programa = 'SI EN 3';
+	SELECT COUNT(*) INTO participa_programa_cuatro FROM resultados WHERE participa_programa = 'SI EN 4';
+	SELECT COUNT(*) INTO participa_programa_cinco FROM resultados WHERE participa_programa = 'SI EN 5';
+	SELECT COUNT(*) INTO participa_programa_no FROM resultados WHERE participa_programa = 'NO';
+	-- Contamos las ocurrencias de cada opcion en la columna 'justicia_terapeutica'
+	SELECT COUNT(*) INTO justicia_no FROM resultados WHERE justicia_terapeutica = 'NO';
+	SELECT COUNT(*) INTO justicia_si FROM resultados WHERE justicia_terapeutica = 'SI';
+	-- Contamos las ocurrencias de cada opcion en la columna 'agresores_Sexuales'
+	SELECT COUNT(*) INTO agresor_no FROM resultados WHERE agresores_sexuales = 'NO'; 
+	SELECT COUNT(*) INTO agresor_si FROM resultados WHERE agresores_sexuales = 'SI'; 
+	-- Contamos las ocurrencias en cada opcion en la columna 'salud_mental'
+	SELECT COUNT(*) INTO salud_si FROM resultados WHERE salud_mental = 'SI';
+    SELECT COUNT(*) INTO salud_no FROM resultados WHERE salud_mental = 'NO';
+	-- Contamos las ocurrencias en cada opcion en la columna 'adn_familiar'
+	SELECT COUNT(*) INTO adn_si FROM resultados WHERE adn_familiar = 'SI';
+    SELECT COUNT(*) INTO adn_no FROM resultados WHERE adn_familiar = 'NO';
+	-- Contamos las ocurrencias en cada opcion en la columna 'intervencion tarapeutica'
+	SELECT COUNT(*) INTO intervencion_aplica FROM resultados WHERE intervencion_terapeutica = 'APLICA';
+    SELECT COUNT(*) INTO intervencion_no_aplica FROM resultados WHERE intervencion_terapeutica = 'NO APLICA';
+	-- Contamos las ocurrencias en cada opcion en la columna 'firmes_adelante'
+	SELECT COUNT(*) INTO firmes_aplica FROM resultados WHERE firmes_adelante = 'APLICA';
+    SELECT COUNT(*) INTO firmes_no_aplica FROM resultados WHERE firmes_adelante = 'NO APLICA';
+    
+    -- Mostramos los resultados
+	RAISE NOTICE 'Total de ocurrencias de "SI EN 1" en la columna participa_programa: %', participa_programa_uno;
+	RAISE NOTICE 'Total de ocurrencias de "SI EN 2" en la columna participa_programa: %', participa_programa_dos;
+	RAISE NOTICE 'Total de ocurrencias de "SI EN 3" en la columna participa_programa: %', participa_programa_tres;
+	RAISE NOTICE 'Total de ocurrencias de "SI EN 4" en la columna participa_programa: %', participa_programa_cuatro;
+	RAISE NOTICE 'Total de ocurrencias de "SI EN 5" en la columna participa_programa: %', participa_programa_cinco;
+	RAISE NOTICE 'Total de ocurrencias de "NO" en la columna participa_programa: %', participa_programa_no;
+    RAISE NOTICE 'Total de ocurrencias de "SI" en la columna justicia_terapeutica: %', justicia_si;
+    RAISE NOTICE 'Total de ocurrencias de "NO" en la columna justicia_terapeutica: %', justicia_no;
+	RAISE NOTICE 'Total de ocurrencias de "SI" en la columna agresores_sexuales: %', agresor_si;
+    RAISE NOTICE 'Total de ocurrencias de "NO" en la columna agresores_sexuales: %', agresor_no;
+	RAISE NOTICE 'Total de ocurrencias de "SI" en la columna salud_mental: %', salud_si;
+    RAISE NOTICE 'Total de ocurrencias de "NO" en la columna salud_mental: %', salud_no;
+	RAISE NOTICE 'Total de ocurrencias de "SI" en la columna adn_familiar: %', adn_si;
+    RAISE NOTICE 'Total de ocurrencias de "NO" en la columna adn_familiar: %', adn_no;
+	RAISE NOTICE 'Total de ocurrencias de "APLICA" en la columna intervencion_terapeutica: %', intervencion_aplica;
+    RAISE NOTICE 'Total de ocurrencias de "NO APLICA" en la columna intervencion_terapeutica: %', intervencion_no_aplica;
+	RAISE NOTICE 'Total de ocurrencias de "APLICA" en la columna firmes_adelante: %', firmes_aplica;
+    RAISE NOTICE 'Total de ocurrencias de "NO APLICA" en la columna firmes_adelante: %', firmes_no_aplica;
+END;
+$$;
+
+CALL procedimiento_tratamiento_diferenciado_cjdr('2024-05-1');
+select * from matriz;
+-----------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE PROCEDURE procedimiento_insercion_educativa_cjdr(fecha_inicio TIMESTAMP, fecha_fin TIMESTAMP DEFAULT NULL)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+	-- variables para campo de Situacion Educativa Actual
+    sea_estudia INT;
+	sea_termino_basico INT;
+	sea_termino_no_doc INT;
+	-- Variables para campos Rol Reinsercion educativa al mes
+	reinsercion_educativa INT;
+	insercion_productiva INT;
+	continuidad_edu INT;
+	apoyo_regularizar INT;
+	-- Variables para Tipo Centro educativo
+	cebr INT;
+	ceba INT;
+	cepre INT;
+	academia INT;
+	cetpro INT;
+	instituto INT;
+	universidad INT;
+	ninguno INT;
+	
+BEGIN
+    -- Creamos una tabla temporal para almacenar filtros
+    IF EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'resultadodos') THEN
+        DROP TABLE resultadodos;
+    END IF;
+
+    CREATE TEMP TABLE resultadodos AS
+    SELECT situacion_edu_actual, rol_reinser_edu_mes, tipo_centro_educativo
+    FROM matriz 
+    WHERE fecha::DATE BETWEEN fecha_inicio::DATE AND COALESCE(fecha_fin::DATE, fecha_inicio::DATE) 
+    AND centro_juvenil LIKE 'CJ%';
+    
+    -- Si se proporciona fecha_fin, se expande el rango de fechas
+    IF fecha_fin IS NOT NULL THEN
+        DELETE FROM resultadodos WHERE fecha_inicio::DATE > fecha_fin::DATE;
+    END IF;
+    
+	--Contamos las ocurrencias de cada opcion en la columna ´situacion_edu_actual'
+	SELECT COUNT(*) INTO sea_estudia FROM resultadodos WHERE situacion_edu_actual = 'ESTUDIA';
+	SELECT COUNT(*) INTO sea_termino_basico FROM resultadodos WHERE situacion_edu_actual = 'TERMINO EDUCACION BASICA';
+	SELECT COUNT(*) INTO sea_termino_no_doc FROM resultadodos WHERE situacion_edu_actual = 'TERMINO Y NO REGULARIZO SUS DOCUMENTOS';
+	-- Contamos las ocurrencias de cada opcion en la columna 'rol_reinser_edu_mes'
+	SELECT COUNT(*) INTO reinsercion_educativa FROM resultadodos WHERE rol_reinser_edu_mes = 'GESTION PARA LA REINSERCION EDUCATIVA BASICA';
+	SELECT COUNT(*) INTO insercion_productiva FROM resultadodos WHERE rol_reinser_edu_mes = 'GESTION PARA LA INSERCION EDUCATIVA PRODUCTIVA SUPERIOR';
+	SELECT COUNT(*) INTO continuidad_edu FROM resultadodos WHERE rol_reinser_edu_mes = 'SEGUIMIENTO A LA CONTINUIDAD EDUCATIVA';
+	SELECT COUNT(*) INTO apoyo_regularizar FROM resultadodos WHERE rol_reinser_edu_mes = 'APOYO A LA REGULARIZACION DOCUMENTARIA';
+	-- Contamos las ocurrencias de cada opcion en la columna 'tipo_centro_educativo'
+	SELECT COUNT(*) INTO cebr FROM resultadodos WHERE tipo_centro_educativo = 'CEBR'; 
+	SELECT COUNT(*) INTO ceba FROM resultadodos WHERE tipo_centro_educativo = 'SEBA'; 
+	SELECT COUNT(*) INTO cepre FROM resultadodos WHERE tipo_centro_educativo = 'CEPRE'; 
+	SELECT COUNT(*) INTO academia FROM resultadodos WHERE tipo_centro_educativo = 'ACADEMIA'; 
+	SELECT COUNT(*) INTO cetpro FROM resultadodos WHERE tipo_centro_educativo = 'CETPRO'; 
+	SELECT COUNT(*) INTO instituto FROM resultadodos WHERE tipo_centro_educativo = 'INSTITUTO SUPERIOR'; 
+	SELECT COUNT(*) INTO universidad FROM resultadodos WHERE tipo_centro_educativo = 'UNIVERSIDAD'; 
+	SELECT COUNT(*) INTO ninguno FROM resultadodos WHERE tipo_centro_educativo = 'NINGUNO'; 
+    
+    -- Mostramos los resultados
+	RAISE NOTICE 'Total de ocurrencias de "ESTUDIA" en la columna situacion_edu_actual: %', sea_estudia;
+	RAISE NOTICE 'Total de ocurrencias de "TERMINO EDUCACION BASICA" en la columna situacion_edu_actual: %', sea_termino_basico;
+	RAISE NOTICE 'Total de ocurrencias de "TERMINO Y NO REGULARIZO DOCUMENTOS" en la columna situacion_edu_actual: %', sea_termino_no_doc;
+	RAISE NOTICE 'Total de ocurrencias de "GESTION PARA LA REINSERCION EDUCATIVA BASICA" en la columna rol_reinser_edu_mes: %', reinsercion_educativa;
+	RAISE NOTICE 'Total de ocurrencias de "GESTION PARA LA INSERCION EDUCATIVA PRODUCTIVA SUPERIOR" en la columna rol_reinser_edu_mes: %', insercion_productiva;
+	RAISE NOTICE 'Total de ocurrencias de "SEGUIMIENTO A LA CONTINUIDAD EDUCATIVA" en la columna rol_reinser_edu_mes: %', continuidad_edu;
+    RAISE NOTICE 'Total de ocurrencias de "APOYO A LA REGULARIZACION DOCUMENTARIA" en la columna rol_reinser_edu_mes: %', apoyo_regularizar;
+	RAISE NOTICE 'Total de ocurrencias de "CEBR" en la columna tipo_centro_educativo: %', cebr;
+	RAISE NOTICE 'Total de ocurrencias de "CEBA" en la columna tipo_centro_educativo: %', ceba;
+	RAISE NOTICE 'Total de ocurrencias de "CEPRE" en la columna tipo_centro_educativo: %', cepre;
+	RAISE NOTICE 'Total de ocurrencias de "ACADEMIA" en la columna tipo_centro_educativo: %', academia;
+	RAISE NOTICE 'Total de ocurrencias de "CETPRO" en la columna tipo_centro_educativo: %', cetpro;
+	RAISE NOTICE 'Total de ocurrencias de "INSTITUTO" en la columna tipo_centro_educativo: %', instituto;
+	RAISE NOTICE 'Total de ocurrencias de "UNIVERSIDAD" en la columna tipo_centro_educativo: %', universidad;
+	RAISE NOTICE 'Total de ocurrencias de "NINGUNO" en la columna tipo_centro_educativo: %', ninguno;
+END;
+$$;
+--DROP TABLE IF EXISTS resultadoEduInser;
+commit;
+
+CALL procedimiento_insercion_educativa_cjdr('2024-05-1','2024-05-2');
+CALL procedimiento_insercion_educativa_cjdr('2024-05-1');
+select * from matriz;
+--DROP TABLE IF EXISTS resultadoEduInser;
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE PROCEDURE procedimiento_insercion_laboral_cjdr(fecha_inicio TIMESTAMP, fecha_fin TIMESTAMP DEFAULT NULL)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    -- variables para campo de Seguro medico
+    seguro_sis INT;
+    seguro_essalud INT;
+    seguro_particular INT;
+    seguro_ninguno INT;
+    -- Variables para situacion laboral actual
+    inser_labo_interna INT;
+    inser_labo_externa INT;
+    no_trabaja INT;
+    
+BEGIN
+    -- Creamos una tabla temporal para almacenar filtros
+    IF EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'resultadoslaboral') THEN
+        DROP TABLE resultadoslaboral;
+    END IF;
+    
+    CREATE TEMP TABLE resultadoslaboral AS
+    SELECT seguro_medico, situacion_laboral_actual
+    FROM matriz 
+    WHERE fecha::DATE BETWEEN fecha_inicio::DATE AND COALESCE(fecha_fin::DATE, fecha_inicio::DATE) 
+    AND centro_juvenil LIKE 'CJ%';
+    
+    -- Si se proporciona fecha_fin, se expande el rango de fechas
+    IF fecha_fin IS NOT NULL THEN
+        DELETE FROM resultadoslaboral WHERE fecha_inicio::DATE > fecha_fin::DATE;
+    END IF;
+    
+    -- Contamos las ocurrencias de cada opcion en la columna ´seguro_medico'
+    SELECT COUNT(*) INTO seguro_sis FROM resultadoslaboral WHERE seguro_medico = 'SIS';
+    SELECT COUNT(*) INTO seguro_essalud FROM resultadoslaboral WHERE seguro_medico = 'ESSALUD';
+    SELECT COUNT(*) INTO seguro_particular FROM resultadoslaboral WHERE seguro_medico = 'PARTICULAR';
+    SELECT COUNT(*) INTO seguro_ninguno FROM resultadoslaboral WHERE seguro_medico = 'NINGUNO';
+    -- Contamos las ocurrencias de cada opcion en la columna 'situacion_laboral_actual'
+    SELECT COUNT(*) INTO inser_labo_interna FROM resultadoslaboral WHERE situacion_laboral_actual = 'INSERCION LABORAL INTERNA';
+    SELECT COUNT(*) INTO inser_labo_externa FROM resultadoslaboral WHERE situacion_laboral_actual = 'INSERCION LABORAL EXTERNA';
+    SELECT COUNT(*) INTO no_trabaja FROM resultadoslaboral WHERE situacion_laboral_actual = 'NO TRABAJA';    
+    -- Mostramos los resultados
+    RAISE NOTICE 'Total de ocurrencias de "SIS" en la columna seguro_medico: %', seguro_sis;
+    RAISE NOTICE 'Total de ocurrencias de "ESSALUD" en la columna seguro_medico: %', seguro_essalud;
+    RAISE NOTICE 'Total de ocurrencias de "PARTICULAR" en la columna seguro_medico: %', seguro_particular;
+    RAISE NOTICE 'Total de ocurrencias de "NINGUNO" en la columna seguro_medico: %', seguro_ninguno;
+    RAISE NOTICE 'Total de ocurrencias de "INSERCION LABORAL INTERNA" en la columna situacion_laboral_actual: %', inser_labo_interna;
+    RAISE NOTICE 'Total de ocurrencias de "INSERCION LABORAL EXTERNA" en la columna situacion_laboral_actual: %', inser_labo_externa;
+    RAISE NOTICE 'Total de ocurrencias de "NO TRABAJA" en la columna situacion_laboral_actual: %', no_trabaja;
+END;
+$$;
+
+CALL procedimiento_insercion_laboral_cjdr('2024-05-01','2024-05-03');
+--DROP TABLE IF EXISTS resultadoCuatro;
+----------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE PROCEDURE procedimiento_infracciones_cometidas_cjdr(fecha_inicio TIMESTAMP, fecha_fin TIMESTAMP DEFAULT NULL)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+	-- variables para campo de Delito Especifico
+    autoaborto INT;
+	exposicion_peligro INT;
+	feminicidio INT;
+	homicidio_c INT;
+	homicidio_s INT;
+	lesiones_g INT;
+	lesiones_l INT;
+	parricidio INT;
+	sicariato INT;
+	otros INT;
+	-- Variables para situacion juridica actual
+	juridica_sentenciado INT;
+	juridica_procesado INT;
+	-- Variables para situación jurídica de ingreso
+	ingreso_sentenciado INT;
+	ingreso_procesado INT;
+BEGIN
+    -- Creamos una tabla temporal para almacenar filtros
+    IF EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'resultadoinfra') THEN
+        DROP TABLE resultadoinfra;
+    END IF;
+    
+    CREATE TEMP TABLE resultadoinfra AS
+    SELECT delito_especifico, situacion_juridica_actual , situacion_juridica_ingreso
+    FROM matriz 
+    WHERE fecha::DATE BETWEEN fecha_inicio::DATE AND COALESCE(fecha_fin::DATE, fecha_inicio::DATE) 
+    AND centro_juvenil LIKE 'CJ%';
+    
+    -- Si se proporciona fecha_fin, se expande el rango de fechas
+    IF fecha_fin IS NOT NULL THEN
+        DELETE FROM resultadoinfra WHERE fecha_inicio::DATE > fecha_fin::DATE;
+    END IF;
+    
+    
+	--Contamos las ocurrencias de cada opcion en la columna ´delito_especifico'
+	SELECT COUNT(*) INTO autoaborto FROM resultadoinfra WHERE delito_especifico = 'AUTOABORTO';
+	SELECT COUNT(*) INTO exposicion_peligro FROM resultadoinfra WHERE delito_especifico = 'EXPOSICION A PELIGRO O ABANDONO FAMILIAR';
+	SELECT COUNT(*) INTO feminicidio FROM resultadoinfra WHERE delito_especifico = 'FEMINICIDIO';
+	SELECT COUNT(*) INTO homicidio_c FROM resultadoinfra WHERE delito_especifico = 'HOMICIDIO CALIFICADO';
+	SELECT COUNT(*) INTO homicidio_s FROM resultadoinfra WHERE delito_especifico = 'HOMICIDIO SIMPLE';
+	SELECT COUNT(*) INTO lesiones_g FROM resultadoinfra WHERE delito_especifico = 'LESIONES GRAVES';
+	SELECT COUNT(*) INTO lesiones_l FROM resultadoinfra WHERE delito_especifico = 'LESIONES LEVES';
+	SELECT COUNT(*) INTO parricidio FROM resultadoinfra WHERE delito_especifico = 'PARRICIDIO';
+	SELECT COUNT(*) INTO sicariato FROM resultadoinfra WHERE delito_especifico = 'SICARIATO';
+	SELECT COUNT(*) INTO otros FROM resultadoinfra WHERE delito_especifico = 'OTROS';
+	-- Contamos las ocurrencias de cada opcion en la columna 'situacion_juridica_actual'
+	SELECT COUNT(*) INTO juridica_sentenciado FROM resultadoinfra WHERE situacion_juridica_actual = 'SENTENCIADO';
+	SELECT COUNT(*) INTO juridica_procesado FROM resultadoinfra WHERE situacion_juridica_actual = 'PROCESADO';
+	-- Contamos las ocurrencias de cada opcion en la columna 'situacion_juridica_ingreso'
+	SELECT COUNT(*) INTO ingreso_sentenciado FROM resultadoinfra WHERE situacion_juridica_ingreso = 'SENTENCIADO';
+	SELECT COUNT(*) INTO ingreso_procesado FROM resultadoinfra WHERE situacion_juridica_ingreso = 'PROCESADO';    
+    -- Mostramos los resultados
+	RAISE NOTICE 'Total de ocurrencias de "AUTOABORTO" en la columna delito_especifico: %', autoaborto;
+	RAISE NOTICE 'Total de ocurrencias de "EXPOSICION A PELIGRO O ABANDONO FAMILIAR" en la columna delito_especifico: %', exposicion_peligro;
+	RAISE NOTICE 'Total de ocurrencias de "FEMINICIDIO" en la columna delito_especifico: %', feminicidio;
+	RAISE NOTICE 'Total de ocurrencias de "HOMICIDIO CALIFICADO" en la columna delito_especifico: %', homicidio_c;
+	RAISE NOTICE 'Total de ocurrencias de "HOMICIDIO SIMPLE" en la columna delito_especifico: %', homicidio_s;
+	RAISE NOTICE 'Total de ocurrencias de "LESIONES GRAVES" en la columna delito_especifico: %', lesiones_g;
+    RAISE NOTICE 'Total de ocurrencias de "LESIONES LEVES" en la columna delito_especifico: %', lesiones_l;
+	RAISE NOTICE 'Total de ocurrencias de "PARRICIDIO" en la columna delito_especifico: %', parricidio;
+	RAISE NOTICE 'Total de ocurrencias de "SICARIATO" en la columna delito_especifico: %', sicariato;
+	RAISE NOTICE 'Total de ocurrencias de "OTROS" en la columna delito_especifico: %', otros;
+	RAISE NOTICE 'Total de ocurrencias de "SENTENCIADO" en la columna situacion_juridica_actual: %', juridica_sentenciado;
+	RAISE NOTICE 'Total de ocurrencias de "PROCESADO" en la columna situacion_juridica_actual: %', juridica_procesado;
+	RAISE NOTICE 'Total de ocurrencias de "SENTENCIADO" en la columna situacion_juridica_ingreso: %', ingreso_sentenciado;
+    RAISE NOTICE 'Total de ocurrencias de "PROCESADO" en la columna situacion_juridica_ingreso: %', ingreso_procesado;
+END;
+$$;
+
+CALL procedimiento_infracciones_cometidas_cjdr('2024-05-1','2024-05-2');
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE PROCEDURE procedimiento_poblacion_cjdr(fecha_inicio TIMESTAMP, fecha_fin TIMESTAMP DEFAULT NULL)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    -- Declaración de variables...
+    total_registros INT;
+	-- Variables para situación jurídica de ingreso
+	ingreso_sentenciado INT;
+	ingreso_procesado INT;
+BEGIN
+    -- Creamos una tabla temporal para almacenar filtros
+    IF EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'resultadopobla') THEN
+        DROP TABLE resultadopobla;
+    END IF;
+    
+    CREATE TEMP TABLE resultadopobla AS
+    SELECT situacion_juridica_ingreso
+    FROM matriz 
+    WHERE fecha::DATE BETWEEN fecha_inicio::DATE AND COALESCE(fecha_fin::DATE, fecha_inicio::DATE) 
+    AND centro_juvenil LIKE 'CJ%'; -- Filtramos por los centros juveniles que comiencen con "CJ**"
+    
+    -- Si se proporciona fecha_fin, se expande el rango de fechas
+    IF fecha_fin IS NOT NULL THEN
+        DELETE FROM resultadopobla WHERE fecha_inicio::DATE > fecha_fin::DATE;
+    END IF;
+    
+    -- Contamos el número total de registros en la tabla temporal
+    SELECT COUNT(*) INTO total_registros FROM resultadopobla;
+	-- Contamos las ocurrencias de cada opcion en la columna 'situacion_juridica_ingreso'
+	SELECT COUNT(*) INTO ingreso_sentenciado FROM resultadopobla WHERE situacion_juridica_ingreso = 'SENTENCIADO';
+	SELECT COUNT(*) INTO ingreso_procesado FROM resultadopobla WHERE situacion_juridica_ingreso = 'PROCESADO';    
+    
+    -- Mostramos el resultado total de registros
+    RAISE NOTICE 'Total de registros que cumplen con la condición: %', total_registros;
+	RAISE NOTICE 'Total de ocurrencias de "SENTENCIADO" en la columna situacion_juridica_ingreso: %', ingreso_sentenciado;
+    RAISE NOTICE 'Total de ocurrencias de "PROCESADO" en la columna situacion_juridica_ingreso: %', ingreso_procesado;
+END;
+$$;
+
+CALL procedimiento_poblacion_cjdr('2024-05-01','2024-05-03');
+select * from matriz;
+
+--------------------------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE PROCEDURE procedimiento_tratamiento_diferenciado_soa(fecha_inicio TIMESTAMP, fecha_fin TIMESTAMP DEFAULT NULL)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+	-- variables para campo de Participa Programa
+    participa_programa_uno INT;
+	participa_programa_dos INT;
+	participa_programa_tres INT;
+	participa_programa_cuatro INT;
+	participa_programa_cinco INT;
+	participa_programa_no INT;
+	-- Variables para campos justicia terapeutica
+	justicia_no INT;
+	justicia_si INT;
+	-- Variables para agresores sexuales
+	agresor_si INT;
+	agresor_no INT;
+	-- Variables para salud mental
+	salud_si INT;
+	salud_no INT;
+	-- Variables ADN familiar
+	adn_si INT;
+	adn_no INT;
+	-- Variables intervencion terapeutica
+	intervencion_aplica INT;
+	intervencion_no_aplica INT;
+	-- Variables Firmes y adelante
+	firmes_aplica INT;
+	firmes_no_aplica INT;
+
+BEGIN
+    -- Creamos una tabla temporal para almacenar filtros
+    IF EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'resultadossoa') THEN
+        DROP TABLE resultadossoa;
+    END IF;
+	
+    CREATE TEMP TABLE resultadossoa AS
+    SELECT participa_programa, justicia_terapeutica, agresores_sexuales, salud_mental, adn_familiar, intervencion_terapeutica, firmes_adelante, centro_juvenil
+    FROM matriz 
+    WHERE fecha::DATE BETWEEN fecha_inicio::DATE AND COALESCE(fecha_fin::DATE, fecha_inicio::DATE) 
+    AND centro_juvenil LIKE 'SOA%';
+    
+    -- Si se proporciona fecha_fin, se expande el rango de fechas
+    IF fecha_fin IS NOT NULL THEN
+        DELETE FROM resultadossoa WHERE fecha_inicio::DATE > fecha_fin::DATE;
+    END IF;
+    
+	--Contamos las ocurrencias de cada opcion en la columna ´participa_programa'
+	SELECT COUNT(*) INTO participa_programa_uno FROM resultadossoa WHERE participa_programa = 'SI EN 1';
+	SELECT COUNT(*) INTO participa_programa_dos FROM resultadossoa WHERE participa_programa = 'SI EN 2';
+	SELECT COUNT(*) INTO participa_programa_tres FROM resultadossoa WHERE participa_programa = 'SI EN 3';
+	SELECT COUNT(*) INTO participa_programa_cuatro FROM resultadossoa WHERE participa_programa = 'SI EN 4';
+	SELECT COUNT(*) INTO participa_programa_cinco FROM resultadossoa WHERE participa_programa = 'SI EN 5';
+	SELECT COUNT(*) INTO participa_programa_no FROM resultadossoa WHERE participa_programa = 'NO';
+	-- Contamos las ocurrencias de cada opcion en la columna 'justicia_terapeutica'
+	SELECT COUNT(*) INTO justicia_no FROM resultadossoa WHERE justicia_terapeutica = 'NO';
+	SELECT COUNT(*) INTO justicia_si FROM resultadossoa WHERE justicia_terapeutica = 'SI';
+	-- Contamos las ocurrencias de cada opcion en la columna 'agresores_Sexuales'
+	SELECT COUNT(*) INTO agresor_no FROM resultadossoa WHERE agresores_sexuales = 'NO'; 
+	SELECT COUNT(*) INTO agresor_si FROM resultadossoa WHERE agresores_sexuales = 'SI'; 
+	-- Contamos las ocurrencias en cada opcion en la columna 'salud_mental'
+	SELECT COUNT(*) INTO salud_si FROM resultadossoa WHERE salud_mental = 'SI';
+    SELECT COUNT(*) INTO salud_no FROM resultadossoa WHERE salud_mental = 'NO';
+	-- Contamos las ocurrencias en cada opcion en la columna 'adn_familiar'
+	SELECT COUNT(*) INTO adn_si FROM resultadossoa WHERE adn_familiar = 'SI';
+    SELECT COUNT(*) INTO adn_no FROM resultadossoa WHERE adn_familiar = 'NO';
+	-- Contamos las ocurrencias en cada opcion en la columna 'intervencion tarapeutica'
+	SELECT COUNT(*) INTO intervencion_aplica FROM resultadossoa WHERE intervencion_terapeutica = 'APLICA';
+    SELECT COUNT(*) INTO intervencion_no_aplica FROM resultadossoa WHERE intervencion_terapeutica = 'NO APLICA';
+	-- Contamos las ocurrencias en cada opcion en la columna 'firmes_adelante'
+	SELECT COUNT(*) INTO firmes_aplica FROM resultadossoa WHERE firmes_adelante = 'APLICA';
+    SELECT COUNT(*) INTO firmes_no_aplica FROM resultadossoa WHERE firmes_adelante = 'NO APLICA';
+    
+    -- Mostramos los resultados
+	RAISE NOTICE 'Total de ocurrencias de "SI EN 1" en la columna participa_programa: %', participa_programa_uno;
+	RAISE NOTICE 'Total de ocurrencias de "SI EN 2" en la columna participa_programa: %', participa_programa_dos;
+	RAISE NOTICE 'Total de ocurrencias de "SI EN 3" en la columna participa_programa: %', participa_programa_tres;
+	RAISE NOTICE 'Total de ocurrencias de "SI EN 4" en la columna participa_programa: %', participa_programa_cuatro;
+	RAISE NOTICE 'Total de ocurrencias de "SI EN 5" en la columna participa_programa: %', participa_programa_cinco;
+	RAISE NOTICE 'Total de ocurrencias de "NO" en la columna participa_programa: %', participa_programa_no;
+    RAISE NOTICE 'Total de ocurrencias de "SI" en la columna justicia_terapeutica: %', justicia_si;
+    RAISE NOTICE 'Total de ocurrencias de "NO" en la columna justicia_terapeutica: %', justicia_no;
+	RAISE NOTICE 'Total de ocurrencias de "SI" en la columna agresores_sexuales: %', agresor_si;
+    RAISE NOTICE 'Total de ocurrencias de "NO" en la columna agresores_sexuales: %', agresor_no;
+	RAISE NOTICE 'Total de ocurrencias de "SI" en la columna salud_mental: %', salud_si;
+    RAISE NOTICE 'Total de ocurrencias de "NO" en la columna salud_mental: %', salud_no;
+	RAISE NOTICE 'Total de ocurrencias de "SI" en la columna adn_familiar: %', adn_si;
+    RAISE NOTICE 'Total de ocurrencias de "NO" en la columna adn_familiar: %', adn_no;
+	RAISE NOTICE 'Total de ocurrencias de "APLICA" en la columna intervencion_terapeutica: %', intervencion_aplica;
+    RAISE NOTICE 'Total de ocurrencias de "NO APLICA" en la columna intervencion_terapeutica: %', intervencion_no_aplica;
+	RAISE NOTICE 'Total de ocurrencias de "APLICA" en la columna firmes_adelante: %', firmes_aplica;
+    RAISE NOTICE 'Total de ocurrencias de "NO APLICA" en la columna firmes_adelante: %', firmes_no_aplica;
+END;
+$$;
+
+CALL procedimiento_tratamiento_diferenciado_soa('2024-05-3');
+select * from matriz;
+-----------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE PROCEDURE procedimiento_insercion_educativa_soa(fecha_inicio TIMESTAMP, fecha_fin TIMESTAMP DEFAULT NULL)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+	-- variables para campo de Situacion Educativa Actual
+    sea_estudia INT;
+	sea_termino_basico INT;
+	sea_termino_no_doc INT;
+	-- Variables para campos Rol Reinsercion educativa al mes
+	reinsercion_educativa INT;
+	insercion_productiva INT;
+	continuidad_edu INT;
+	apoyo_regularizar INT;
+	-- Variables para Tipo Centro educativo
+	cebr INT;
+	ceba INT;
+	cepre INT;
+	academia INT;
+	cetpro INT;
+	instituto INT;
+	universidad INT;
+	ninguno INT;
+	
+BEGIN
+    -- Creamos una tabla temporal para almacenar filtros
+    IF EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'resultadodossoa') THEN
+        DROP TABLE resultadodossoa;
+    END IF;
+
+    CREATE TEMP TABLE resultadodossoa AS
+    SELECT situacion_edu_actual, rol_reinser_edu_mes, tipo_centro_educativo
+    FROM matriz 
+    WHERE fecha::DATE BETWEEN fecha_inicio::DATE AND COALESCE(fecha_fin::DATE, fecha_inicio::DATE) 
+    AND centro_juvenil LIKE 'SOA%';
+    
+    -- Si se proporciona fecha_fin, se expande el rango de fechas
+    IF fecha_fin IS NOT NULL THEN
+        DELETE FROM resultadodossoa WHERE fecha_inicio::DATE > fecha_fin::DATE;
+    END IF;
+    
+	--Contamos las ocurrencias de cada opcion en la columna ´situacion_edu_actual'
+	SELECT COUNT(*) INTO sea_estudia FROM resultadodossoa WHERE situacion_edu_actual = 'ESTUDIA';
+	SELECT COUNT(*) INTO sea_termino_basico FROM resultadodossoa WHERE situacion_edu_actual = 'TERMINO EDUCACION BASICA';
+	SELECT COUNT(*) INTO sea_termino_no_doc FROM resultadodossoa WHERE situacion_edu_actual = 'TERMINO Y NO REGULARIZO SUS DOCUMENTOS';
+	-- Contamos las ocurrencias de cada opcion en la columna 'rol_reinser_edu_mes'
+	SELECT COUNT(*) INTO reinsercion_educativa FROM resultadodossoa WHERE rol_reinser_edu_mes = 'GESTION PARA LA REINSERCION EDUCATIVA BASICA';
+	SELECT COUNT(*) INTO insercion_productiva FROM resultadodossoa WHERE rol_reinser_edu_mes = 'GESTION PARA LA INSERCION EDUCATIVA PRODUCTIVA SUPERIOR';
+	SELECT COUNT(*) INTO continuidad_edu FROM resultadodossoa WHERE rol_reinser_edu_mes = 'SEGUIMIENTO A LA CONTINUIDAD EDUCATIVA';
+	SELECT COUNT(*) INTO apoyo_regularizar FROM resultadodossoa WHERE rol_reinser_edu_mes = 'APOYO A LA REGULARIZACION DOCUMENTARIA';
+	-- Contamos las ocurrencias de cada opcion en la columna 'tipo_centro_educativo'
+	SELECT COUNT(*) INTO cebr FROM resultadodossoa WHERE tipo_centro_educativo = 'CEBR'; 
+	SELECT COUNT(*) INTO ceba FROM resultadodossoa WHERE tipo_centro_educativo = 'SEBA'; 
+	SELECT COUNT(*) INTO cepre FROM resultadodossoa WHERE tipo_centro_educativo = 'CEPRE'; 
+	SELECT COUNT(*) INTO academia FROM resultadodossoa WHERE tipo_centro_educativo = 'ACADEMIA'; 
+	SELECT COUNT(*) INTO cetpro FROM resultadodossoa WHERE tipo_centro_educativo = 'CETPRO'; 
+	SELECT COUNT(*) INTO instituto FROM resultadodossoa WHERE tipo_centro_educativo = 'INSTITUTO SUPERIOR'; 
+	SELECT COUNT(*) INTO universidad FROM resultadodossoa WHERE tipo_centro_educativo = 'UNIVERSIDAD'; 
+	SELECT COUNT(*) INTO ninguno FROM resultadodossoa WHERE tipo_centro_educativo = 'NINGUNO'; 
+    
+    -- Mostramos los resultados
+	RAISE NOTICE 'Total de ocurrencias de "ESTUDIA" en la columna situacion_edu_actual: %', sea_estudia;
+	RAISE NOTICE 'Total de ocurrencias de "TERMINO EDUCACION BASICA" en la columna situacion_edu_actual: %', sea_termino_basico;
+	RAISE NOTICE 'Total de ocurrencias de "TERMINO Y NO REGULARIZO DOCUMENTOS" en la columna situacion_edu_actual: %', sea_termino_no_doc;
+	RAISE NOTICE 'Total de ocurrencias de "GESTION PARA LA REINSERCION EDUCATIVA BASICA" en la columna rol_reinser_edu_mes: %', reinsercion_educativa;
+	RAISE NOTICE 'Total de ocurrencias de "GESTION PARA LA INSERCION EDUCATIVA PRODUCTIVA SUPERIOR" en la columna rol_reinser_edu_mes: %', insercion_productiva;
+	RAISE NOTICE 'Total de ocurrencias de "SEGUIMIENTO A LA CONTINUIDAD EDUCATIVA" en la columna rol_reinser_edu_mes: %', continuidad_edu;
+    RAISE NOTICE 'Total de ocurrencias de "APOYO A LA REGULARIZACION DOCUMENTARIA" en la columna rol_reinser_edu_mes: %', apoyo_regularizar;
+	RAISE NOTICE 'Total de ocurrencias de "CEBR" en la columna tipo_centro_educativo: %', cebr;
+	RAISE NOTICE 'Total de ocurrencias de "CEBA" en la columna tipo_centro_educativo: %', ceba;
+	RAISE NOTICE 'Total de ocurrencias de "CEPRE" en la columna tipo_centro_educativo: %', cepre;
+	RAISE NOTICE 'Total de ocurrencias de "ACADEMIA" en la columna tipo_centro_educativo: %', academia;
+	RAISE NOTICE 'Total de ocurrencias de "CETPRO" en la columna tipo_centro_educativo: %', cetpro;
+	RAISE NOTICE 'Total de ocurrencias de "INSTITUTO" en la columna tipo_centro_educativo: %', instituto;
+	RAISE NOTICE 'Total de ocurrencias de "UNIVERSIDAD" en la columna tipo_centro_educativo: %', universidad;
+	RAISE NOTICE 'Total de ocurrencias de "NINGUNO" en la columna tipo_centro_educativo: %', ninguno;
+END;
+$$;
+--DROP TABLE IF EXISTS resultadoEduInser;
+commit;
+
+CALL procedimiento_insercion_educativa_soa('2024-05-1','2024-05-3');
+CALL procedimiento_insercion_educativa_soa('2024-05-1');
+select * from matriz;
+--DROP TABLE IF EXISTS resultadoEduInser;
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE PROCEDURE procedimiento_insercion_laboral_soa(fecha_inicio TIMESTAMP, fecha_fin TIMESTAMP DEFAULT NULL)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    -- variables para campo de Seguro medico
+    seguro_sis INT;
+    seguro_essalud INT;
+    seguro_particular INT;
+    seguro_ninguno INT;
+    -- Variables para situacion laboral actual
+    inser_labo_interna INT;
+    inser_labo_externa INT;
+    no_trabaja INT;
+    
+BEGIN
+    -- Creamos una tabla temporal para almacenar filtros
+    IF EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'resultadoslaboralsoa') THEN
+        DROP TABLE resultadoslaboralsoa;
+    END IF;
+    
+    CREATE TEMP TABLE resultadoslaboralsoa AS
+    SELECT seguro_medico, situacion_laboral_actual
+    FROM matriz 
+    WHERE fecha::DATE BETWEEN fecha_inicio::DATE AND COALESCE(fecha_fin::DATE, fecha_inicio::DATE) 
+    AND centro_juvenil LIKE 'SOA%';
+    
+    -- Si se proporciona fecha_fin, se expande el rango de fechas
+    IF fecha_fin IS NOT NULL THEN
+        DELETE FROM resultadoslaboralsoa WHERE fecha_inicio::DATE > fecha_fin::DATE;
+    END IF;
+    
+    -- Contamos las ocurrencias de cada opcion en la columna ´seguro_medico'
+    SELECT COUNT(*) INTO seguro_sis FROM resultadoslaboralsoa WHERE seguro_medico = 'SIS';
+    SELECT COUNT(*) INTO seguro_essalud FROM resultadoslaboralsoa WHERE seguro_medico = 'ESSALUD';
+    SELECT COUNT(*) INTO seguro_particular FROM resultadoslaboralsoa WHERE seguro_medico = 'PARTICULAR';
+    SELECT COUNT(*) INTO seguro_ninguno FROM resultadoslaboralsoa WHERE seguro_medico = 'NINGUNO';
+    -- Contamos las ocurrencias de cada opcion en la columna 'situacion_laboral_actual'
+    SELECT COUNT(*) INTO inser_labo_interna FROM resultadoslaboralsoa WHERE situacion_laboral_actual = 'INSERCION LABORAL INTERNA';
+    SELECT COUNT(*) INTO inser_labo_externa FROM resultadoslaboralsoa WHERE situacion_laboral_actual = 'INSERCION LABORAL EXTERNA';
+    SELECT COUNT(*) INTO no_trabaja FROM resultadoslaboralsoa WHERE situacion_laboral_actual = 'NO TRABAJA';    
+    -- Mostramos los resultados
+    RAISE NOTICE 'Total de ocurrencias de "SIS" en la columna seguro_medico: %', seguro_sis;
+    RAISE NOTICE 'Total de ocurrencias de "ESSALUD" en la columna seguro_medico: %', seguro_essalud;
+    RAISE NOTICE 'Total de ocurrencias de "PARTICULAR" en la columna seguro_medico: %', seguro_particular;
+    RAISE NOTICE 'Total de ocurrencias de "NINGUNO" en la columna seguro_medico: %', seguro_ninguno;
+    RAISE NOTICE 'Total de ocurrencias de "INSERCION LABORAL INTERNA" en la columna situacion_laboral_actual: %', inser_labo_interna;
+    RAISE NOTICE 'Total de ocurrencias de "INSERCION LABORAL EXTERNA" en la columna situacion_laboral_actual: %', inser_labo_externa;
+    RAISE NOTICE 'Total de ocurrencias de "NO TRABAJA" en la columna situacion_laboral_actual: %', no_trabaja;
+END;
+$$;
+
+CALL procedimiento_insercion_laboral_soa('2024-05-01','2024-05-03');
+--DROP TABLE IF EXISTS resultadoCuatro;
+
+------------------------------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE PROCEDURE procedimiento_infracciones_cometidas_soa(fecha_inicio TIMESTAMP, fecha_fin TIMESTAMP DEFAULT NULL)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+	-- variables para campo de Delito Especifico
+    autoaborto INT;
+	exposicion_peligro INT;
+	feminicidio INT;
+	homicidio_c INT;
+	homicidio_s INT;
+	lesiones_g INT;
+	lesiones_l INT;
+	parricidio INT;
+	sicariato INT;
+	otros INT;
+	-- Variables para situacion juridica actual
+	juridica_sentenciado INT;
+	juridica_procesado INT;
+	-- Variables para situación jurídica de ingreso
+	ingreso_sentenciado INT;
+	ingreso_procesado INT;
+BEGIN
+    -- Creamos una tabla temporal para almacenar filtros
+    IF EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'resultadoinfrasoa') THEN
+        DROP TABLE resultadoinfrasoa;
+    END IF;
+    
+    CREATE TEMP TABLE resultadoinfrasoa AS
+    SELECT delito_especifico, situacion_juridica_actual , situacion_juridica_ingreso
+    FROM matriz 
+    WHERE fecha::DATE BETWEEN fecha_inicio::DATE AND COALESCE(fecha_fin::DATE, fecha_inicio::DATE) 
+    AND centro_juvenil LIKE 'SOA%';
+    
+    -- Si se proporciona fecha_fin, se expande el rango de fechas
+    IF fecha_fin IS NOT NULL THEN
+        DELETE FROM resultadoinfrasoa WHERE fecha_inicio::DATE > fecha_fin::DATE;
+    END IF;
+    
+    
+	--Contamos las ocurrencias de cada opcion en la columna ´delito_especifico'
+	SELECT COUNT(*) INTO autoaborto FROM resultadoinfrasoa WHERE delito_especifico = 'AUTOABORTO';
+	SELECT COUNT(*) INTO exposicion_peligro FROM resultadoinfrasoa WHERE delito_especifico = 'EXPOSICION A PELIGRO O ABANDONO FAMILIAR';
+	SELECT COUNT(*) INTO feminicidio FROM resultadoinfrasoa WHERE delito_especifico = 'FEMINICIDIO';
+	SELECT COUNT(*) INTO homicidio_c FROM resultadoinfrasoa WHERE delito_especifico = 'HOMICIDIO CALIFICADO';
+	SELECT COUNT(*) INTO homicidio_s FROM resultadoinfrasoa WHERE delito_especifico = 'HOMICIDIO SIMPLE';
+	SELECT COUNT(*) INTO lesiones_g FROM resultadoinfrasoa WHERE delito_especifico = 'LESIONES GRAVES';
+	SELECT COUNT(*) INTO lesiones_l FROM resultadoinfrasoa WHERE delito_especifico = 'LESIONES LEVES';
+	SELECT COUNT(*) INTO parricidio FROM resultadoinfrasoa WHERE delito_especifico = 'PARRICIDIO';
+	SELECT COUNT(*) INTO sicariato FROM resultadoinfrasoa WHERE delito_especifico = 'SICARIATO';
+	SELECT COUNT(*) INTO otros FROM resultadoinfrasoa WHERE delito_especifico = 'OTROS';
+	-- Contamos las ocurrencias de cada opcion en la columna 'situacion_juridica_actual'
+	SELECT COUNT(*) INTO juridica_sentenciado FROM resultadoinfrasoa WHERE situacion_juridica_actual = 'SENTENCIADO';
+	SELECT COUNT(*) INTO juridica_procesado FROM resultadoinfrasoa WHERE situacion_juridica_actual = 'PROCESADO';
+	-- Contamos las ocurrencias de cada opcion en la columna 'situacion_juridica_ingreso'
+	SELECT COUNT(*) INTO ingreso_sentenciado FROM resultadoinfrasoa WHERE situacion_juridica_ingreso = 'SENTENCIADO';
+	SELECT COUNT(*) INTO ingreso_procesado FROM resultadoinfrasoa WHERE situacion_juridica_ingreso = 'PROCESADO';    
+    -- Mostramos los resultados
+	RAISE NOTICE 'Total de ocurrencias de "AUTOABORTO" en la columna delito_especifico: %', autoaborto;
+	RAISE NOTICE 'Total de ocurrencias de "EXPOSICION A PELIGRO O ABANDONO FAMILIAR" en la columna delito_especifico: %', exposicion_peligro;
+	RAISE NOTICE 'Total de ocurrencias de "FEMINICIDIO" en la columna delito_especifico: %', feminicidio;
+	RAISE NOTICE 'Total de ocurrencias de "HOMICIDIO CALIFICADO" en la columna delito_especifico: %', homicidio_c;
+	RAISE NOTICE 'Total de ocurrencias de "HOMICIDIO SIMPLE" en la columna delito_especifico: %', homicidio_s;
+	RAISE NOTICE 'Total de ocurrencias de "LESIONES GRAVES" en la columna delito_especifico: %', lesiones_g;
+    RAISE NOTICE 'Total de ocurrencias de "LESIONES LEVES" en la columna delito_especifico: %', lesiones_l;
+	RAISE NOTICE 'Total de ocurrencias de "PARRICIDIO" en la columna delito_especifico: %', parricidio;
+	RAISE NOTICE 'Total de ocurrencias de "SICARIATO" en la columna delito_especifico: %', sicariato;
+	RAISE NOTICE 'Total de ocurrencias de "OTROS" en la columna delito_especifico: %', otros;
+	RAISE NOTICE 'Total de ocurrencias de "SENTENCIADO" en la columna situacion_juridica_actual: %', juridica_sentenciado;
+	RAISE NOTICE 'Total de ocurrencias de "PROCESADO" en la columna situacion_juridica_actual: %', juridica_procesado;
+	RAISE NOTICE 'Total de ocurrencias de "SENTENCIADO" en la columna situacion_juridica_ingreso: %', ingreso_sentenciado;
+    RAISE NOTICE 'Total de ocurrencias de "PROCESADO" en la columna situacion_juridica_ingreso: %', ingreso_procesado;
+END;
+$$;
+
+CALL procedimiento_infracciones_cometidas_soa('2024-05-1','2024-05-3');
+
+-----------------------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE PROCEDURE procedimiento_poblacion_soa(fecha_inicio TIMESTAMP, fecha_fin TIMESTAMP DEFAULT NULL)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    -- Declaración de variables...
+    total_registros INT;
+	-- Variables para situación jurídica de ingreso
+	ingreso_sentenciado INT;
+	ingreso_procesado INT;
+BEGIN
+    -- Creamos una tabla temporal para almacenar filtros
+    IF EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'resultadopoblasoa') THEN
+        DROP TABLE resultadopoblasoa;
+    END IF;
+    
+    CREATE TEMP TABLE resultadopoblasoa AS
+    SELECT situacion_juridica_ingreso
+    FROM matriz 
+    WHERE fecha::DATE BETWEEN fecha_inicio::DATE AND COALESCE(fecha_fin::DATE, fecha_inicio::DATE) 
+    AND centro_juvenil LIKE 'CJ%'; -- Filtramos por los centros juveniles que comiencen con "CJ**"
+    
+    -- Si se proporciona fecha_fin, se expande el rango de fechas
+    IF fecha_fin IS NOT NULL THEN
+        DELETE FROM resultadopoblasoa WHERE fecha_inicio::DATE > fecha_fin::DATE;
+    END IF;
+    
+    -- Contamos el número total de registros en la tabla temporal
+    SELECT COUNT(*) INTO total_registros FROM resultadopoblasoa;
+	-- Contamos las ocurrencias de cada opcion en la columna 'situacion_juridica_ingreso'
+	SELECT COUNT(*) INTO ingreso_sentenciado FROM resultadopoblasoa WHERE situacion_juridica_ingreso = 'SENTENCIADO';
+	SELECT COUNT(*) INTO ingreso_procesado FROM resultadopoblasoa WHERE situacion_juridica_ingreso = 'PROCESADO';    
+    
+    -- Mostramos el resultado total de registros
+    RAISE NOTICE 'Total de registros que cumplen con la condición: %', total_registros;
+	RAISE NOTICE 'Total de ocurrencias de "SENTENCIADO" en la columna situacion_juridica_ingreso: %', ingreso_sentenciado;
+    RAISE NOTICE 'Total de ocurrencias de "PROCESADO" en la columna situacion_juridica_ingreso: %', ingreso_procesado;
+END;
+$$;
+
+CALL procedimiento_poblacion_soa('2024-05-1');

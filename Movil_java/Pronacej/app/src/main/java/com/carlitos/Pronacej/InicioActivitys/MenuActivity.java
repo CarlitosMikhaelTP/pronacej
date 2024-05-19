@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.carlitos.Pronacej.GraphicsActivitys.GraficoUnoActivity;
 import com.carlitos.Pronacej.OptionsActivitys.OpcionCincoActivity;
@@ -23,12 +24,12 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        LinearLayout opcionUno = findViewById(R.id.Opcion1);
-        LinearLayout opcionDos = findViewById(R.id.Opcion2);
-        LinearLayout opcionTres = findViewById(R.id.Opcion3);
-        LinearLayout opcionCuatro = findViewById(R.id.Opcion4);
-        LinearLayout opcionCinco = findViewById(R.id.Opcion5);
-        LinearLayout opcionSeis = findViewById(R.id.Opcion6);
+        ConstraintLayout opcionUno = findViewById(R.id.Opcion1);
+        ConstraintLayout opcionDos = findViewById(R.id.Opcion2);
+        ConstraintLayout opcionTres = findViewById(R.id.Opcion3);
+        ConstraintLayout opcionCuatro = findViewById(R.id.Opcion4);
+        ConstraintLayout opcionCinco = findViewById(R.id.Opcion5);
+        ConstraintLayout opcionSeis = findViewById(R.id.Opcion6);
 
 
         // Eventos que abrirá las otras actividades

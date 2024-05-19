@@ -11,7 +11,6 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
-C:\Users\HP\Downloads\Pronacej (1).zip\Pronacej\app\src\main\res\drawable
 
 public class ResultadosUnoActivity extends AppCompatActivity {
 
