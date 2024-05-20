@@ -23,55 +23,37 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".OptionsActivitys.OpcionUnoActivity"
+            android:name=".OptionsCjdr.TratamientoDiferenciadoCjdrActivity"
             android:exported="false" />
         <activity
-            android:name=".OptionsActivitys.OpcionDosActivity"
+            android:name=".OptionsCjdr.InsercionEducativaCjdrActivity"
             android:exported="false" />
         <activity
-            android:name=".OptionsActivitys.OpcionTresActivity"
+            android:name=".OptionsCjdr.InsercionLaboralActivity"
             android:exported="false" />
         <activity
-            android:name=".OptionsActivitys.OpcionCuatroActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GraphicsActivitys.GraficoUnoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GraphicsActivitys.GraficoDosActivity"
-            android:exported="false" />
-        <activity
-            android:name=".OptionsActivitys.OpcionCincoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".OptionsActivitys.OpcionSeisActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ResultadosUnoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SabanaActivity"
-            android:exported="false" />
-        <activity
-            android:name=".InicioActivitys.MenuActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ActMenu"
-            android:exported="false" />
-
-        <activity android:name=".ResultadoDosActivity"
-            android:exported="false" />
-
-
-        <activity
-            android:name=".InicioActivitys.OptionTypeActivity"
+            android:name=".OptionsCjdr.PoblacionCjdrActivity"
             android:exported="false" />
 
         <activity
-            android:name=".InicioActivitys.MainActivity"
+            android:name=".ActivitysPadres.MenuCjdrActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActivitysPadres.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActivitysPadres.CategoriaMenu"
+            android:exported="false" />
+
+        <activity android:name=".ActivitysPadres.MenuSoaActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ActivitysPadres.OpcionesCentrosJuvenilesActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ActivitysPadres.PresentacionActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

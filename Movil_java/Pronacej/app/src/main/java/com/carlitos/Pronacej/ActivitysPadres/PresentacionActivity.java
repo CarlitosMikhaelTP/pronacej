@@ -1,18 +1,17 @@
-package com.carlitos.Pronacej.InicioActivitys;
+package com.carlitos.Pronacej.ActivitysPadres;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.carlitos.Pronacej.LoginActivity;
 import com.carlitos.Pronacej.R;
 
-public class MainActivity extends AppCompatActivity {
+public class PresentacionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_presentacion);
 
         // Se declara el btn a usar
         TextView btncomenzar = findViewById(R.id.btnComenzar);
@@ -20,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         // Se establecen las funciones del botón
         btncomenzar.setOnClickListener(view -> {
             // Intent para pasar a otro activity
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            Intent intent = new Intent(PresentacionActivity.this, LoginActivity.class);
             // Llamado a la acción de intent
             startActivity(intent);
         });

@@ -74,4 +74,6 @@ public class DatePickerFragment extends DialogFragment
         String selectedDate = String.format("%02d", day) + "/" + String.format("%02d", (month+1))  + "/" + String.format("%04d", year);
         this.editText.setText(selectedDate);
     }
+
+
 }

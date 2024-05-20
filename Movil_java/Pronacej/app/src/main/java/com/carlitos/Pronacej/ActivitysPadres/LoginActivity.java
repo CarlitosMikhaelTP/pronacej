@@ -1,13 +1,12 @@
-package com.carlitos.Pronacej;
+package com.carlitos.Pronacej.ActivitysPadres;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.carlitos.Pronacej.InicioActivitys.MainActivity;
+import com.carlitos.Pronacej.R;
 
 public class LoginActivity extends AppCompatActivity {
     @Override
@@ -20,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
         // Se establecen las funciones del botón
         btncomenzar.setOnClickListener(view -> {
             // Intent para pasar a otro activity
-            Intent intent = new Intent(LoginActivity.this, ActMenu.class);
+            Intent intent = new Intent(LoginActivity.this, CategoriaMenu.class);
             // Llamado a la acción de intent
             startActivity(intent);
         });

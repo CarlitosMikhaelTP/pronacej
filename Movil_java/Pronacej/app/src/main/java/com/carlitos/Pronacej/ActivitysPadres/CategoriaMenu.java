@@ -1,22 +1,19 @@
-package com.carlitos.Pronacej;
+package com.carlitos.Pronacej.ActivitysPadres;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.carlitos.Pronacej.InicioActivitys.OptionTypeActivity;
+import com.carlitos.Pronacej.R;
 
-public class ActMenu extends AppCompatActivity {
+public class CategoriaMenu extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_menu);
+        setContentView(R.layout.activity_categoria_menu);
 
         ConstraintLayout btncomenzar = findViewById(R.id.opcion_uno);
         ConstraintLayout btncomenzar2 = findViewById(R.id.opcion_dos);
@@ -24,14 +21,14 @@ public class ActMenu extends AppCompatActivity {
         // Se establecen las funciones del botón
         btncomenzar.setOnClickListener(view -> {
             // Intent para pasar a otro activity
-            Intent intent = new Intent(ActMenu.this, OptionTypeActivity.class);
+            Intent intent = new Intent(CategoriaMenu.this, OpcionesCentrosJuvenilesActivity.class);
             // Llamado a la acción de intent
             startActivity(intent);
         });
 
         btncomenzar2.setOnClickListener(view -> {
             // Intent para pasar a otro activity
-            Intent intent = new Intent(ActMenu.this, OptionTypeActivity.class);
+            Intent intent = new Intent(CategoriaMenu.this, OpcionesCentrosJuvenilesActivity.class);
             // Llamado a la acción de intent
             startActivity(intent);
         });

@@ -1,4 +1,4 @@
-package com.carlitos.Pronacej.OptionsActivitys;
+package com.carlitos.Pronacej.OptionsCjdr;
 
 import android.os.Bundle;
 
@@ -6,11 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.carlitos.Pronacej.R;
 
-public class OpcionCuatroActivity extends AppCompatActivity {
+public class InfraccionesCometidasActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.opcion_cuatro);
+        setContentView(R.layout.activity_infraccion_cjdr);
     }
 }

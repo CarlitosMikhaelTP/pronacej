@@ -1,42 +1,41 @@
-package com.carlitos.Pronacej.InicioActivitys;
+package com.carlitos.Pronacej.ActivitysPadres;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.carlitos.Pronacej.GraphicsActivitys.GraficoUnoActivity;
-import com.carlitos.Pronacej.OptionsActivitys.OpcionCincoActivity;
-import com.carlitos.Pronacej.OptionsActivitys.OpcionCuatroActivity;
-import com.carlitos.Pronacej.OptionsActivitys.OpcionDosActivity;
-import com.carlitos.Pronacej.OptionsActivitys.OpcionSeisActivity;
-import com.carlitos.Pronacej.OptionsActivitys.OpcionTresActivity;
-import com.carlitos.Pronacej.OptionsActivitys.OpcionUnoActivity;
+import com.carlitos.Pronacej.OptionsCjdr.InfraccionesCometidasActivity;
+import com.carlitos.Pronacej.OptionsCjdr.InsercionEducativaCjdrActivity;
+import com.carlitos.Pronacej.OptionsCjdr.InsercionLaboralActivity;
+import com.carlitos.Pronacej.OptionsCjdr.PoblacionCjdrActivity;
+import com.carlitos.Pronacej.OptionsCjdr.TratamientoDiferenciadoCjdrActivity;
 import com.carlitos.Pronacej.R;
 
-public class MenuActivity extends AppCompatActivity {
+;
+
+public class MenuSoaActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_menu_cjdr);
 
         ConstraintLayout opcionUno = findViewById(R.id.Opcion1);
         ConstraintLayout opcionDos = findViewById(R.id.Opcion2);
         ConstraintLayout opcionTres = findViewById(R.id.Opcion3);
         ConstraintLayout opcionCuatro = findViewById(R.id.Opcion4);
         ConstraintLayout opcionCinco = findViewById(R.id.Opcion5);
-        ConstraintLayout opcionSeis = findViewById(R.id.Opcion6);
+
 
 
         // Eventos que abrirá las otras actividades
         opcionUno.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, GraficoUnoActivity.class);
+                Intent intent = new Intent(MenuSoaActivity.this, PoblacionCjdrActivity.class);
                 startActivity(intent);
             }
         });
@@ -44,7 +43,7 @@ public class MenuActivity extends AppCompatActivity {
         opcionDos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, OpcionDosActivity.class);
+                Intent intent = new Intent(MenuSoaActivity.this, TratamientoDiferenciadoCjdrActivity.class);
                 startActivity(intent);
             }
         });
@@ -52,7 +51,7 @@ public class MenuActivity extends AppCompatActivity {
         opcionTres.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, OpcionTresActivity.class);
+                Intent intent = new Intent(MenuSoaActivity.this, InsercionEducativaCjdrActivity.class);
                 startActivity(intent);
             }
         });
@@ -60,7 +59,7 @@ public class MenuActivity extends AppCompatActivity {
         opcionCuatro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, OpcionCuatroActivity.class);
+                Intent intent = new Intent(MenuSoaActivity.this, InsercionLaboralActivity.class);
                 startActivity(intent);
             }
         });
@@ -68,15 +67,7 @@ public class MenuActivity extends AppCompatActivity {
         opcionCinco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, OpcionCincoActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        opcionSeis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, OpcionSeisActivity.class);
+                Intent intent = new Intent(MenuSoaActivity.this, InfraccionesCometidasActivity.class);
                 startActivity(intent);
             }
         });
