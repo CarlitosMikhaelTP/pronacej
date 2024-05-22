@@ -14,7 +14,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
-        Button btncomenzar = findViewById(R.id.login);
+        Button btncomenzar = findViewById(R.id.button);
 
         // Se establecen las funciones del botón
         btncomenzar.setOnClickListener(view -> {

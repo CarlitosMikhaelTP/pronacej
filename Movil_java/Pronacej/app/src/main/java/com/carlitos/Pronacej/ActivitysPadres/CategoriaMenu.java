@@ -15,18 +15,18 @@ public class CategoriaMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categoria_menu);
 
-        ConstraintLayout btncomenzar = findViewById(R.id.opcion_uno);
-        ConstraintLayout btncomenzar2 = findViewById(R.id.opcion_dos);
+        ConstraintLayout categoriaUno = findViewById(R.id.opcion_uno);
+        ConstraintLayout categoriaDos = findViewById(R.id.opcion_dos);
 
         // Se establecen las funciones del botón
-        btncomenzar.setOnClickListener(view -> {
+        categoriaUno.setOnClickListener(view -> {
             // Intent para pasar a otro activity
             Intent intent = new Intent(CategoriaMenu.this, OpcionesCentrosJuvenilesActivity.class);
             // Llamado a la acción de intent
             startActivity(intent);
         });
 
-        btncomenzar2.setOnClickListener(view -> {
+        categoriaDos.setOnClickListener(view -> {
             // Intent para pasar a otro activity
             Intent intent = new Intent(CategoriaMenu.this, OpcionesCentrosJuvenilesActivity.class);
             // Llamado a la acción de intent

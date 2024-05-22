@@ -7,11 +7,26 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.carlitos.Pronacej.OptionsCjdr.InfraccionesCometidasActivity;
-import com.carlitos.Pronacej.OptionsCjdr.InsercionEducativaCjdrActivity;
-import com.carlitos.Pronacej.OptionsCjdr.InsercionLaboralActivity;
-import com.carlitos.Pronacej.OptionsCjdr.PoblacionCjdrActivity;
-import com.carlitos.Pronacej.OptionsCjdr.TratamientoDiferenciadoCjdrActivity;
+import com.carlitos.Pronacej.FiltrosCjdr.FiltroEducativaCjdr;
+import com.carlitos.Pronacej.FiltrosCjdr.FiltroInfraccionCjdr;
+import com.carlitos.Pronacej.FiltrosCjdr.FiltroLaboralCjdr;
+import com.carlitos.Pronacej.FiltrosCjdr.FiltroPoblacionCjdr;
+import com.carlitos.Pronacej.FiltrosCjdr.FiltroTratamientoCjdr;
+import com.carlitos.Pronacej.FiltrosSoa.FiltroEducativaSoa;
+import com.carlitos.Pronacej.FiltrosSoa.FiltroInfraccionSoa;
+import com.carlitos.Pronacej.FiltrosSoa.FiltroLaboralSoa;
+import com.carlitos.Pronacej.FiltrosSoa.FiltroPoblacionSoa;
+import com.carlitos.Pronacej.FiltrosSoa.FiltroTratamientoSoa;
+import com.carlitos.Pronacej.OpcionesCjdr.PoblacionCjdrActivity;
+import com.carlitos.Pronacej.OpcionesCjdr.InfraccionesCometidasCjdrActivity;
+import com.carlitos.Pronacej.OpcionesCjdr.InsercionEducativaCjdrActivity;
+import com.carlitos.Pronacej.OpcionesCjdr.InsercionLaboralCjdrActivity;
+import com.carlitos.Pronacej.OpcionesCjdr.TratamientoDiferenciadoCjdrActivity;
+import com.carlitos.Pronacej.OpcionesSoa.InfraccionesCometidasSoaActivity;
+import com.carlitos.Pronacej.OpcionesSoa.InsercionEducativaSoaActivity;
+import com.carlitos.Pronacej.OpcionesSoa.InsercionLaboralSoaActivity;
+import com.carlitos.Pronacej.OpcionesSoa.PoblacionSoaActivity;
+import com.carlitos.Pronacej.OpcionesSoa.TratamientoDiferenciadoSoaActivity;
 import com.carlitos.Pronacej.R;
 
 ;
@@ -21,7 +36,7 @@ public class MenuSoaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_cjdr);
+        setContentView(R.layout.activity_menu_soa);
 
         ConstraintLayout opcionUno = findViewById(R.id.Opcion1);
         ConstraintLayout opcionDos = findViewById(R.id.Opcion2);
@@ -35,7 +50,7 @@ public class MenuSoaActivity extends AppCompatActivity {
         opcionUno.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuSoaActivity.this, PoblacionCjdrActivity.class);
+                Intent intent = new Intent(MenuSoaActivity.this, FiltroPoblacionSoa.class);
                 startActivity(intent);
             }
         });
@@ -43,7 +58,7 @@ public class MenuSoaActivity extends AppCompatActivity {
         opcionDos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuSoaActivity.this, TratamientoDiferenciadoCjdrActivity.class);
+                Intent intent = new Intent(MenuSoaActivity.this, FiltroTratamientoSoa.class);
                 startActivity(intent);
             }
         });
@@ -51,7 +66,7 @@ public class MenuSoaActivity extends AppCompatActivity {
         opcionTres.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuSoaActivity.this, InsercionEducativaCjdrActivity.class);
+                Intent intent = new Intent(MenuSoaActivity.this, FiltroEducativaSoa.class);
                 startActivity(intent);
             }
         });
@@ -59,7 +74,7 @@ public class MenuSoaActivity extends AppCompatActivity {
         opcionCuatro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuSoaActivity.this, InsercionLaboralActivity.class);
+                Intent intent = new Intent(MenuSoaActivity.this, FiltroLaboralSoa.class);
                 startActivity(intent);
             }
         });
@@ -67,11 +82,12 @@ public class MenuSoaActivity extends AppCompatActivity {
         opcionCinco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuSoaActivity.this, InfraccionesCometidasActivity.class);
+                Intent intent = new Intent(MenuSoaActivity.this, FiltroInfraccionSoa.class);
                 startActivity(intent);
             }
         });
 
     }
+
 
 }

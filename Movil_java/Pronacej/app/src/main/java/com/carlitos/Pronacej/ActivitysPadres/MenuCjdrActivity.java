@@ -5,11 +5,17 @@ import android.os.Bundle;
 import android.view.View;;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import com.carlitos.Pronacej.OptionsCjdr.PoblacionCjdrActivity;
-import com.carlitos.Pronacej.OptionsCjdr.InfraccionesCometidasActivity;
-import com.carlitos.Pronacej.OptionsCjdr.InsercionLaboralActivity;
-import com.carlitos.Pronacej.OptionsCjdr.TratamientoDiferenciadoCjdrActivity;
-import com.carlitos.Pronacej.OptionsCjdr.InsercionEducativaCjdrActivity;
+
+import com.carlitos.Pronacej.FiltrosCjdr.FiltroEducativaCjdr;
+import com.carlitos.Pronacej.FiltrosCjdr.FiltroInfraccionCjdr;
+import com.carlitos.Pronacej.FiltrosCjdr.FiltroLaboralCjdr;
+import com.carlitos.Pronacej.FiltrosCjdr.FiltroPoblacionCjdr;
+import com.carlitos.Pronacej.FiltrosCjdr.FiltroTratamientoCjdr;
+import com.carlitos.Pronacej.OpcionesCjdr.PoblacionCjdrActivity;
+import com.carlitos.Pronacej.OpcionesCjdr.InfraccionesCometidasCjdrActivity;
+import com.carlitos.Pronacej.OpcionesCjdr.InsercionLaboralCjdrActivity;
+import com.carlitos.Pronacej.OpcionesCjdr.TratamientoDiferenciadoCjdrActivity;
+import com.carlitos.Pronacej.OpcionesCjdr.InsercionEducativaCjdrActivity;
 import com.carlitos.Pronacej.R;
 
 public class MenuCjdrActivity extends AppCompatActivity {
@@ -31,7 +37,7 @@ public class MenuCjdrActivity extends AppCompatActivity {
         opcionUno.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuCjdrActivity.this, PoblacionCjdrActivity.class);
+                Intent intent = new Intent(MenuCjdrActivity.this, FiltroPoblacionCjdr.class);
                 startActivity(intent);
             }
         });
@@ -39,7 +45,7 @@ public class MenuCjdrActivity extends AppCompatActivity {
         opcionDos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuCjdrActivity.this, TratamientoDiferenciadoCjdrActivity.class);
+                Intent intent = new Intent(MenuCjdrActivity.this, FiltroTratamientoCjdr.class);
                 startActivity(intent);
             }
         });
@@ -47,7 +53,7 @@ public class MenuCjdrActivity extends AppCompatActivity {
         opcionTres.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuCjdrActivity.this, InsercionEducativaCjdrActivity.class);
+                Intent intent = new Intent(MenuCjdrActivity.this, FiltroEducativaCjdr.class);
                 startActivity(intent);
             }
         });
@@ -55,7 +61,7 @@ public class MenuCjdrActivity extends AppCompatActivity {
         opcionCuatro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuCjdrActivity.this, InsercionLaboralActivity.class);
+                Intent intent = new Intent(MenuCjdrActivity.this, FiltroLaboralCjdr.class);
                 startActivity(intent);
             }
         });
@@ -63,7 +69,7 @@ public class MenuCjdrActivity extends AppCompatActivity {
         opcionCinco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuCjdrActivity.this, InfraccionesCometidasActivity.class);
+                Intent intent = new Intent(MenuCjdrActivity.this, FiltroInfraccionCjdr.class);
                 startActivity(intent);
             }
         });

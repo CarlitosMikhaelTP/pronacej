@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondoptions"
     tools:context=".ActivitysPadres.MenuCjdrActivity">
 
     <ScrollView
@@ -63,12 +62,12 @@
                 android:orientation="horizontal">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
                     android:id="@+id/Opcion1"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="12dp"
                     android:layout_weight="0.5"
-                    android:background="@drawable/btn_background_6">
+                    android:background="@drawable/btn_background_oficial_6">
 
                     <ImageView
                         android:id="@+id/imageView01"
@@ -106,18 +105,17 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
                     android:id="@+id/Opcion2"
+                    android:layout_width="0dp"
                     android:layout_height="170dp"
                     android:layout_marginStart="12dp"
                     android:layout_weight="0.5"
-                    android:background="@drawable/btn_background_7">
+                    android:background="@drawable/btn_background_oficial_1">
 
                     <ImageView
                         android:id="@+id/imageView03"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:srcCompat="@drawable/light_2" />
@@ -126,7 +124,6 @@
                         android:id="@+id/imageView04"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-
                         android:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -160,18 +157,17 @@
                 android:orientation="horizontal">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
                     android:id="@+id/Opcion3"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="12dp"
                     android:layout_weight="0.5"
-                    android:background="@drawable/btn_background_8">
+                    android:background="@drawable/btn_background_oficial_5">
 
                     <ImageView
                         android:id="@+id/imageView05"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:srcCompat="@drawable/light_3" />
@@ -180,7 +176,6 @@
                         android:id="@+id/imageView06"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-
                         android:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -205,18 +200,17 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
                     android:id="@+id/Opcion4"
+                    android:layout_width="0dp"
                     android:layout_height="170dp"
                     android:layout_marginStart="12dp"
                     android:layout_weight="0.5"
-                    android:background="@drawable/btn_background_10">
+                    android:background="@drawable/btn_background_oficial_3">
 
                     <ImageView
                         android:id="@+id/imageView07"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:srcCompat="@drawable/light_4" />
@@ -225,7 +219,6 @@
                         android:id="@+id/imageView08"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-
                         android:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -259,18 +252,17 @@
                 android:orientation="horizontal">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
                     android:id="@+id/Opcion5"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="12dp"
                     android:layout_weight="0.5"
-                    android:background="@drawable/btn_background_11">
+                    android:background="@drawable/btn_background_oficial_2">
 
                     <ImageView
                         android:id="@+id/imageView09"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:srcCompat="@drawable/light_1" />
@@ -279,7 +271,6 @@
                         android:id="@+id/imageView10"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-
                         android:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -304,18 +295,18 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/Opcion6"
                     android:layout_width="0dp"
                     android:layout_height="170dp"
-                    android:id="@+id/Opcion6"
                     android:layout_marginStart="12dp"
                     android:layout_weight="0.5"
-                    android:background="@drawable/btn_background_4">
+                    android:background="@drawable/btn_background_oficial_4"
+                    android:visibility="visible">
 
                     <ImageView
                         android:id="@+id/imageView11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:srcCompat="@drawable/light_2" />
@@ -324,7 +315,6 @@
                         android:id="@+id/imageView12"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-
                         android:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -358,18 +348,17 @@
                 android:layout_marginEnd="24dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
                     android:id="@+id/Opcion7"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="12dp"
                     android:layout_weight="0.5"
-                    android:background="@drawable/btn_background_5">
+                    android:background="@drawable/btn_background_oficial_3">
 
                     <ImageView
                         android:id="@+id/imageView13"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:srcCompat="@drawable/light_3" />
@@ -378,7 +367,6 @@
                         android:id="@+id/imageView14"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-
                         android:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -403,18 +391,17 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
                     android:id="@+id/Opcion8"
+                    android:layout_width="0dp"
                     android:layout_height="170dp"
                     android:layout_marginStart="12dp"
                     android:layout_weight="0.5"
-                    android:background="@drawable/btn_background_1">
+                    android:background="@drawable/btn_background_oficial_6">
 
                     <ImageView
                         android:id="@+id/imageView15"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:srcCompat="@drawable/light_4" />
@@ -423,7 +410,6 @@
                         android:id="@+id/imageView16"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-
                         android:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondoptions"
     tools:context=".ActivitysPadres.OpcionesCentrosJuvenilesActivity">
 
     <ScrollView
@@ -27,7 +26,6 @@
                     android:id="@+id/imageView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/user_1" />
@@ -68,13 +66,12 @@
                     android:id="@+id/Opcion1"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
-                    android:background="@drawable/btn_background_3">
+                    android:background="@drawable/btn_background_oficial_1">
 
                     <ImageView
                         android:id="@+id/imageView17"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:srcCompat="@drawable/light_3"
@@ -84,7 +81,6 @@
                         android:id="@+id/imageView18"
                         android:layout_width="86dp"
                         android:layout_height="86dp"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -106,17 +102,16 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
                     android:id="@+id/Opcion2"
+                    android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/btn_background_4">
+                    android:background="@drawable/btn_background_oficial_3">
 
                     <ImageView
                         android:id="@+id/imageView19"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:srcCompat="@drawable/light_4"
@@ -126,7 +121,6 @@
                         android:id="@+id/imageView20"
                         android:layout_width="86dp"
                         android:layout_height="86dp"
-
                         android:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -150,17 +144,16 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/Opcion3"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:layout_marginTop="10dp"
-                    android:id="@+id/Opcion3"
-                    android:background="@drawable/btn_background_5">
+                    android:background="@drawable/btn_background_oficial_6">
 
                     <ImageView
                         android:id="@+id/imageView21"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:srcCompat="@drawable/light_1"
@@ -170,7 +163,6 @@
                         android:id="@+id/imageView22"
                         android:layout_width="86dp"
                         android:layout_height="86dp"
-
                         android:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -184,7 +176,7 @@
                         android:id="@+id/textView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="PASPE"
+                        android:text="Totales en CJDR"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -194,17 +186,16 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/Opcion4"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:layout_marginTop="10dp"
-                    android:id="@+id/Opcion4"
-                    android:background="@drawable/btn_background_6">
+                    android:background="@drawable/btn_background_oficial_5">
 
                     <ImageView
                         android:id="@+id/imageView23"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:srcCompat="@drawable/light_2"
@@ -214,7 +205,6 @@
                         android:id="@+id/imageView24"
                         android:layout_width="86dp"
                         android:layout_height="86dp"
-
                         android:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -228,7 +218,7 @@
                         android:id="@+id/textView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TOTALES"
+                        android:text="Totales en SOA"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"

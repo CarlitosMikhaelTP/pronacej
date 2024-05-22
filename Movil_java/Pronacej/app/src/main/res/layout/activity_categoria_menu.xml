@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondoptions"
     tools:context=".ActivitysPadres.CategoriaMenu">
 
     <ScrollView
@@ -69,7 +68,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="12dp"
                     android:layout_weight="0.5"
-                    android:background="@drawable/btn_background_1">
+                    android:background="@drawable/btn_background_oficial_2">
 
                     <ImageView
                         android:id="@+id/imageView61"
@@ -90,8 +89,8 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.32999998"
                         app:srcCompat="@drawable/baseline_data_usage_24"
-                        tools:ignore="DuplicateIds"
-                        app:tint="@color/white" />
+                        app:tint="@color/white"
+                        tools:ignore="DuplicateIds" />
 
                     <TextView
                         android:id="@+id/textView10"
@@ -114,7 +113,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="24dp"
                     android:layout_weight="0.5"
-                    android:background="@drawable/btn_background_2">
+                    android:background="@drawable/btn_background_oficial_3">
 
                     <ImageView
                         android:id="@+id/imageView60"
@@ -128,7 +127,6 @@
                         android:id="@+id/imageView90"
                         android:layout_width="156dp"
                         android:layout_height="75dp"
-
                         android:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -170,9 +168,8 @@
                         android:layout_width="175dp"
                         android:layout_height="50dp"
                         android:layout_marginStart="10dp"
-
                         app:layout_constraintStart_toStartOf="parent"
-                        app:srcCompat="@drawable/ministerioimag"
+                        app:srcCompat="@drawable/imgministerio"
                         tools:ignore="MissingConstraints" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -186,9 +183,8 @@
                         android:layout_width="175dp"
                         android:layout_height="50dp"
                         android:layout_marginEnd="10dp"
-
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:srcCompat="@drawable/pronacejimg"
+                        app:srcCompat="@drawable/imgpronacej"
                         tools:ignore="MissingConstraints" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>

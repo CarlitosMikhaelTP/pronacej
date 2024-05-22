@@ -19,6 +19,7 @@ public class OpcionesCentrosJuvenilesActivity extends AppCompatActivity {
         ConstraintLayout buttonUserA = findViewById(R.id.Opcion1);
         ConstraintLayout buttonUserB = findViewById(R.id.Opcion2);
         ConstraintLayout buttonUserC = findViewById(R.id.Opcion3);
+        ConstraintLayout buttonUserD = findViewById(R.id.Opcion4);
 
         buttonUserA.setOnClickListener(view -> {
             startActivity(new Intent(OpcionesCentrosJuvenilesActivity.this, MenuCjdrActivity.class));
@@ -27,15 +28,21 @@ public class OpcionesCentrosJuvenilesActivity extends AppCompatActivity {
         });
 
         buttonUserB.setOnClickListener(view -> {
-            startActivity(new Intent(OpcionesCentrosJuvenilesActivity.this, MenuCjdrActivity.class));
+            startActivity(new Intent(OpcionesCentrosJuvenilesActivity.this, MenuSoaActivity.class));
             // Acción cuando se presiona el botón Usuario B
             Toast.makeText(OpcionesCentrosJuvenilesActivity.this, "Seleccionaste SOA", Toast.LENGTH_SHORT).show();
         });
 
         buttonUserC.setOnClickListener(view -> {
-            startActivity(new Intent(OpcionesCentrosJuvenilesActivity.this, MenuCjdrActivity.class));
+            startActivity(new Intent(OpcionesCentrosJuvenilesActivity.this, MenuTotalesCjdrActivity.class));
             // Acción cuando se presiona el botón Usuario C
-            Toast.makeText(OpcionesCentrosJuvenilesActivity.this, "Seleccionaste PASPE", Toast.LENGTH_SHORT).show();
+            Toast.makeText(OpcionesCentrosJuvenilesActivity.this, "Seleccionaste totales CJDR", Toast.LENGTH_SHORT).show();
+        });
+
+        buttonUserD.setOnClickListener(view -> {
+            startActivity(new Intent(OpcionesCentrosJuvenilesActivity.this, MenuTotalesSoaActivity.class));
+            // Acción cuando se presiona el botón Usuario C
+            Toast.makeText(OpcionesCentrosJuvenilesActivity.this, "Seleccionaste totales SOA", Toast.LENGTH_SHORT).show();
         });
     }
 }
