@@ -6,6 +6,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.gob.pronacej.entity.dto.SabanaDTO;
+import pe.gob.pronacej.entity.graphic.Indicators;
 import pe.gob.pronacej.entity.graphic.TableTables;
 import pe.gob.pronacej.entity.sabana.ProcessHeader;
 import pe.gob.pronacej.entity.sabana.Sabana;
@@ -26,8 +27,7 @@ public class SabanaServiceImpl implements SabanaService {
 
     private final SabanaRepository crudSabana;
     private final BaseRepository<ProcessHeader, Integer> crudProcessHeader;
-    private final BaseRepository<TableTables, Integer> crudTableTables;
-    private final BaseRepository<Admin, Integer> crudAdmin;
+    private final BaseRepository<Indicators, Integer> crudIndicator;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -35,18 +35,14 @@ public class SabanaServiceImpl implements SabanaService {
     @Override
     public SabanaDTO register(SabanaDTO sabanaDTO) {
 
-        Admin admin = crudAdmin.findById(sabanaDTO.getAdminId())
-                .orElseThrow(()-> new NotFoundException("Id del campo AdminId no encontrado"));
-
-        TableTables tableTables = crudTableTables.findById(sabanaDTO.getTableTablesId())
-                .orElseThrow(() -> new NotFoundException("Id del campo TableTablesId no encontrado."));
+        Indicators indicators = crudIndicator.findById(sabanaDTO.getIndicatorId())
+                .orElseThrow(() -> new NotFoundException("Id del campo IndicatorId no encontrado."));
 
         ProcessHeader processHeader = crudProcessHeader.findById(sabanaDTO.getProcessHeaderId())
                 .orElseThrow(() -> new NotFoundException("Id del campo ProcessHeaderId no encontrado"));
 
         Sabana newSabana = Sabana.builder()
-                .adminId(admin)
-                .tableTablesId(tableTables)
+                .idIndicator(indicators)
                 .processHeaderId(processHeader)
                 .value(sabanaDTO.getValue())
                 .state(sabanaDTO.getState())
@@ -62,15 +58,11 @@ public class SabanaServiceImpl implements SabanaService {
         Sabana sabana = crudSabana.findById(id)
                 .orElseThrow(()-> new NotFoundException("Id de la tabla Sabana no encontrado."));
 
-        Admin admin = sabana.getAdminId();
-        if (sabanaDTO.getAdminId() != null) {
-            admin = crudAdmin.findById(sabanaDTO.getAdminId())
-                    .orElseThrow(() -> new NotFoundException("Id del Admin no encontrado"));
-        }
-        TableTables tablesTables = sabana.getTableTablesId();
-        if (sabanaDTO.getTableTablesId() != null) {
-            tablesTables = crudTableTables.findById(sabanaDTO.getTableTablesId())
-                    .orElseThrow(()-> new NotFoundException("Id de la tabla TablaTablas no encontrado"));
+
+        Indicators indicators = sabana.getIdIndicator();
+        if (sabanaDTO.getIndicatorId() != null) {
+            indicators = crudIndicator.findById(sabanaDTO.getIndicatorId())
+                    .orElseThrow(()-> new NotFoundException("Id de la tabla Indicators no encontrado"));
         }
         ProcessHeader processHeader = sabana.getProcessHeaderId();
         if (sabanaDTO.getProcessHeaderId() != null){
@@ -78,11 +70,8 @@ public class SabanaServiceImpl implements SabanaService {
                     .orElseThrow(()-> new NotFoundException("Id de la tabla ProcessHeader no encontrado"));
         }
         // Verificando campos en caso sean nulos
-        if (sabanaDTO.getAdminId() != null){
-            sabana.setAdminId(admin);
-        }
-        if (sabanaDTO.getTableTablesId() != null){
-            sabana.setTableTablesId(tablesTables);
+        if (sabanaDTO.getIndicatorId() != null){
+            sabana.setIdIndicator(indicators);
         }
         if (sabanaDTO.getProcessHeaderId() != null){
             sabana.setProcessHeaderId(processHeader);
@@ -114,8 +103,7 @@ public class SabanaServiceImpl implements SabanaService {
 
         return sabanaOptional.map(sabana -> {
             SabanaDTO sabanaDTO = new SabanaDTO();
-            sabanaDTO.setAdminId(sabana.getAdminId().getId());
-            sabanaDTO.setTableTablesId(sabana.getTableTablesId().getId());
+            sabanaDTO.setIndicatorId(sabana.getIdIndicator().getId());
             sabanaDTO.setProcessHeaderId(sabana.getProcessHeaderId().getId());
             sabanaDTO.setValue(sabana.getValue());
             sabanaDTO.setState(sabana.getState());

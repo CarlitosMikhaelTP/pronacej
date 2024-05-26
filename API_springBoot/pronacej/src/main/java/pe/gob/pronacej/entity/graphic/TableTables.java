@@ -26,17 +26,13 @@ public class TableTables {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "admin_id", nullable = false)
-    private Admin adminId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_indicator", nullable = false)
+    @JoinColumn(name = "indicator_id", nullable = false)
     private Indicators indicatorId;
 
-    @Column(name = "name_table", length = 100, nullable = false)
+    @Column(name = "name_column", length = 100, nullable = false)
     private String nameTable;
 
-    @Column(name = "id_field", nullable = false)
+    @Column(name = "option_column", nullable = false)
     private Integer idField;
 
     @Column(name = "value", length = 100, nullable = false)
@@ -59,7 +55,4 @@ public class TableTables {
     @JoinColumn(name = "updated_by", referencedColumnName = "id")
     private SectionRecord updatedBy;
 
-    // Mapeando Cardinalidad
-    @OneToMany(mappedBy = "tableTablesId", cascade = CascadeType.ALL)
-    private List<Sabana> sabanaList;
 }

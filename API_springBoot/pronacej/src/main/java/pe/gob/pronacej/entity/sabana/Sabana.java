@@ -26,22 +26,14 @@ public class Sabana {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_admin", nullable = false)
-    private Admin adminId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_indicator", nullable = false)
-    private Indicators idIndicator;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_table_tables", nullable = false)
-    private TableTables tableTablesId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "process_header_id", nullable = false)
     private ProcessHeader processHeaderId;
 
-    @Column(name = "valor", length = 50, nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "indicator_id", nullable = false)
+    private Indicators idIndicator;
+
+    @Column(name = "valor_option", length = 100, nullable = false)
     private String value;
 
     @Column(name = "state", columnDefinition = "TINYINT DEFAULT 1", nullable = false)

@@ -2,12 +2,14 @@ package pe.gob.pronacej.entity.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -45,6 +47,20 @@ public class TypeUser {
     ///////// MAPEO DE CARDINALIDAD EN OTRAS TABLAS /////////////
     @OneToMany(mappedBy = "typeUserId", cascade = CascadeType.ALL)
     private List<Person> personList;
+
+    @Override
+    public String toString() {
+        return "TipoUsuario{" +
+                "idTipoUsuario=" + id +
+                ", nombreTipoUsuario='" + name + '\'' +
+                ", descripcion='" + description + '\'' +
+                ", estado=" + state +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", createdBy=" + createdBy +
+                ", updatedBy=" + updatedBy +
+                '}';
+    }
 
 }
 

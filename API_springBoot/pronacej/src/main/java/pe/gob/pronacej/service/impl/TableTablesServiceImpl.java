@@ -26,7 +26,7 @@ public class TableTablesServiceImpl implements TableTablesService {
 
     private final TableTablesRepository crudTableTables;
     private final BaseRepository<Indicators, Integer> crudIndicator;
-    private final BaseRepository<Admin, Integer> crudAdmin;
+
 
     @Autowired
     private ModelMapper modelMapper;
@@ -34,14 +34,10 @@ public class TableTablesServiceImpl implements TableTablesService {
     @Override
     public TableTablesDTO register(TableTablesDTO tableTablesDTO) {
 
-        Admin admin = crudAdmin.findById(tableTablesDTO.getAdminId())
-                .orElseThrow(()-> new NotFoundException("ID del campo AdminId no encontrado"));
-
         Indicators indicators = crudIndicator.findById(tableTablesDTO.getIndicatorId())
                 .orElseThrow(()-> new NotFoundException("ID del campo IdIndicador no encontrado."));
 
         TableTables newTableTables = TableTables.builder()
-                .adminId(admin)
                 .indicatorId(indicators)
                 .nameTable(tableTablesDTO.getNameTable())
                 .idField(tableTablesDTO.getIdField())
@@ -59,11 +55,6 @@ public class TableTablesServiceImpl implements TableTablesService {
         TableTables tableTables = crudTableTables.findById(id)
                 .orElseThrow(()-> new NotFoundException("ID de la tabla TableTables no encontrada"));
 
-        Admin admin = tableTables.getAdminId();
-        if (tableTablesDTO.getAdminId() != null){
-            admin = crudAdmin.findById(tableTablesDTO.getAdminId())
-                    .orElseThrow(()-> new NotFoundException("ID del IdAdmin no encontrado."));
-        }
         Indicators indicators = tableTables.getIndicatorId();
         if (tableTablesDTO.getIndicatorId() != null){
             indicators = crudIndicator.findById(tableTablesDTO.getIndicatorId())
@@ -71,9 +62,6 @@ public class TableTablesServiceImpl implements TableTablesService {
         }
 
         // Verificando campos en caso sean nulos
-        if (tableTablesDTO.getAdminId() != null) {
-            tableTables.setAdminId(admin);
-        }
         if (tableTablesDTO.getIndicatorId() != null){
             tableTables.setIndicatorId(indicators);
         }
@@ -109,7 +97,6 @@ public class TableTablesServiceImpl implements TableTablesService {
         Optional<TableTables> tableTablesOptional = crudTableTables.findById(id);
         return tableTablesOptional.map(tableTables -> {
             TableTablesDTO tableTablesDTO = new TableTablesDTO();
-            tableTablesDTO.setAdminId(tableTables.getAdminId().getId());
             tableTablesDTO.setIndicatorId(tableTables.getIndicatorId().getId());
             tableTablesDTO.setNameTable(tableTables.getNameTable());
             tableTablesDTO.setIdField(tableTables.getIdField());

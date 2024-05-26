@@ -16,14 +16,9 @@ import javax.validation.constraints.Size;
 @Builder
 public class SabanaDTO {
 
-
-    @NotNull(message = "El id del admin no puede ser nulo")
-    @NotBlank(message = "El id del admin no puede estar vacio")
-    private Integer adminId;
-
     @NotNull(message = "El id de tableTables no puede ser nulo")
     @NotBlank(message = "El id de tableTables no puede estar vacio")
-    private Integer tableTablesId;
+    private Integer indicatorId;
 
     @NotNull(message = "El id de processHeader no puede ser nulo")
     @NotBlank(message = "El id de processHeader no puede estar vacio")

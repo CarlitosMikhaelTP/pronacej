@@ -14,13 +14,9 @@ import javax.validation.constraints.Size;
 @Builder
 public class TypeUserDTO {
 
-    @NotNull(message = "El id del typeSectionRecord no puede ser nulo")
-    @NotBlank(message = "El id del typeSectionRecord no puede estar vacio")
-    private Integer typeSectionRecordId;
-
     @NotNull(message = "El name no puede ser nula")
     @NotBlank(message = "El name no puede estar vacía")
-    @Size(max = 50, message = "El name debe tener entre 1 y 50 caracteres")
+    @Size(max = 150, message = "El campo name debe tener entre 1 y 150 caracteres")
     private String name;
 
     @NotNull(message = "La description no puede ser nula")

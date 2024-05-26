@@ -24,7 +24,7 @@ public class TypeProcessHeader {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name", length = 50, nullable = false)
+    @Column(name = "name", length = 100, nullable = false)
     private String name;
 
     @Column(name = "state", columnDefinition = "TINYINT DEFAULT 1")

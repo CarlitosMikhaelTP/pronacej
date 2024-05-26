@@ -47,9 +47,9 @@ public class Admin {
     private Admin updatedBy;
 
     // Agregando cardinalidad
-    @OneToMany(mappedBy = "adminId", cascade = CascadeType.ALL)
-    private List<TableTables> tableTablesList;
+    //@OneToMany(mappedBy = "adminId", cascade = CascadeType.ALL)
+    //private List<TableTables> tableTablesList;
 
-    @OneToMany(mappedBy = "adminId", cascade = CascadeType.ALL)
-    private List<Sabana> sabanaList;
+    //@OneToMany(mappedBy = "adminId", cascade = CascadeType.ALL)
+    //private List<Sabana> sabanaList;
 }

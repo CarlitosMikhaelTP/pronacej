@@ -19,7 +19,6 @@ public class IndicatorDTO {
     @NotBlank(message = "El id de person no puede estar vacio")
     private Integer sectionRecordId;
 
-
     @NotNull(message = "El nameIndicator no puede ser nula")
     @NotBlank(message = "El nameIndicator no puede estar vacía")
     @Size(max = 30, message = "El campo nameIndicator debe tener entre 1 y 30 caracteres")

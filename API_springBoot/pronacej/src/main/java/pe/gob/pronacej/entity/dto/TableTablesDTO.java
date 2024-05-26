@@ -15,9 +15,6 @@ import javax.validation.constraints.Size;
 @Builder
 public class TableTablesDTO {
 
-    @NotNull(message = "El id del Admin no puede ser nulo")
-    @NotBlank(message = "El id del Admin no puede estar vacía")
-    private Integer adminId;
 
     @NotNull(message = "El id del idIndicators no puede ser nulo")
     @NotBlank(message = "El id del idIndicators no puede estar vacía")

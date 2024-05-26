@@ -30,6 +30,9 @@ public class Indicators {
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
+    @Column(name = "description", columnDefinition = "TEXT", nullable = false)
+    private String description;
+
     @Column(name = "state", columnDefinition = "TINYINT DEFAULT 1", nullable = false)
     private Short state;
 
