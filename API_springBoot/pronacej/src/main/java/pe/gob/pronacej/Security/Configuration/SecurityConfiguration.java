@@ -24,7 +24,7 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/**") // ESPECIFICANDO COMIENZO DEL ENDPOINT PARA PODER ACCEDER A LAS FUNCIONALIDADES
+                .requestMatchers("/**") // ESPECIFICANDO COMIENZO DEL ENDPOINT PARA PODER ACCEDER A LAS FUNCIONALIDADES
                 .permitAll()
                 .anyRequest()
                 .authenticated()
