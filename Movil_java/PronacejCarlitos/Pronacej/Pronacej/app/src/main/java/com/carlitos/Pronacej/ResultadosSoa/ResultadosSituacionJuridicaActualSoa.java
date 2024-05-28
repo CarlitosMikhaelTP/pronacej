@@ -49,6 +49,14 @@ public class ResultadosSituacionJuridicaActualSoa extends AppCompatActivity {
         // Configurar la leyenda
         Legend legend = barChart.getLegend();
         legend.setEnabled(true); // Habilitar la leyenda
+        legend.setForm(Legend.LegendForm.SQUARE);
+        legend.setTextSize(12f);
+        legend.setTextColor(Color.BLACK);
+        legend.setFormSize(12f);
+        legend.setXEntrySpace(10f);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
 
         // Agregar los datos al gráfico de barras
         BarData data = new BarData(dataSet);

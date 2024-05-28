@@ -51,10 +51,18 @@ public class ResultadosSeguroMedicoSoa extends AppCompatActivity {
 
         // Configurar la leyenda
         Legend legend = barChart.getLegend();
-        legend.setEnabled(true); // Deshabilitar la leyenda
+        legend.setEnabled(true);
+        legend.setTextSize(12f);
+        legend.setTextColor(Color.BLACK);
+        legend.setForm(Legend.LegendForm.SQUARE);
+        legend.setFormSize(12f);
+        legend.setXEntrySpace(10f);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
 
-        // Configurar el eje X
-        barChart.getXAxis().setEnabled(true); // Deshabilitar el eje X
+        // Deshabilitar el eje X
+        barChart.getXAxis().setEnabled(false);
 
         // Agregar los datos al gráfico de barras
         BarData data = new BarData(dataSet);

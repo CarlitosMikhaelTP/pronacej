@@ -1,4 +1,4 @@
-package com.carlitos.Pronacej.ResultadosCjrd;
+package com.carlitos.Pronacej.ResultadosSoa;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultadosEstadoCivilCjdr extends AppCompatActivity {
+public class ResultadosEstadoCivilSoa extends AppCompatActivity {
 
     private int estado_civil_casado;
     private int estado_civil_conviviente;
@@ -26,7 +26,7 @@ public class ResultadosEstadoCivilCjdr extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.resultado_estado_civil_cjdr);
+        setContentView(R.layout.resultado_estado_civil_soa);
 
         // Obtener los valores de estado civil
         Intent intent = getIntent();
@@ -51,6 +51,9 @@ public class ResultadosEstadoCivilCjdr extends AppCompatActivity {
         // Configurar el gráfico de pastel
         PieChart chart = findViewById(R.id.pieChart);
         chart.getDescription().setEnabled(false);
+
+        // Configurar la leyenda
+        chart.getLegend().setEnabled(true);
 
         // Crear una instancia de PieData y configurarla con el conjunto de datos
         PieData pieData = new PieData(dataSet);

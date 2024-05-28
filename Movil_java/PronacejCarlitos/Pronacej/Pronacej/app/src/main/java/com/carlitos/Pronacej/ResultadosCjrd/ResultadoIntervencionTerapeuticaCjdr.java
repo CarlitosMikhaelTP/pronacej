@@ -33,7 +33,7 @@ public class ResultadoIntervencionTerapeuticaCjdr extends AppCompatActivity {
 
         // Crear las entradas para el gráfico de pastel
         List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(intervencion_aplica, "Intervencion Terapéutica Sí"));
+        entries.add(new PieEntry(intervencion_aplica, "Intervención Terapéutica Sí"));
         entries.add(new PieEntry(intervencion_no_aplica, "Intervención Terapéutica No"));
 
         // Crear el conjunto de datos del gráfico de pastel
@@ -46,7 +46,7 @@ public class ResultadoIntervencionTerapeuticaCjdr extends AppCompatActivity {
 
         // Configurar la leyenda
         Legend legend = pieChart.getLegend();
-        legend.setEnabled(false);
+        legend.setEnabled(true); // Habilitar la leyenda
 
         // Agregar los datos al gráfico de pastel
         PieData data = new PieData(dataSet);

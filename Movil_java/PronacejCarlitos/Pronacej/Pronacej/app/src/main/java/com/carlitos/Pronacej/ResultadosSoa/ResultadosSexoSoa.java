@@ -1,4 +1,4 @@
-package com.carlitos.Pronacej.ResultadosCjrd;
+package com.carlitos.Pronacej.ResultadosSoa;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.carlitos.Pronacej.R;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -15,7 +16,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultadosSexoCjrd extends AppCompatActivity {
+public class ResultadosSexoSoa extends AppCompatActivity {
 
     private int sexo_masculino;
     private int sexo_femenino;
@@ -23,7 +24,7 @@ public class ResultadosSexoCjrd extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.resultado_sexo_cjdr);
+        setContentView(R.layout.resultado_sexo_soa);
 
         // Obtener los valores de ingresoSentenciado y ingresoProcesado
         Intent intent = getIntent();
@@ -51,6 +52,19 @@ public class ResultadosSexoCjrd extends AppCompatActivity {
 
         // Establecer los datos en el gráfico
         chart.setData(barData);
+
+        // Configurar la leyenda
+        Legend legend = chart.getLegend();
+        legend.setEnabled(true); // Habilitar la leyenda
+        legend.setTextSize(12f);
+        legend.setTextColor(Color.BLACK);
+        legend.setForm(Legend.LegendForm.SQUARE);
+        legend.setFormSize(12f);
+        legend.setXEntrySpace(10f);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+
         chart.invalidate();
     }
 }

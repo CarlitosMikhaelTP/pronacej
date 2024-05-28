@@ -24,7 +24,6 @@ public class ResultadosSituacionJuridicaIngresoCjdr extends AppCompatActivity {
 
     private int ingreso_sentenciado;
     private int ingreso_procesado;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +34,7 @@ public class ResultadosSituacionJuridicaIngresoCjdr extends AppCompatActivity {
         ingreso_sentenciado = intent.getIntExtra("ingreso_sentenciado", 0);
         ingreso_procesado = intent.getIntExtra("ingreso_procesado", 0);
 
-        // Configurar el gráfico barras
+        // Configurar el gráfico de barras
         BarChart barChart = findViewById(R.id.barChart);
         barChart.getDescription().setEnabled(false);
         barChart.setDrawGridBackground(false);
@@ -43,8 +42,7 @@ public class ResultadosSituacionJuridicaIngresoCjdr extends AppCompatActivity {
         // Configurar los datos para el gráfico
         List<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(0f, ingreso_sentenciado));
-        entries.add(new BarEntry(0f, ingreso_procesado));
-       ;
+        entries.add(new BarEntry(1f, ingreso_procesado));
 
         BarDataSet barDataSet = new BarDataSet(entries, "Situación Jurídica Ingreso");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
@@ -52,7 +50,6 @@ public class ResultadosSituacionJuridicaIngresoCjdr extends AppCompatActivity {
 
         BarData barData = new BarData(barDataSet);
         barData.setBarWidth(0.5f);
-
 
         // Configurar ejes y leyenda
         XAxis xAxis = barChart.getXAxis();
@@ -70,5 +67,4 @@ public class ResultadosSituacionJuridicaIngresoCjdr extends AppCompatActivity {
         barChart.setData(barData);
         barChart.invalidate();
     }
-
 }

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.carlitos.Pronacej.R;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -34,12 +35,19 @@ public class ResultadosTotalPoblacionCjdr extends AppCompatActivity {
         BarData barData = new BarData(dataSet);
         barChart.setData(barData);
 
+        // Agregar leyenda
+        Legend legend = barChart.getLegend();
+        legend.setForm(Legend.LegendForm.SQUARE);
+        legend.setTextSize(12f);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setDrawInside(false);
+
         XAxis xAxis = barChart.getXAxis();
         xAxis.setEnabled(false);
 
         barChart.getDescription().setEnabled(false);
-        barChart.getLegend().setEnabled(false);
-
         barChart.invalidate();
     }
 }

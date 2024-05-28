@@ -76,7 +76,11 @@ public class ResultadosSituacionLaboralActualCjdr extends AppCompatActivity {
 
         // Customize legend
         Legend legend = barChart.getLegend();
-        legend.setEnabled(false); // Disable legend or customize as needed
+        legend.setEnabled(true);
+        legend.setTextSize(12f);
+        legend.setForm(Legend.LegendForm.SQUARE);
+        legend.setFormSize(12f);
+        legend.setXEntrySpace(10f);
+        legend.setTextColor(getResources().getColor(R.color.black));
     }
-
 }

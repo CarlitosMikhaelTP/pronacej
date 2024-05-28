@@ -1,12 +1,14 @@
-package com.carlitos.Pronacej.ResultadosCjrd;
+package com.carlitos.Pronacej.ResultadosSoa;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.carlitos.Pronacej.R;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -15,7 +17,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultadosEstadoCjrd extends AppCompatActivity {
+public class ResultadosEstadoSoa extends AppCompatActivity {
 
     private int estado_cierre_post;
     private int estado_egr;
@@ -25,7 +27,7 @@ public class ResultadosEstadoCjrd extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.resultado_estado_cjdr);
+        setContentView(R.layout.resultado_estado_soa);
 
         Intent intent = getIntent();
         estado_cierre_post = intent.getIntExtra("estado_cierre_post", 0);
@@ -48,6 +50,18 @@ public class ResultadosEstadoCjrd extends AppCompatActivity {
         BarChart chart = findViewById(R.id.barChart);
         chart.getDescription().setEnabled(false);
 
+        // Configurar la leyenda
+        Legend legend = chart.getLegend();
+        legend.setEnabled(true);
+        legend.setTextSize(12f);
+        legend.setTextColor(Color.BLACK);
+        legend.setForm(Legend.LegendForm.SQUARE);
+        legend.setFormSize(12f);
+        legend.setXEntrySpace(10f);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+
         // Crear una instancia de BarData y configurarla con el conjunto de datos
         BarData barData = new BarData(dataSet);
         barData.setBarWidth(0.9f);
@@ -56,6 +70,5 @@ public class ResultadosEstadoCjrd extends AppCompatActivity {
         chart.setData(barData);
         chart.invalidate();
     }
-
 
 }

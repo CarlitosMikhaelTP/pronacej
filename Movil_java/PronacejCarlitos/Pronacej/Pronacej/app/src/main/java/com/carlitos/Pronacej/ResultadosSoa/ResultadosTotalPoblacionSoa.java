@@ -1,5 +1,6 @@
 package com.carlitos.Pronacej.ResultadosSoa;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.carlitos.Pronacej.R;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -37,9 +39,19 @@ public class ResultadosTotalPoblacionSoa extends AppCompatActivity {
         XAxis xAxis = barChart.getXAxis();
         xAxis.setEnabled(false);
 
-        barChart.getDescription().setEnabled(false);
-        barChart.getLegend().setEnabled(false);
+        // Agregar leyenda al gráfico
+        Legend legend = barChart.getLegend();
+        legend.setEnabled(true);
+        legend.setTextSize(12f);
+        legend.setTextColor(Color.BLACK);
+        legend.setForm(Legend.LegendForm.SQUARE);
+        legend.setFormSize(12f);
+        legend.setXEntrySpace(10f);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
 
+        barChart.getDescription().setEnabled(false);
         barChart.invalidate();
     }
 }

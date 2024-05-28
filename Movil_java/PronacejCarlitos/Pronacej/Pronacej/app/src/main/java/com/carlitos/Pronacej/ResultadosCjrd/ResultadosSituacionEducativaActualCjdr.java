@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.data.ScatterDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,7 @@ public class ResultadosSituacionEducativaActualCjdr extends AppCompatActivity {
     private int sea_estudia;
     private int sea_termino_basico;
     private int sea_termino_no_doc;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class ResultadosSituacionEducativaActualCjdr extends AppCompatActivity {
         ScatterDataSet dataSet = new ScatterDataSet(entries, "Situación Educativa Actual");
         dataSet.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
         dataSet.setScatterShapeSize(15f);
-        dataSet.setColor(getResources().getColor(com.google.android.material.R.color.design_default_color_primary));
+        dataSet.setColor(ColorTemplate.COLORFUL_COLORS[0]);
 
         ArrayList<IScatterDataSet> dataSets = new ArrayList<>();
         dataSets.add(dataSet);

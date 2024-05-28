@@ -1,5 +1,6 @@
 package com.carlitos.Pronacej.ResultadosSoa;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -47,7 +48,15 @@ public class ResultadosSaludMentalSoa extends AppCompatActivity {
 
         // Configurar la leyenda
         Legend legend = pieChart.getLegend();
-        legend.setEnabled(false);
+        legend.setEnabled(true);
+        legend.setTextSize(12f);
+        legend.setTextColor(Color.BLACK);
+        legend.setForm(Legend.LegendForm.SQUARE);
+        legend.setFormSize(12f);
+        legend.setXEntrySpace(10f);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
 
         // Agregar los datos al gráfico de pastel
         PieData data = new PieData(dataSet);

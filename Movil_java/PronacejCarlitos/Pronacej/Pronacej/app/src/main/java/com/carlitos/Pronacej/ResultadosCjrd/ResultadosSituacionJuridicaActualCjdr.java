@@ -41,7 +41,7 @@ public class ResultadosSituacionJuridicaActualCjdr extends AppCompatActivity {
         entries.add(new BarEntry(1f, juridica_procesado));
 
         // Crear el conjunto de datos del gráfico de barras
-        BarDataSet dataSet = new BarDataSet(entries, "");
+        BarDataSet dataSet = new BarDataSet(entries, "Situación Jurídica Actual");
         dataSet.setColors(new int[]{Color.BLUE, Color.GREEN});
         dataSet.setValueTextColor(Color.WHITE);
         dataSet.setValueTextSize(12f);

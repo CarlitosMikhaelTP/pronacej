@@ -75,6 +75,6 @@ public class ResultadosSituacionLaboralActualSoa extends AppCompatActivity {
 
         // Customize legend
         Legend legend = barChart.getLegend();
-        legend.setEnabled(false); // Disable legend or customize as needed
+        legend.setEnabled(true); // Enable legend
     }
 }

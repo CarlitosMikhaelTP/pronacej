@@ -27,6 +27,7 @@ public class ResultadosSaludMentalCjdr extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resultados_salud_mental_cjdr);
 
+        // Obtener los valores de salud mental desde el intent
         salud_si = getIntent().getIntExtra("salud_si", 0);
         salud_no = getIntent().getIntExtra("salud_no", 0);
 
@@ -40,7 +41,7 @@ public class ResultadosSaludMentalCjdr extends AppCompatActivity {
         entries.add(new PieEntry(salud_no, "Salud No"));
 
         // Crear el conjunto de datos del gráfico de pastel
-        PieDataSet dataSet = new PieDataSet(entries, "");
+        PieDataSet dataSet = new PieDataSet(entries, "Estado de Salud Mental");
         dataSet.setColors(getResources().getColor(android.R.color.holo_green_light),
                 getResources().getColor(android.R.color.holo_red_light));
 
@@ -49,7 +50,7 @@ public class ResultadosSaludMentalCjdr extends AppCompatActivity {
 
         // Configurar la leyenda
         Legend legend = pieChart.getLegend();
-        legend.setEnabled(false);
+        legend.setEnabled(true); // Habilitar la leyenda
 
         // Agregar los datos al gráfico de pastel
         PieData data = new PieData(dataSet);

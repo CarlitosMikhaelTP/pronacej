@@ -29,6 +29,7 @@ public class ResultadoJusticiaTerapeuticaCjdr extends AppCompatActivity {
         setContentView(R.layout.resultado_justicia_terapeutica_cjdr);
         justicia_si = getIntent().getIntExtra("justicia_si", 0);
         justicia_no = getIntent().getIntExtra("justicia_no", 0);
+
         // Configurar el gráfico de pastel
         PieChart pieChart = findViewById(R.id.pieChart);
         pieChart.getDescription().setEnabled(false);
@@ -53,6 +54,10 @@ public class ResultadoJusticiaTerapeuticaCjdr extends AppCompatActivity {
         // Agregar leyenda
         PieData data = new PieData(dataSet);
         pieChart.setData(data);
+
+        // Configurar la leyenda
+        pieChart.getLegend().setEnabled(true);
+
         pieChart.invalidate(); // Refrescar el gráfico
     }
 }

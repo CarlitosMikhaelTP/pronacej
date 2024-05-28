@@ -69,7 +69,7 @@ public class ResultadoAdnCjdr extends AppCompatActivity {
         xAxis.setDrawGridLines(false);
 
         Legend legend = barChart.getLegend();
-        legend.setEnabled(false);
+        legend.setEnabled(true); // Habilitar la leyenda
 
         // Agregar los datos al gráfico de barras
         BarData data = new BarData(dataSet);

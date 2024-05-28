@@ -34,7 +34,9 @@
         <activity
             android:name=".OpcionesCjdr.InfraccionesCometidasCjdrActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".ActivitysPadres.RegisterActivity"
+            android:exported="false" />
         <activity
             android:name=".OpcionesCjdr.PoblacionCjdrActivity"
             android:exported="false" />
@@ -44,6 +46,7 @@
         <activity
             android:name=".OpcionesSoa.PoblacionSoaActivity"
             android:exported="false" />
+
         <activity
             android:name=".OpcionesSoa.TratamientoDiferenciadoSoaActivity"
             android:exported="false" />
@@ -59,7 +62,12 @@
         <activity
             android:name=".ResultadosSoa.ResultadosSituacionJuridicaIngresoSoa"
             android:exported="false" />
-
+        <activity
+            android:name=".ResultadosSoa.ResultadosSexoSoa"
+            android:exported="false" />
+        <activity
+            android:name=".ResultadosSoa.ResultadosEstadoCivilSoa"
+            android:exported="false" />
         <activity
             android:name=".ResultadosSoa.ResultadosDelitoSoa"
             android:exported="false" />
@@ -69,6 +77,11 @@
         <activity
             android:name=".ResultadosSoa.ResultadosSituacionLaboralActualSoa"
             android:exported="false" />
+        <activity
+            android:name=".ResultadosSoa.ResultadosEstadoSoa"
+            android:exported="false" />
+
+
 
         <activity
             android:name=".ResultadosSoa.ResultadosSituacionJuridicaActualSoa"
@@ -76,6 +89,17 @@
 
         <activity
             android:name=".ResultadosCjrd.ResultadosSituacionJuridicaCjdr"
+            android:exported="false" />
+
+        <activity
+            android:name=".ResultadosCjrd.ResultadosEstadoCjrd"
+            android:exported="false" />
+
+        <activity
+            android:name=".ResultadosCjrd.ResultadosEstadoCivilCjdr"
+            android:exported="false" />
+        <activity
+            android:name=".ResultadosCjrd.ResultadosSexoCjrd"
             android:exported="false" />
         <activity
             android:name=".ActivitysPadres.MenuCjdrActivity"

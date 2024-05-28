@@ -31,7 +31,7 @@ public class ResultadosProgramasSoa extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resultado_programacion_soa);
 
-        //Obtener los valores de ingresoSentenciado y ingresoProcesado
+        // Obtener los valores de ingresoSentenciado y ingresoProcesado
         Intent intent = getIntent();
         participa_programa_uno = intent.getIntExtra("participa_programa_uno", 0);
         participa_programa_dos = intent.getIntExtra("participa_programa_dos", 0);
@@ -48,11 +48,11 @@ public class ResultadosProgramasSoa extends AppCompatActivity {
         // Configurar los datos para el gráfico
         List<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(0f, participa_programa_uno));
-        entries.add(new BarEntry(0f, participa_programa_dos));
-        entries.add(new BarEntry(0f, participa_programa_tres));
-        entries.add(new BarEntry(0f, participa_programa_cuatro));
-        entries.add(new BarEntry(0f, participa_programa_cinco));
-        entries.add(new BarEntry(0f, participa_programa_no));
+        entries.add(new BarEntry(1f, participa_programa_dos));
+        entries.add(new BarEntry(2f, participa_programa_tres));
+        entries.add(new BarEntry(3f, participa_programa_cuatro));
+        entries.add(new BarEntry(4f, participa_programa_cinco));
+        entries.add(new BarEntry(5f, participa_programa_no));
 
         BarDataSet barDataSet = new BarDataSet(entries, "Participación en programas");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
@@ -67,6 +67,7 @@ public class ResultadosProgramasSoa extends AppCompatActivity {
         xAxis.setDrawGridLines(false);
 
         Legend legend = barChart.getLegend();
+        legend.setEnabled(true);
         legend.setWordWrapEnabled(true);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);

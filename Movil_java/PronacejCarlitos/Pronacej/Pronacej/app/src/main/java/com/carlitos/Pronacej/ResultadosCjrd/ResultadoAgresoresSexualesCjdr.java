@@ -50,13 +50,14 @@ public class ResultadoAgresoresSexualesCjdr extends AppCompatActivity {
         // Configurar el tamaño del texto dentro de las barras
         dataSet.setValueTextSize(12f);
 
-        // Configurar el eje X y la leyenda
+        // Configurar el eje X
         XAxis xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
 
+        // Configurar la leyenda
         Legend legend = barChart.getLegend();
-        legend.setEnabled(false);
+        legend.setEnabled(true); // Habilitar la leyenda
 
         // Agregar los datos al gráfico de barras
         BarData data = new BarData(dataSet);

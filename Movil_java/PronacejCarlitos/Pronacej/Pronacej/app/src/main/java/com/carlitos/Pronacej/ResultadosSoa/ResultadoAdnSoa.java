@@ -12,6 +12,7 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
@@ -30,9 +31,6 @@ public class ResultadoAdnSoa extends AppCompatActivity {
         // Obtener los datos de la actividad anterior
         adn_si = getIntent().getIntExtra("adn_si", 0);
         adn_no = getIntent().getIntExtra("adn_no", 0);
-
-        // Calcular el total
-        int total = adn_si + adn_no;
 
         // Configurar el gráfico de barras
         BarChart barChart = findViewById(R.id.barChart);
@@ -54,20 +52,9 @@ public class ResultadoAdnSoa extends AppCompatActivity {
 
         // Configurar ejes y leyenda
         XAxis xAxis = barChart.getXAxis();
-        xAxis.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                int intValue = Math.round(value);
-                if (intValue == 0) {
-                    return "Sí";
-                } else {
-                    return "No";
-                }
-            }
-        });
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"Sí", "No"}));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
-
 
         Legend legend = barChart.getLegend();
         legend.setEnabled(false);

@@ -46,7 +46,10 @@ public class ResultadoIntervencionTerapeuticaSoa extends AppCompatActivity {
 
         // Configurar la leyenda
         Legend legend = pieChart.getLegend();
-        legend.setEnabled(false);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setWordWrapEnabled(true);
 
         // Agregar los datos al gráfico de pastel
         PieData data = new PieData(dataSet);

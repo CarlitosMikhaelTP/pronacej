@@ -50,17 +50,17 @@ public class ResultadosSeguroMedicoCjdr extends AppCompatActivity {
         entries.add(new BarEntry(3f, seguro_ninguno));
 
         // Crear el conjunto de datos del gráfico de barras
-        BarDataSet dataSet = new BarDataSet(entries, "");
+        BarDataSet dataSet = new BarDataSet(entries, "Seguro Médico");
         dataSet.setColors(new int[]{Color.BLUE, Color.GREEN, Color.RED, Color.GRAY});
         dataSet.setValueTextColor(Color.WHITE);
         dataSet.setValueTextSize(12f);
 
         // Configurar la leyenda
         Legend legend = barChart.getLegend();
-        legend.setEnabled(true); // Deshabilitar la leyenda
+        legend.setEnabled(true); // Habilitar la leyenda
 
         // Configurar el eje X
-        barChart.getXAxis().setEnabled(true); // Deshabilitar el eje X
+        barChart.getXAxis().setEnabled(true); // Habilitar el eje X
 
         // Agregar los datos al gráfico de barras
         BarData data = new BarData(dataSet);

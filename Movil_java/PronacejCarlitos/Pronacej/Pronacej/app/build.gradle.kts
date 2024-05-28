@@ -36,7 +36,8 @@ android {
 
 dependencies {
 
-    implementation("com.google.android.material:material:1.10.0")
+    // Otras dependencias necesarias
+    implementation ("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation ("org.apache.poi:poi:4.0.0")
     implementation ("org.apache.poi:poi-ooxml:4.0.0")

@@ -82,6 +82,7 @@ public class ResultadoCentroEducativoSoa extends AppCompatActivity {
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
+        legend.setWordWrapEnabled(true);
 
         barChart.invalidate();
     }
