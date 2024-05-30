@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pe.gob.pronacej.Security.Configuration.ProjectService;
+import pe.gob.pronacej.entity.dto.IndicatorDTO;
+import pe.gob.pronacej.entity.graphic.Indicators;
 import pe.gob.pronacej.entity.user.Person;
 import pe.gob.pronacej.entity.user.TypeUser;
 import pe.gob.pronacej.exceptions.NotFoundException;
@@ -137,6 +139,30 @@ public class AuthenticationService {
 
         //Si no se actualiza el password devolver null o algun indicador
         return null;
+    }
+
+    public List<PersonDTO> showAll() {
+        return StreamSupport.stream(crudPerson
+                        .findAll()
+                        .spliterator(), false)
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
+
+
+    public Optional<PersonDTO> showById(Integer id) {
+        Optional<Person> personOptional = crudPerson.findById(id);
+
+        return personOptional.map(person -> {
+            PersonDTO personDTO = new PersonDTO();
+            personDTO.setTypeUserId(person.getTypeUserId().getId());
+            personDTO.setName(person.getName());
+            personDTO.setLastName(person.getLastName());
+            personDTO.setEmail(person.getEmail());
+            personDTO.setPassword(person.getPassword());
+
+            return personDTO;
+        });
     }
 
     // Creación de servicio para eliminar usuarios por ID

@@ -15,6 +15,7 @@ import pe.gob.pronacej.service.PersonService;
 import pe.gob.pronacej.service.TypeUserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -48,6 +49,20 @@ public class AuthenticationController {
         AuthenticationResponse response = service.authenticate(request);
 
         return ResponseEntity.ok(service.authenticate(request));
+    }
+
+
+    // Endpoint for list all People
+    @GetMapping("/findAllUser")
+    public ResponseEntity<List<PersonDTO>> showAllPerson(){
+        List<PersonDTO> personDTOList = service.showAll();
+        return ResponseEntity.ok(personDTOList);
+    }
+
+    // Endpoint for list one person byId
+    @GetMapping("/findPersonById/{id}")
+    public Optional<PersonDTO> showIndicatorById(@PathVariable Integer id){
+        return service.showById(id);
     }
 
     // ENDPOINT PARA EDITAR A UN USUARIO POR SU ID
