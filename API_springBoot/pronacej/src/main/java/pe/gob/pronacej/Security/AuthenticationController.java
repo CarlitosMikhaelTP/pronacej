@@ -61,10 +61,10 @@ public class AuthenticationController {
 
     // Endpoint for list one person byId
     @GetMapping("/findPersonById/{id}")
-    public Optional<PersonDTO> showIndicatorById(@PathVariable Integer id){
-        return service.showById(id);
+    public ResponseEntity<AuthenticationResponse> getUserById(@PathVariable Integer id) {
+        AuthenticationResponse response = service.showByIdWithToken(id);
+        return ResponseEntity.ok(response);
     }
-
     // ENDPOINT PARA EDITAR A UN USUARIO POR SU ID
     @PutMapping("/edit/{id}")
     public ResponseEntity<String> editUser(

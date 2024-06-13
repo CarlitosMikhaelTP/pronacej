@@ -64,11 +64,6 @@ public class AuthenticationService {
         person = crudPerson.loadTypeUser(person.getId());
         var jwtToken = projectService.generateToken(person);
 
-        TypeUser typeUser = person.getTypeUserId();
-        Integer typeUserId = typeUser.getId();
-        Integer personId = person.getId();
-        String name = person.getName();
-        String lastNames = person.getLastName();
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -76,13 +71,19 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
+
+        TypeUser typeUser = person.getTypeUserId();
+        Integer typeUserId = typeUser.getId();
+        Integer personId = person.getId();
+        String name = person.getName();
+        String lastNames = person.getLastName();
         //Crear la respuesta con el token y el tipo de usuario
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .id(personId)
                 .typeUserId(typeUserId)
-                .Id(personId)
                 .name(name)
                 .lastName(lastNames)
+                .token(jwtToken)
                 .build();
     }
 
@@ -96,18 +97,33 @@ public class AuthenticationService {
     }
 
     // Servicio para mostrar un usuario por su ID
-    public Optional<PersonDTO> getUserById(Integer id){
+    public AuthenticationResponse showByIdWithToken(Integer id) {
         Optional<Person> personOptional = crudPerson.findById(id);
+
         return personOptional.map(person -> {
-            PersonDTO personDTO =  new PersonDTO();
+            // Recuperar el usuario por su ID
+            PersonDTO personDTO = new PersonDTO();
+            personDTO.setId(person.getId());
             personDTO.setTypeUserId(person.getTypeUserId().getId());
             personDTO.setName(person.getName());
             personDTO.setLastName(person.getLastName());
             personDTO.setEmail(person.getEmail());
             personDTO.setPassword(person.getPassword());
-            return personDTO;
-        });
+
+            // Generar el token para el usuario
+            String jwtToken = projectService.generateToken(person);
+
+            // Crear y devolver la respuesta con el token y la información del usuario
+            return AuthenticationResponse.builder()
+                    .id(personDTO.getId())
+                    .typeUserId(personDTO.getTypeUserId())
+                    .name(personDTO.getName())
+                    .lastName(personDTO.getLastName())
+                    .token(jwtToken)
+                    .build();
+        }).orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
     }
+
 
     // Servicio para editar Usuario
     public String editUserDetails(Integer id, PersonDTO request) {
@@ -155,6 +171,7 @@ public class AuthenticationService {
 
         return personOptional.map(person -> {
             PersonDTO personDTO = new PersonDTO();
+            personDTO.setId(person.getId());
             personDTO.setTypeUserId(person.getTypeUserId().getId());
             personDTO.setName(person.getName());
             personDTO.setLastName(person.getLastName());

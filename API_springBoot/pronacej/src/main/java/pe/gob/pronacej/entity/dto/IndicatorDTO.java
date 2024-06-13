@@ -15,9 +15,13 @@ import javax.validation.constraints.Size;
 @Builder
 public class IndicatorDTO {
 
+    private Integer id;
+
     @NotNull(message = "El id de person no puede ser nulo")
     @NotBlank(message = "El id de person no puede estar vacio")
     private Integer sectionRecordId;
+
+    private String nameSectionRecord;
 
     @NotNull(message = "El nameIndicator no puede ser nula")
     @NotBlank(message = "El nameIndicator no puede estar vacía")

@@ -14,6 +14,8 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Builder
 public class PersonDTO {
+    // Id de la persona
+    private Integer id;
 
     @NotNull(message = "El id de typUser no puede ser nulo")
     @NotBlank(message = "El id de typUser no puede estar vacio")
@@ -42,4 +44,6 @@ public class PersonDTO {
     @NotNull(message = "El state no puede ser nulo")
     @NotBlank(message = "El state no puede estar vacía")
     private Short state;
+
+    private String token;
 }

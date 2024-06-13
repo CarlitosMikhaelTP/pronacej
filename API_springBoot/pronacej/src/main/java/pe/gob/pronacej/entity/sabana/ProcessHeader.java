@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import pe.gob.pronacej.entity.user.Person;
 import pe.gob.pronacej.entity.user.TypeUser;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -34,7 +35,16 @@ public class ProcessHeader {
     @Column(name= "end_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
     private Timestamp endTime;
 
-    @Column(name = "state", columnDefinition = "TYNI DEFAULT 1", nullable = false)
+    @Column(name = "amount", precision = 10, scale = 2)
+    private BigDecimal amount;
+
+    @Column(name = "message", length = 200)
+    private String message;
+
+    @Column(name = "status",length = 300)
+    private String status;
+
+    @Column(name = "state", columnDefinition = "TINY DEFAULT 1", nullable = false)
     private Short state;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -42,14 +52,6 @@ public class ProcessHeader {
 
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Timestamp updatedAt;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by", referencedColumnName = "id")
-    private ProcessHeader createdBy;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "updated_by", referencedColumnName = "id")
-    private ProcessHeader updatedBy;
 
     // Mapenado cardinalidad
     @OneToMany(mappedBy = "processHeaderId", cascade = CascadeType.ALL)

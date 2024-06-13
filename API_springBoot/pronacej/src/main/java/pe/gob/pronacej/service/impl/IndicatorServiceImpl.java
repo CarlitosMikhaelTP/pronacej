@@ -51,7 +51,7 @@ public class IndicatorServiceImpl implements IndicatorService {
         Indicators indicators = crudIndicator.findById(id)
                 .orElseThrow(()-> new NotFoundException("Id de la tabla Indicators no encontrado"));
 
-        SectionRecord sectionRecord = crudSectionRecord.findById(id)
+        SectionRecord sectionRecord = crudSectionRecord.findById(indicatorDTO.getSectionRecordId())
                 .orElseThrow(()-> new NotFoundException("ID de la tabla SectionRecord no encontrado. "));
 
         // Verificando campos en caso sean nulos
@@ -85,7 +85,8 @@ public class IndicatorServiceImpl implements IndicatorService {
 
         return indicatorOptional.map(indicators -> {
             IndicatorDTO indicatorDTO = new IndicatorDTO();
-            indicatorDTO.setSectionRecordId(indicators.getSectionRecordId().getId());
+            indicatorDTO.setId(indicatorDTO.getId());
+            indicatorDTO.setNameSectionRecord(indicatorDTO.getNameSectionRecord());
             indicatorDTO.setName(indicators.getName());
             indicatorDTO.setState(indicators.getState());
 
