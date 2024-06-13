@@ -1,2 +1,4 @@
-package org.example;public class ReportDailySoa {
+package org.example;
+
+public class ReportDailySoa {
 }
