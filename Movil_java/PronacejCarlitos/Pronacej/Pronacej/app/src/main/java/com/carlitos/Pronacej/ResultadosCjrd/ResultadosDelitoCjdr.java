@@ -35,7 +35,7 @@ public class ResultadosDelitoCjdr extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resultado_delito_cjdr);
 
-        //Obtener los valores de ingresoSentenciado y ingresoProcesado
+        //Obtener los valores de los delitos específicos
         Intent intent = getIntent();
         autoaborto = intent.getIntExtra("autoaborto", 0);
         exposicion_peligro = intent.getIntExtra("exposicion_peligro", 0);
@@ -55,16 +55,16 @@ public class ResultadosDelitoCjdr extends AppCompatActivity {
 
         // Configurar los datos para el gráfico
         List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, autoaborto));
-        entries.add(new BarEntry(0f, exposicion_peligro));
-        entries.add(new BarEntry(0f, feminicidio));
-        entries.add(new BarEntry(0f, homicidio_c));
-        entries.add(new BarEntry(0f, homicidio_s));
-        entries.add(new BarEntry(0f, lesiones_g));
-        entries.add(new BarEntry(0f, lesiones_l));
-        entries.add(new BarEntry(0f, parricidio));
-        entries.add(new BarEntry(0f, sicariato));
-        entries.add(new BarEntry(0f, otros));
+        entries.add(new BarEntry(0, autoaborto));
+        entries.add(new BarEntry(1, exposicion_peligro));
+        entries.add(new BarEntry(2, feminicidio));
+        entries.add(new BarEntry(3, homicidio_c));
+        entries.add(new BarEntry(4, homicidio_s));
+        entries.add(new BarEntry(5, lesiones_g));
+        entries.add(new BarEntry(6, lesiones_l));
+        entries.add(new BarEntry(7, parricidio));
+        entries.add(new BarEntry(8, sicariato));
+        entries.add(new BarEntry(9, otros));
 
         BarDataSet barDataSet = new BarDataSet(entries, "Lista de Delitos Específicos");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);

@@ -13,12 +13,24 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.carlitos.Pronacej.FiltrosSoa.FiltroPoblacionSoa;
 import com.carlitos.Pronacej.OpcionesCjdr.PoblacionCjdrActivity;
+import com.carlitos.Pronacej.OpcionesSoa.PoblacionSoaActivity;
 import com.carlitos.Pronacej.R;
+import com.carlitos.Pronacej.ResultadosCjrd.ResultadoReporteDiarioCJdr;
 import com.carlitos.Pronacej.Utils.Apis;
 import com.carlitos.Pronacej.Utils.CjdrService;
+import com.carlitos.Pronacej.Utils.SoaService;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -145,6 +157,7 @@ public class FiltroPoblacionCjdr extends AppCompatActivity {
             }
         });
     }
+
 
     private void initDatePicker() {
         // Establece el Locale a español

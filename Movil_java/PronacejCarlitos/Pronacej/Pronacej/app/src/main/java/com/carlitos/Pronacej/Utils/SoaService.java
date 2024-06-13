@@ -39,5 +39,9 @@ public interface SoaService {
             @Query("fechaFin") String fechafin
     );
 
+    // Reportes Diario CJDR
+    @GET("pronacej/v1/dailySoa/showReportSoa")
+    Call<List<Map<String, Object>>> obtenerReporteDiarioSoa(
+            @Query("fecha_seleccionada")String fecha_seleccionada);
 
 }

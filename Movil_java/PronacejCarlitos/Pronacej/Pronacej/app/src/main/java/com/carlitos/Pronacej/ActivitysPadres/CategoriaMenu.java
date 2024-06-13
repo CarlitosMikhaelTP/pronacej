@@ -42,7 +42,7 @@ public class CategoriaMenu extends AppCompatActivity {
         });
         categoriaCuatro.setOnClickListener(view -> {
             // Intent para pasar a otro activity
-            Intent intent = new Intent(CategoriaMenu.this, OpcionesCentrosJuvenilesActivity.class);
+            Intent intent = new Intent(CategoriaMenu.this, OpcionPronacejDigital.class);
             // Llamado a la acción de intent
             startActivity(intent);
         });

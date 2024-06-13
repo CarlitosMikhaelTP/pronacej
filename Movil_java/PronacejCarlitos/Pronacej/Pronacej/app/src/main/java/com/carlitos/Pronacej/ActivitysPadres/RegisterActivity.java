@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
 
         // Crear instancia de ApiService
-        loginService = Client.getClient("http://192.168.18.76:8080/").create(LoginService.class);
+        loginService = Client.getClient("http://181.176.172.117:8081/").create(LoginService.class);
 
         btnRegister.setOnClickListener(v -> registerUser());
     }

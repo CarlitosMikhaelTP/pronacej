@@ -44,6 +44,10 @@ public class ResultadosEstadoCjrd extends AppCompatActivity {
 
         // Crear un conjunto de datos para el gráfico de barras
         BarDataSet dataSet = new BarDataSet(entries, "Estado");
+
+        // Configurar los nombres de las columnas en la leyenda
+        String[] columnNames = new String[]{"Cierre Post", "Egreso", "Ingreso", "Ingreso Post"};
+        dataSet.setStackLabels(columnNames);
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS); // Colores de las barras
 
         // Configurar el gráfico de barras
@@ -69,6 +73,4 @@ public class ResultadosEstadoCjrd extends AppCompatActivity {
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL); // Orientación de la leyenda
         legend.setDrawInside(false); // Dibujar la leyenda dentro del gráfico
     }
-
-
 }

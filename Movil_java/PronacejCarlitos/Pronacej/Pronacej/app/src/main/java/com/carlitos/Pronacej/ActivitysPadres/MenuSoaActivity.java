@@ -16,6 +16,7 @@ import com.carlitos.Pronacej.FiltrosSoa.FiltroEducativaSoa;
 import com.carlitos.Pronacej.FiltrosSoa.FiltroInfraccionSoa;
 import com.carlitos.Pronacej.FiltrosSoa.FiltroLaboralSoa;
 import com.carlitos.Pronacej.FiltrosSoa.FiltroPoblacionSoa;
+import com.carlitos.Pronacej.FiltrosSoa.FiltroSimpleSoa;
 import com.carlitos.Pronacej.FiltrosSoa.FiltroTratamientoSoa;
 import com.carlitos.Pronacej.OpcionesCjdr.PoblacionCjdrActivity;
 import com.carlitos.Pronacej.OpcionesCjdr.InfraccionesCometidasCjdrActivity;
@@ -29,7 +30,7 @@ import com.carlitos.Pronacej.OpcionesSoa.PoblacionSoaActivity;
 import com.carlitos.Pronacej.OpcionesSoa.TratamientoDiferenciadoSoaActivity;
 import com.carlitos.Pronacej.R;
 
-;
+
 
 public class MenuSoaActivity extends AppCompatActivity {
 
@@ -38,6 +39,7 @@ public class MenuSoaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_soa);
 
+        ConstraintLayout opcionOcho = findViewById(R.id.Opcion8);
         ConstraintLayout opcionUno = findViewById(R.id.Opcion1);
         ConstraintLayout opcionDos = findViewById(R.id.Opcion2);
         ConstraintLayout opcionTres = findViewById(R.id.Opcion3);
@@ -83,6 +85,14 @@ public class MenuSoaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuSoaActivity.this, FiltroInfraccionSoa.class);
+                startActivity(intent);
+            }
+        });
+
+        opcionOcho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuSoaActivity.this, FiltroSimpleSoa.class);
                 startActivity(intent);
             }
         });

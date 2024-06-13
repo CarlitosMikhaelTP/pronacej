@@ -47,6 +47,10 @@ public class ResultadoAgresoresSexualesCjdr extends AppCompatActivity {
         BarDataSet dataSet = new BarDataSet(entries, "Resultados de Agresores Sexuales");
         dataSet.setColors(colors);
 
+        // Configurar los nombres en la leyenda
+        String[] legendLabels = {"Sí", "No"};
+        dataSet.setStackLabels(legendLabels);
+
         // Configurar el tamaño del texto dentro de las barras
         dataSet.setValueTextSize(12f);
 

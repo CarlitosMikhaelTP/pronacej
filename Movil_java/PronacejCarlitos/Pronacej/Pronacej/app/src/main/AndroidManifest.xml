@@ -26,6 +26,22 @@
             android:name=".OpcionesCjdr.TratamientoDiferenciadoCjdrActivity"
             android:exported="false" />
         <activity
+            android:name=".ResultadosSoa.ResultadoReporteDiarioSoa"
+            android:exported="false" />
+        <activity
+            android:name=".FiltrosCjdr.FiltroSimpleCjdr"
+            android:exported="false" />
+        <activity
+            android:name=".ActivitysPadres.OpcionPronacejDigital"
+            android:exported="false" />
+        <activity
+            android:name=".ResultadosCjrd.ResultadoReporteDiarioCJdr"
+            android:exported="false" />
+        <activity
+            android:name=".FiltrosSoa.FiltroSimpleSoa"
+            android:exported="false" />
+
+        <activity
             android:name=".OpcionesCjdr.InsercionEducativaCjdrActivity"
             android:exported="false" />
         <activity

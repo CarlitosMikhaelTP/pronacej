@@ -26,7 +26,7 @@ public class ResultadosSexoCjrd extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resultado_sexo_cjdr);
 
-        // Obtener los valores de ingresoSentenciado y ingresoProcesado
+        // Obtener los valores de sexo masculino y sexo femenino
         Intent intent = getIntent();
         sexo_masculino = intent.getIntExtra("sexo_masculino", 0);
         sexo_femenino = intent.getIntExtra("sexo_femenino", 0);
@@ -38,6 +38,10 @@ public class ResultadosSexoCjrd extends AppCompatActivity {
 
         // Crear un conjunto de datos para el gráfico de barras
         BarDataSet dataSet = new BarDataSet(entries, "Sexo");
+
+        // Configurar los nombres de las columnas en la leyenda
+        String[] columnNames = new String[]{"Masculino", "Femenino"};
+        dataSet.setStackLabels(columnNames);
         dataSet.setColors(new int[]{Color.BLUE, Color.RED}); // Colores de las barras
 
         // Configurar el gráfico de barras

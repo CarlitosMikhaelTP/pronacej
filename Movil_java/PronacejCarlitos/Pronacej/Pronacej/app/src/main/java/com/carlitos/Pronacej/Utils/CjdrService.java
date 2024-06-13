@@ -41,5 +41,9 @@ public interface CjdrService {
             @Query("fechaFin") String fechafin
     );
 
+    // Reportes Diario CJDR
+    @GET("pronacej/v1/dailyCjdr/showReportCjdr")
+    Call<List<Map<String, Object>>> obtenerReporteDiarioCjdr(
+            @Query("fecha_seleccionada")String fecha_seleccionada);
 
 }

@@ -21,6 +21,7 @@ import com.carlitos.Pronacej.FiltrosSoa.FiltroEducativaSoa;
 import com.carlitos.Pronacej.FiltrosSoa.FiltroInfraccionSoa;
 import com.carlitos.Pronacej.FiltrosSoa.FiltroLaboralSoa;
 import com.carlitos.Pronacej.FiltrosSoa.FiltroPoblacionSoa;
+import com.carlitos.Pronacej.FiltrosSoa.FiltroSimpleSoa;
 import com.carlitos.Pronacej.FiltrosSoa.FiltroTratamientoSoa;
 import com.carlitos.Pronacej.R;
 
@@ -31,6 +32,7 @@ public class MenuTotalesSoaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_totales_soa);
 
+        ConstraintLayout opcionOcho = findViewById(R.id.Opcion8);
         ConstraintLayout opcionUno = findViewById(R.id.Opcion1);
         ConstraintLayout opcionDos = findViewById(R.id.Opcion2);
         ConstraintLayout opcionTres = findViewById(R.id.Opcion3);
@@ -76,6 +78,14 @@ public class MenuTotalesSoaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuTotalesSoaActivity.this, FiltroInfraccionTotalSoa.class);
+                startActivity(intent);
+            }
+        });
+
+        opcionOcho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuTotalesSoaActivity.this, FiltroSimpleSoa.class);
                 startActivity(intent);
             }
         });

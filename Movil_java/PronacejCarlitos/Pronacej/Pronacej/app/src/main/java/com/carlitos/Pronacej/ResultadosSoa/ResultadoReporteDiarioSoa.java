@@ -1,61 +1,79 @@
-package com.carlitos.Pronacej.ResultadosCjrd;
+package com.carlitos.Pronacej.ResultadosSoa;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.carlitos.Pronacej.R;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ResultadoReporteDiarioCJdr extends AppCompatActivity {
+public class ResultadoReporteDiarioSoa extends AppCompatActivity {
 
-    private PieChart pieChart;
+    private HorizontalBarChart horizontalBarChart;
+    private TextView legendTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.resultado_reporte_diario_cjdr);
+        setContentView(R.layout.resultado_reporte_diario_soa);
 
-        pieChart = findViewById(R.id.pieChart);
+        horizontalBarChart = findViewById(R.id.horizontalBarChart);
 
-        // Obtener los datos pasados desde la actividad anterior
         ArrayList<HashMap<String, String>> reportData = (ArrayList<HashMap<String, String>>) getIntent().getSerializableExtra("reportData");
 
-        // Crear los objetos PieEntry a partir de los datos
-        ArrayList<PieEntry> entries = new ArrayList<>();
-        for (HashMap<String, String> data : reportData) {
-            String nombreCentro = data.get("centro_cjdr");
-            float poblacion = Float.parseFloat(data.get("poblacion_cjdr"));
-            String descripcion = nombreCentro + ": " + poblacion;
-            entries.add(new PieEntry(poblacion, descripcion));
+        if (reportData != null) {
+            mostrarGrafico(reportData);
+        } else {
+            Log.e("DATA_ERROR", "No se recibieron datos para el gráfico");
+        }
+    }
+
+    private void mostrarGrafico(ArrayList<HashMap<String, String>> reportData) {
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        ArrayList<String> labels = new ArrayList<>();
+
+        for (int i = 0; i < reportData.size(); i++) {
+            HashMap<String, String> entry = reportData.get(i);
+            String centroSoa = entry.get("centro_soa");
+            float poblacionSoa = Float.parseFloat(entry.get("poblacion_soa"));
+            entries.add(new BarEntry(i, poblacionSoa));
+            labels.add(centroSoa);
         }
 
-        // Crear el conjunto de datos para el gráfico de pastel
-        PieDataSet dataSet = new PieDataSet(entries, "Población por Centro Juvenil");
+        BarDataSet dataSet = new BarDataSet(entries, "Población por Centro SOA");
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        dataSet.setValueTextSize(12f);
-        dataSet.setValueTextColor(R.color.black);
 
-        // Crear los datos del gráfico de pastel
-        PieData pieData = new PieData(dataSet);
-
-        // Configurar la leyenda
-        pieChart.getLegend().setEnabled(true);
-        pieChart.getLegend().setTextSize(12f);
-
-        // Configurar descripción del gráfico
-        pieChart.getDescription().setEnabled(false);
-
-        // Establecer los datos en el gráfico y refrescar
-        pieChart.setData(pieData);
-        pieChart.invalidate(); // refrescar
+        BarData barData = new BarData(dataSet);
+        horizontalBarChart.setData(barData);
+        horizontalBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                int index = (int) value;
+                if (index >= 0 && index < labels.size()) {
+                    return labels.get(index);
+                } else {
+                    return "";
+                }
+            }
+        });
+        horizontalBarChart.invalidate(); // refresh
     }
 }

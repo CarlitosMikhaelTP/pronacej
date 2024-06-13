@@ -56,6 +56,9 @@ public class ResultadoCentroEducativoCjdr extends AppCompatActivity {
         entries.add(new BarEntry(6, universidad));
         entries.add(new BarEntry(7, ninguno));
 
+        // Configurar los nombres en la leyenda
+        String[] legendLabels = {"CEBR", "CEBA", "CEPRE", "Academia", "CETPRO", "Instituto", "Universidad", "Ninguno"};
+
         BarDataSet dataSet = new BarDataSet(entries, "Centro Educativo");
         dataSet.setColor(getResources().getColor(com.google.android.material.R.color.design_default_color_primary_dark));
 
@@ -70,7 +73,7 @@ public class ResultadoCentroEducativoCjdr extends AppCompatActivity {
         XAxis xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"CEBR", "CEBA", "CEPRE", "Academia", "CETPRO", "Instituto", "Universidad", "Ninguno"}));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(legendLabels));
 
         YAxis yAxis = barChart.getAxisLeft();
         yAxis.setDrawGridLines(false);
