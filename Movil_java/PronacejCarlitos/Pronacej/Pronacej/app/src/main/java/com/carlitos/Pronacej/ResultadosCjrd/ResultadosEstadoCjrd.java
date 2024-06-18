@@ -3,6 +3,7 @@ package com.carlitos.Pronacej.ResultadosCjrd;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,6 +36,24 @@ public class ResultadosEstadoCjrd extends AppCompatActivity {
         estado_ing = intent.getIntExtra("estado_ing", 0);
         estado_ing_post = intent.getIntExtra("estado_ing_post", 0);
 
+        // Calcular el total
+        int totalEstados = estado_cierre_post + estado_egr + estado_ing + estado_ing_post;
+
+        // Calcular los porcentajes
+        double porcentajeCierrePost = (double) estado_cierre_post / totalEstados * 100;
+        double porcentajeEgreso = (double) estado_egr / totalEstados * 100;
+        double porcentajeIngreso = (double) estado_ing / totalEstados * 100;
+        double porcentajeIngresoPost = (double) estado_ing_post / totalEstados * 100;
+
+        ((TextView) findViewById(R.id.textViewestado_cierre_postPorcentaje)).setText(String.format("%.2f%%", porcentajeCierrePost));
+        ((TextView) findViewById(R.id.textViewestado_cierre_post)).setText("Cierre post");
+        ((TextView) findViewById(R.id.textViewestado_egrPorcentaje)).setText(String.format("%.2f%%", porcentajeEgreso));
+        ((TextView) findViewById(R.id.textViewestado_egr)).setText("Egreso");
+        ((TextView) findViewById(R.id.textViewestado_ingPorcentaje)).setText(String.format("%.2f%%", porcentajeIngreso));
+        ((TextView) findViewById(R.id.textViewestado_ing)).setText("Ingreso");
+        ((TextView) findViewById(R.id.textViewestado_ing_postPorcentaje)).setText(String.format("%.2f%%", porcentajeIngresoPost));
+        ((TextView) findViewById(R.id.textViewestado_ing_post)).setText("Ingreso Post");
+
         // Crear una lista de entradas de datos para el gráfico de barras
         List<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(0, estado_cierre_post));
@@ -45,10 +64,16 @@ public class ResultadosEstadoCjrd extends AppCompatActivity {
         // Crear un conjunto de datos para el gráfico de barras
         BarDataSet dataSet = new BarDataSet(entries, "Estado");
 
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.Pronacej3));
+        colors.add(getResources().getColor(R.color.Pronacej8));
+        colors.add(getResources().getColor(R.color.Pronacej7));
+        colors.add(getResources().getColor(R.color.Pronacej5));
+
         // Configurar los nombres de las columnas en la leyenda
         String[] columnNames = new String[]{"Cierre Post", "Egreso", "Ingreso", "Ingreso Post"};
         dataSet.setStackLabels(columnNames);
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS); // Colores de las barras
+        dataSet.setColors(colors); // Colores de las barras
 
         // Configurar el gráfico de barras
         BarChart chart = findViewById(R.id.barChart);
@@ -72,5 +97,18 @@ public class ResultadosEstadoCjrd extends AppCompatActivity {
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER); // Alineación horizontal de la leyenda
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL); // Orientación de la leyenda
         legend.setDrawInside(false); // Dibujar la leyenda dentro del gráfico
+
+        // Mostrar los datos y porcentajes en el TextView
+        String texto = String.format(
+                "Cierre Post: %d personas (%.2f%%) " +
+                        "Egreso: %d personas (%.2f%%) " +
+                        "Ingreso: %d personas (%.2f%%) " +
+                        "Ingreso Post: %d personas (%.2f%%)",
+                estado_cierre_post, porcentajeCierrePost,
+                estado_egr, porcentajeEgreso,
+                estado_ing, porcentajeIngreso,
+                estado_ing_post, porcentajeIngresoPost);
+
+
     }
 }

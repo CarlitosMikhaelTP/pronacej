@@ -1,6 +1,7 @@
 package com.carlitos.Pronacej.ResultadosCjrd;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultadoIntervencionTerapeuticaCjdr extends AppCompatActivity {
-    private  int intervencion_aplica;
-    private  int intervencion_no_aplica;
+    private int intervencion_aplica;
+    private int intervencion_no_aplica;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,6 +27,13 @@ public class ResultadoIntervencionTerapeuticaCjdr extends AppCompatActivity {
 
         intervencion_aplica = getIntent().getIntExtra("intervencion_aplica", 0);
         intervencion_no_aplica = getIntent().getIntExtra("intervencion_no_aplica", 0);
+
+        // Calcular el total
+        int totalIntervenciones = intervencion_aplica + intervencion_no_aplica;
+
+        // Calcular los porcentajes
+        double porcentajeAplica = (double) intervencion_aplica / totalIntervenciones * 100;
+        double porcentajeNoAplica = (double) intervencion_no_aplica / totalIntervenciones * 100;
 
         // Configurar el gráfico de pastel
         PieChart pieChart = findViewById(R.id.pieChart);
@@ -52,5 +60,18 @@ public class ResultadoIntervencionTerapeuticaCjdr extends AppCompatActivity {
         PieData data = new PieData(dataSet);
         pieChart.setData(data);
         pieChart.invalidate(); // Refrescar el gráfico
+
+        // Mostrar los datos y porcentajes en el TextView
+        String texto = String.format(
+                "Se ve que existen %.2f%% (%d) de personas que no han recibido intervenciòn terapeutica mientras que el %.2f%% (%d) de personas si han recibido.",
+                porcentajeNoAplica, intervencion_no_aplica,
+                porcentajeAplica, intervencion_aplica);
+
+
+        ((TextView) findViewById(R.id.textViewintervencion_aplicaPorcentaje)).setText(String.format("%.2f%%", porcentajeAplica));
+        ((TextView) findViewById(R.id.textViewintervencion_aplica)).setText("Aplica intervención");
+
+        ((TextView) findViewById(R.id.textViewintervencion_no_aplicaPorcentaje)).setText(String.format("%.2f%%", porcentajeNoAplica));
+        ((TextView) findViewById(R.id.textViewintervencion_no_aplica)).setText("No aplica intervención");
     }
 }

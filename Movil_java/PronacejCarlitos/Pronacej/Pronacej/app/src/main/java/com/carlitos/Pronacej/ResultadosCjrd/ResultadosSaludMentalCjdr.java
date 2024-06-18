@@ -1,6 +1,7 @@
 package com.carlitos.Pronacej.ResultadosCjrd;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,12 @@ public class ResultadosSaludMentalCjdr extends AppCompatActivity {
         salud_si = getIntent().getIntExtra("salud_si", 0);
         salud_no = getIntent().getIntExtra("salud_no", 0);
 
+        int totalSalud = salud_no + salud_si;
+
+        // Calcular los porcentajes
+        double porcentajesalud_si = (double) salud_si / totalSalud * 100;
+        double porcentajesalud_no = (double) salud_no / totalSalud * 100;
+
         // Configurar el gráfico de pastel
         PieChart pieChart = findViewById(R.id.pieChart);
         pieChart.getDescription().setEnabled(false);
@@ -56,5 +63,14 @@ public class ResultadosSaludMentalCjdr extends AppCompatActivity {
         PieData data = new PieData(dataSet);
         pieChart.setData(data);
         pieChart.invalidate(); // Refrescar el gráfico
+
+
+        ((TextView) findViewById(R.id.textViewsalud_siPorcentaje)).setText(String.format("%.2f%%", porcentajesalud_si));
+        ((TextView) findViewById(R.id.textViewsalud_si)).setText("Salud mental");
+
+
+        ((TextView) findViewById(R.id.textViewsalud_noPorcentaje)).setText(String.format("%.2f%%", porcentajesalud_no));
+        ((TextView) findViewById(R.id.textViewsalud_no)).setText("Sin salud mental");
+
     }
 }

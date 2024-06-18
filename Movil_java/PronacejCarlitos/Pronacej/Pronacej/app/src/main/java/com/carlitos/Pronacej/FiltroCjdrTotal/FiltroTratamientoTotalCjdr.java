@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -60,6 +61,7 @@ public class FiltroTratamientoTotalCjdr extends AppCompatActivity {
     private Button dateButtonFinal;
     private String selectedDateInicio;
     private String selectedDateFinal;
+    private CheckBox cbIncluirEstadoIng;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class FiltroTratamientoTotalCjdr extends AppCompatActivity {
         initDatePickerFinal();
         selectedDateInicio = getTodaysDate();
         selectedDateFinal = getTodaysDate();
-
+        cbIncluirEstadoIng = findViewById(R.id.cbIncluirEstadoIng);
 
         tvErrorFecha = findViewById(R.id.tvErrorFecha);
         btnGenerarGrafico = findViewById(R.id.btnEnviar);
@@ -81,10 +83,15 @@ public class FiltroTratamientoTotalCjdr extends AppCompatActivity {
         btnGenerarGrafico.setOnClickListener(view -> {
             String fechaInicio = showSelectedDateInicio(dateButtonInicio).toString().trim();
             String fechaFin = showSelectedDateFinal(dateButtonFinal).toString().trim();
+            boolean incluirEstadoIng = cbIncluirEstadoIng.isChecked();
 
             if (validarFechaFormato(fechaInicio) && (fechaFin.isEmpty() || validarFechaFormato(fechaFin))) {
                 tvErrorFecha.setVisibility(View.GONE);
-                llamarEndPoint(fechaInicio, fechaFin.isEmpty() ? null : fechaFin);
+                if (fechaFin.isEmpty()) {
+                    fechaFin = fechaInicio;
+                    dateButtonFinal.setText(fechaInicio);
+                }
+                llamarEndPoint(fechaInicio, fechaFin, incluirEstadoIng);
             } else {
                 tvErrorFecha.setVisibility(View.VISIBLE);
             }
@@ -96,8 +103,8 @@ public class FiltroTratamientoTotalCjdr extends AppCompatActivity {
         return fecha.matches(pattern);
     }
 
-    private void llamarEndPoint(String fechaInicio, @Nullable String fechaFin) {
-        Call<List<Map<String, Object>>> call = cjdrService.obtenerTD(fechaInicio, fechaFin);
+    private void llamarEndPoint(String fechaInicio, @Nullable String fechaFin, boolean incluirEstadoIng) {
+        Call<List<Map<String, Object>>> call = cjdrService.obtenerTD(fechaInicio, fechaFin, incluirEstadoIng);
         call.enqueue(new Callback<List<Map<String, Object>>>() {
             @Override
             public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
@@ -105,24 +112,24 @@ public class FiltroTratamientoTotalCjdr extends AppCompatActivity {
                     List<Map<String, Object>> data = response.body();
                     if (data != null && !data.isEmpty()) {
                         Map<String, Object> firstElement = data.get(0);
-                        participa_programa_uno = ((Double) firstElement.get("participa_programa_uno")).intValue();
-                        participa_programa_dos = ((Double) firstElement.get("participa_programa_dos")).intValue();
-                        participa_programa_tres = ((Double) firstElement.get("participa_programa_tres")).intValue();
-                        participa_programa_cuatro = ((Double) firstElement.get("participa_programa_cuatro")).intValue();
-                        participa_programa_cinco = ((Double) firstElement.get("participa_programa_cinco")).intValue();
-                        participa_programa_no = ((Double) firstElement.get("participa_programa_no")).intValue();
-                        justicia_si = ((Double) firstElement.get("justicia_si")).intValue();
-                        justicia_no = ((Double) firstElement.get("justicia_no")).intValue();
-                        agresor_si = ((Double) firstElement.get("agresor_si")).intValue();
-                        agresor_no = ((Double) firstElement.get("agresor_no")).intValue();
-                        salud_si = ((Double) firstElement.get("salud_si")).intValue();
-                        salud_no = ((Double) firstElement.get("salud_no")).intValue();
-                        adn_si = ((Double) firstElement.get("adn_si")).intValue();
-                        adn_no = ((Double) firstElement.get("adn_no")).intValue();
-                        intervencion_aplica = ((Double) firstElement.get("intervencion_aplica")).intValue();
-                        intervencion_no_aplica = ((Double) firstElement.get("intervencion_no_aplica")).intValue();
-                        firmes_aplica = ((Double) firstElement.get("firmes_aplica")).intValue();
-                        firmes_no_aplica = ((Double) firstElement.get("firmes_no_aplica")).intValue();
+                        participa_programa_uno = getIntValue(firstElement, "participa_programa_uno");
+                        participa_programa_dos = getIntValue(firstElement, "participa_programa_dos");
+                        participa_programa_tres = getIntValue(firstElement, "participa_programa_tres");
+                        participa_programa_cuatro = getIntValue(firstElement, "participa_programa_cuatro");
+                        participa_programa_cinco = getIntValue(firstElement, "participa_programa_cinco");
+                        participa_programa_no = getIntValue(firstElement, "participa_programa_no");
+                        justicia_si = getIntValue(firstElement, "justicia_si");
+                        justicia_no = getIntValue(firstElement, "justicia_no");
+                        agresor_si = getIntValue(firstElement, "agresor_si");
+                        agresor_no = getIntValue(firstElement, "agresor_no");
+                        salud_si = getIntValue(firstElement, "salud_si");
+                        salud_no = getIntValue(firstElement, "salud_no");
+                        adn_si = getIntValue(firstElement, "adn_si");
+                        adn_no = getIntValue(firstElement, "adn_no");
+                        intervencion_aplica = getIntValue(firstElement, "intervencion_aplica");
+                        intervencion_no_aplica = getIntValue(firstElement, "intervencion_no_aplica");
+                        firmes_aplica = getIntValue(firstElement, "firmes_aplica");
+                        firmes_no_aplica = getIntValue(firstElement, "firmes_no_aplica");
 
                         // Crear el Intent y añadir los extras
                         Intent intent = new Intent(FiltroTratamientoTotalCjdr.this, TratamientoDiferenciadoCjdrActivity.class);
@@ -160,13 +167,16 @@ public class FiltroTratamientoTotalCjdr extends AppCompatActivity {
         });
     }
 
-
-
-
-
-
-
-
+    private int getIntValue(Map<String, Object> map, String key) {
+        Object value = map.get(key);
+        if (value instanceof Double) {
+            return ((Double) value).intValue();
+        } else if (value instanceof Integer) {
+            return (Integer) value;
+        } else {
+            return 0; // O cualquier valor por defecto que consideres adecuado
+        }
+    }
 
     private String getTodaysDate() {
         Calendar cal = Calendar.getInstance();
@@ -188,6 +198,8 @@ public class FiltroTratamientoTotalCjdr extends AppCompatActivity {
                 month = month + 1;
                 selectedDateInicio = makeDateString(dayOfMonth, month, year);
                 dateButtonInicio.setText(selectedDateInicio);
+                selectedDateFinal = selectedDateInicio;
+                dateButtonFinal.setText(selectedDateFinal);
             }
         };
 

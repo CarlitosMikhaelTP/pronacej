@@ -1,6 +1,7 @@
 package com.carlitos.Pronacej.ResultadosSoa;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,23 @@ public class ResultadosSituacionEducativaActualSoa extends AppCompatActivity {
         sea_termino_basico = getIntent().getIntExtra("sea_termino_basico", 0);
         sea_termino_no_doc = getIntent().getIntExtra("sea_termino_no_doc", 0);
 
+        int totalSEA = sea_estudia + sea_termino_basico + sea_termino_no_doc;
+
+        // Calcular los porcentajes
+        double porcentajesea_estudia = (double) sea_estudia / totalSEA * 100;
+        double porcentajesea_termino_basico = (double) sea_termino_basico / totalSEA * 100;
+        double porcentajesea_termino_no_doc = (double) sea_termino_no_doc / totalSEA * 100;
+
+        ((TextView) findViewById(R.id.textViewsea_estudiaPorcentaje)).setText(String.format("%.2f%%", porcentajesea_estudia));
+        ((TextView) findViewById(R.id.textViewsea_estudia)).setText("Estudia");
+
+        ((TextView) findViewById(R.id.textViewsea_termino_basicoPorcentaje)).setText(String.format("%.2f%%", porcentajesea_termino_basico));
+        ((TextView) findViewById(R.id.textViewsea_termino_basico)).setText("Basico terminado");
+
+        ((TextView) findViewById(R.id.textViewsea_termino_no_docPorcentaje)).setText(String.format("%.2f%%", porcentajesea_termino_no_doc));
+        ((TextView) findViewById(R.id.textViewsea_termino_no_doc)).setText("No doc");
+
+
         ScatterChart scatterChart = findViewById(R.id.scatterChart);
 
         ArrayList<Entry> entries = new ArrayList<>();
@@ -41,10 +59,16 @@ public class ResultadosSituacionEducativaActualSoa extends AppCompatActivity {
         entries.add(new Entry(1, sea_termino_basico));
         entries.add(new Entry(2, sea_termino_no_doc));
 
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.Pronacej2));
+        colors.add(getResources().getColor(R.color.Pronacej4));
+        colors.add(getResources().getColor(R.color.Pronacej6));
+
+
         ScatterDataSet dataSet = new ScatterDataSet(entries, "Situación Educativa Actual");
         dataSet.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
         dataSet.setScatterShapeSize(15f);
-        dataSet.setColor(getResources().getColor(com.google.android.material.R.color.design_default_color_primary));
+        dataSet.setColors(colors);
 
         ArrayList<IScatterDataSet> dataSets = new ArrayList<>();
         dataSets.add(dataSet);
@@ -73,6 +97,7 @@ public class ResultadosSituacionEducativaActualSoa extends AppCompatActivity {
         legend.setDrawInside(false);
 
         scatterChart.invalidate();
+
     }
 
 }

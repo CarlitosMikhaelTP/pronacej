@@ -2,6 +2,7 @@ package com.carlitos.Pronacej.ResultadosSoa;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import java.util.List;
 public class ResultadosTotalPoblacionSoa extends AppCompatActivity {
 
     private int totalRegistros;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,22 +38,24 @@ public class ResultadosTotalPoblacionSoa extends AppCompatActivity {
         BarData barData = new BarData(dataSet);
         barChart.setData(barData);
 
+        // Agregar leyenda
+        Legend legend = barChart.getLegend();
+        legend.setForm(Legend.LegendForm.SQUARE);
+        legend.setTextSize(12f);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setDrawInside(false);
+
         XAxis xAxis = barChart.getXAxis();
         xAxis.setEnabled(false);
 
-        // Agregar leyenda al gráfico
-        Legend legend = barChart.getLegend();
-        legend.setEnabled(true);
-        legend.setTextSize(12f);
-        legend.setTextColor(Color.BLACK);
-        legend.setForm(Legend.LegendForm.SQUARE);
-        legend.setFormSize(12f);
-        legend.setXEntrySpace(10f);
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-
         barChart.getDescription().setEnabled(false);
         barChart.invalidate();
+
+        // Actualizar el TextView con el total de registros
+        TextView textView28 = findViewById(R.id.textView28);
+        String mensaje = "Total de registros: " + totalRegistros;
+        textView28.setText(mensaje);
     }
 }

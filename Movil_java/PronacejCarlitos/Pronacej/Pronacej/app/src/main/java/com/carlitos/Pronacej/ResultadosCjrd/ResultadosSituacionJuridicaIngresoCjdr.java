@@ -3,6 +3,7 @@ package com.carlitos.Pronacej.ResultadosCjrd;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,13 +40,34 @@ public class ResultadosSituacionJuridicaIngresoCjdr extends AppCompatActivity {
         barChart.getDescription().setEnabled(false);
         barChart.setDrawGridBackground(false);
 
+
+
+// Calcular el total de participantes
+        int totalParticipantes = ingreso_sentenciado + ingreso_procesado;
+
+// Calcular los porcentajes
+        double porcentajeSentenciado = (double) ingreso_sentenciado / totalParticipantes * 100;
+        double porcentajeProcesado = (double) ingreso_procesado / totalParticipantes * 100;
+
+        ((TextView) findViewById(R.id.textViewingreso_sentenciadoPorcentaje)).setText(String.format("%.2f%%", porcentajeSentenciado));
+        ((TextView) findViewById(R.id.textViewingreso_sentenciado)).setText("Ingreso de sentenciado");
+
+        ((TextView) findViewById(R.id.textViewingreso_procesadoPorcentaje)).setText(String.format("%.2f%%", porcentajeProcesado));
+        ((TextView) findViewById(R.id.textViewingreso_procesado)).setText("Ingreso de procesado");
+
+
         // Configurar los datos para el gráfico
         List<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(0f, ingreso_sentenciado));
         entries.add(new BarEntry(1f, ingreso_procesado));
 
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.Pronacej2));
+        colors.add(getResources().getColor(R.color.Pronacej3));
+
+
         BarDataSet barDataSet = new BarDataSet(entries, "Situación Jurídica Ingreso");
-        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        barDataSet.setColors(colors);
         barDataSet.setValueTextSize(12f);
 
         BarData barData = new BarData(barDataSet);

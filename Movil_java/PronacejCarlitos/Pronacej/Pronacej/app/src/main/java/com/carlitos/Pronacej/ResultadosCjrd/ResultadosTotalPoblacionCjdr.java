@@ -1,6 +1,7 @@
 package com.carlitos.Pronacej.ResultadosCjrd;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import java.util.List;
 public class ResultadosTotalPoblacionCjdr extends AppCompatActivity {
 
     private int totalRegistros;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,5 +51,10 @@ public class ResultadosTotalPoblacionCjdr extends AppCompatActivity {
 
         barChart.getDescription().setEnabled(false);
         barChart.invalidate();
+
+        // Actualizar el TextView con el total de registros
+        TextView textView28 = findViewById(R.id.textView28);
+        String mensaje = "Total de registros: " + totalRegistros;
+        textView28.setText(mensaje);
     }
 }

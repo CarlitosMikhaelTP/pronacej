@@ -91,7 +91,7 @@ public class PoblacionSoaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Iniciar la actividad correspondiente al presionar el ConstraintLayout 2
-                Intent intentOpcion2 = new Intent(PoblacionSoaActivity.this, ResultadosSituacionJuridicaCjdr.class);
+                Intent intentOpcion2 = new Intent(PoblacionSoaActivity.this, ResultadosSituacionJuridicaSoa.class);
                 intentOpcion2.putExtra("ingresoSentenciado", ingresoSentenciado);
                 intentOpcion2.putExtra("ingresoProcesado", ingresoProcesado);
                 startActivity(intentOpcion2);

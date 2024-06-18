@@ -1,32 +1,29 @@
 package com.carlitos.Pronacej.ResultadosCjrd;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.carlitos.Pronacej.R;
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ResultadoJusticiaTerapeuticaCjdr extends AppCompatActivity {
 
     private int justicia_si;
     private int justicia_no;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resultado_justicia_terapeutica_cjdr);
+
         justicia_si = getIntent().getIntExtra("justicia_si", 0);
         justicia_no = getIntent().getIntExtra("justicia_no", 0);
 
@@ -59,5 +56,15 @@ public class ResultadoJusticiaTerapeuticaCjdr extends AppCompatActivity {
         pieChart.getLegend().setEnabled(true);
 
         pieChart.invalidate(); // Refrescar el gráfico
+
+        // Calcular los porcentajes
+        int total = justicia_si + justicia_no;
+        float porcentaje_si = ((float) justicia_si / total) * 100;
+        float porcentaje_no = ((float) justicia_no / total) * 100;
+
+        ((TextView) findViewById(R.id.textViewparticipa_programa_unoPorcentaje)).setText(String.format("%.2f%%", porcentaje_si));
+        ((TextView) findViewById(R.id.textViewparticipa_programa_uno)).setText("Si tiene justicia");
+        ((TextView) findViewById(R.id.textViewjusticia_noPorcentaje)).setText(String.format("%.2f%%", porcentaje_no));
+        ((TextView) findViewById(R.id.textViewjusticia_no)).setText("No tiene justicia");
     }
 }

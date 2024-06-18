@@ -60,6 +60,12 @@
             android:textColor="@color/black"
             android:textSize="25sp" />
 
+        <CheckBox
+            android:id="@+id/cbIncluirEstadoIng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Incluir solo Estado ING" />
+
         <TextView
             android:id="@+id/textView20"
             android:layout_width="match_parent"
@@ -102,6 +108,17 @@
             android:onClick="showSelectedDates"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tvErrorFecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Formato de fecha incorrecto"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etFechaInicio"
+        tools:ignore="NotSibling" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"

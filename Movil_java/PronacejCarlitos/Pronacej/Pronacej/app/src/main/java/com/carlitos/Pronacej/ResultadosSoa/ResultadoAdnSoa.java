@@ -1,17 +1,22 @@
 package com.carlitos.Pronacej.ResultadosSoa;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.carlitos.Pronacej.R;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
@@ -32,36 +37,60 @@ public class ResultadoAdnSoa extends AppCompatActivity {
         adn_si = getIntent().getIntExtra("adn_si", 0);
         adn_no = getIntent().getIntExtra("adn_no", 0);
 
-        // Configurar el gráfico de barras
-        BarChart barChart = findViewById(R.id.barChart);
-        barChart.getDescription().setEnabled(false);
-        barChart.setDrawGridBackground(false);
+        // Calcular el total
+        int total = adn_si + adn_no;
 
-        // Crear las entradas para el gráfico de barras
-        List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0, adn_si));
-        entries.add(new BarEntry(1, adn_no));
+        // Calcular los porcentajes
+        double por_si = (total != 0) ? (adn_si * 100.0 / total) : 0;
+        double por_no = (total != 0) ? (adn_no * 100.0 / total) : 0;
 
-        // Crear el conjunto de datos del gráfico de barras
-        BarDataSet dataSet = new BarDataSet(entries, "ADN");
-        dataSet.setColors(getResources().getColor(android.R.color.holo_green_light),
-                getResources().getColor(android.R.color.holo_red_light));
+        // Actualizar los TextView con los valores correctos
+        TextView textView13 = findViewById(R.id.textView13);
+        textView13.setText(String.format("%.2f%%", por_si));
 
-        // Configurar el tamaño del texto dentro del gráfico de barras
+        TextView textView7 = findViewById(R.id.textView7);
+        textView7.setText(String.format("ADN sí; %d personas", adn_si));
+
+        TextView textView135 = findViewById(R.id.textView135);
+        textView135.setText(String.format("%.2f%%", por_no));
+
+        TextView textView75 = findViewById(R.id.textView75);
+        textView75.setText(String.format("ADN no; %d personas", adn_no));
+
+        TextView txtSummary = findViewById(R.id.textView28);
+        String summaryText = String.format(
+                "El gráfico muestra que existe un %.2f%% (%d) de personas que NO tienen ADN del familiar mientras que el resto %.2f%% (%d) tienen ADN familiar.",
+                por_no, adn_no, por_si, adn_si
+        );
+        txtSummary.setText(summaryText);
+
+        // Configurar el gráfico de pie
+        PieChart pieChart = findViewById(R.id.pieChart);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setUsePercentValues(true);
+        pieChart.setEntryLabelColor(getResources().getColor(android.R.color.black));
+        pieChart.setEntryLabelTextSize(12f);
+
+        // Crear las entradas para el gráfico de pie
+        List<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry((float) adn_si, "ADN"));
+        entries.add(new PieEntry((float) adn_no, "NO ADN"));
+
+
+
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(android.R.color.holo_green_light));
+        colors.add(getResources().getColor(android.R.color.holo_red_light));
+
+        // Crear el conjunto de datos del gráfico de pie
+        PieDataSet dataSet = new PieDataSet(entries, "");
+        dataSet.setColors(colors);
         dataSet.setValueTextSize(12f);
 
-        // Configurar ejes y leyenda
-        XAxis xAxis = barChart.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"Sí", "No"}));
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-
-        Legend legend = barChart.getLegend();
-        legend.setEnabled(false);
-
-        // Agregar los datos al gráfico de barras
-        BarData data = new BarData(dataSet);
-        barChart.setData(data);
-        barChart.invalidate(); // Refrescar el gráfico
+        // Agregar los datos al gráfico de pie
+        PieData data = new PieData(dataSet);
+        pieChart.setData(data);
+        pieChart.invalidate();
     }
 }

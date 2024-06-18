@@ -1,6 +1,7 @@
 package com.carlitos.Pronacej.ResultadosSoa;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,10 +19,12 @@ public class ResultadoJusticiaTerapeuticaSoa extends AppCompatActivity {
 
     private int justicia_si;
     private int justicia_no;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resultado_justicia_terapeutica_soa);
+
         justicia_si = getIntent().getIntExtra("justicia_si", 0);
         justicia_no = getIntent().getIntExtra("justicia_no", 0);
 
@@ -46,16 +49,23 @@ public class ResultadoJusticiaTerapeuticaSoa extends AppCompatActivity {
         // Configurar el tamaño del texto dentro de las entradas
         dataSet.setValueTextSize(12f);
 
-        // Configurar leyenda
-        Legend legend = pieChart.getLegend();
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        legend.setWordWrapEnabled(true);
-
-        // Agregar datos al gráfico de pastel
+        // Agregar leyenda
         PieData data = new PieData(dataSet);
         pieChart.setData(data);
+
+        // Configurar la leyenda
+        pieChart.getLegend().setEnabled(true);
+
         pieChart.invalidate(); // Refrescar el gráfico
+
+        // Calcular los porcentajes
+        int total = justicia_si + justicia_no;
+        float porcentaje_si = ((float) justicia_si / total) * 100;
+        float porcentaje_no = ((float) justicia_no / total) * 100;
+
+        ((TextView) findViewById(R.id.textViewparticipa_programa_unoPorcentaje)).setText(String.format("%.2f%%", porcentaje_si));
+        ((TextView) findViewById(R.id.textViewparticipa_programa_uno)).setText("Si tiene justicia");
+        ((TextView) findViewById(R.id.textViewjusticia_noPorcentaje)).setText(String.format("%.2f%%", porcentaje_no));
+        ((TextView) findViewById(R.id.textViewjusticia_no)).setText("No tiene justicia");
     }
 }

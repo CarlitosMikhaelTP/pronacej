@@ -3,6 +3,7 @@ package com.carlitos.Pronacej.ResultadosCjrd;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,6 +32,13 @@ public class ResultadosSituacionJuridicaActualCjdr extends AppCompatActivity {
         juridica_sentenciado = intent.getIntExtra("juridica_sentenciado", 0);
         juridica_procesado = intent.getIntExtra("juridica_procesado", 0);
 
+        // Calcular el total de participantes
+        int totalParticipantes = juridica_sentenciado + juridica_procesado;
+
+        // Calcular los porcentajes
+        double porcentajeSentenciado = (double) juridica_sentenciado / totalParticipantes * 100;
+        double porcentajeProcesado = (double) juridica_procesado / totalParticipantes * 100;
+
         // Configurar el gráfico de barras
         BarChart barChart = findViewById(R.id.barChart);
         barChart.getDescription().setEnabled(false);
@@ -40,9 +48,13 @@ public class ResultadosSituacionJuridicaActualCjdr extends AppCompatActivity {
         entries.add(new BarEntry(0f, juridica_sentenciado));
         entries.add(new BarEntry(1f, juridica_procesado));
 
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.Pronacej5));
+        colors.add(getResources().getColor(R.color.Pronacej3));
+
         // Crear el conjunto de datos del gráfico de barras
         BarDataSet dataSet = new BarDataSet(entries, "Situación Jurídica Actual");
-        dataSet.setColors(new int[]{Color.BLUE, Color.GREEN});
+        dataSet.setColors(colors);
         dataSet.setValueTextColor(Color.WHITE);
         dataSet.setValueTextSize(12f);
 
@@ -54,5 +66,10 @@ public class ResultadosSituacionJuridicaActualCjdr extends AppCompatActivity {
         BarData data = new BarData(dataSet);
         barChart.setData(data);
         barChart.invalidate(); // Refrescar el gráfico
+
+        ((TextView) findViewById(R.id.textViewjuridica_sentenciadoPorcentaje)).setText(String.format("%.2f%%", porcentajeSentenciado));
+        ((TextView) findViewById(R.id.textViewjuridica_sentenciado)).setText("Sentenciado");
+        ((TextView) findViewById(R.id.textViewjuridica_procesadoPorcentaje)).setText(String.format("%.2f%%", porcentajeProcesado));
+        ((TextView) findViewById(R.id.textViewjuridica_procesado)).setText("Procesado");
     }
 }

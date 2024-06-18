@@ -2,6 +2,7 @@ package com.carlitos.Pronacej.ResultadosSoa;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,8 +27,15 @@ public class ResultadosSaludMentalSoa extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resultados_salud_mental_soa);
 
+        // Obtener los valores de salud mental desde el intent
         salud_si = getIntent().getIntExtra("salud_si", 0);
         salud_no = getIntent().getIntExtra("salud_no", 0);
+
+        int totalSalud = salud_no + salud_si;
+
+        // Calcular los porcentajes
+        double porcentajesalud_si = (double) salud_si / totalSalud * 100;
+        double porcentajesalud_no = (double) salud_no / totalSalud * 100;
 
         // Configurar el gráfico de pastel
         PieChart pieChart = findViewById(R.id.pieChart);
@@ -39,7 +47,7 @@ public class ResultadosSaludMentalSoa extends AppCompatActivity {
         entries.add(new PieEntry(salud_no, "Salud No"));
 
         // Crear el conjunto de datos del gráfico de pastel
-        PieDataSet dataSet = new PieDataSet(entries, "");
+        PieDataSet dataSet = new PieDataSet(entries, "Estado de Salud Mental");
         dataSet.setColors(getResources().getColor(android.R.color.holo_green_light),
                 getResources().getColor(android.R.color.holo_red_light));
 
@@ -48,19 +56,20 @@ public class ResultadosSaludMentalSoa extends AppCompatActivity {
 
         // Configurar la leyenda
         Legend legend = pieChart.getLegend();
-        legend.setEnabled(true);
-        legend.setTextSize(12f);
-        legend.setTextColor(Color.BLACK);
-        legend.setForm(Legend.LegendForm.SQUARE);
-        legend.setFormSize(12f);
-        legend.setXEntrySpace(10f);
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setEnabled(true); // Habilitar la leyenda
 
         // Agregar los datos al gráfico de pastel
         PieData data = new PieData(dataSet);
         pieChart.setData(data);
         pieChart.invalidate(); // Refrescar el gráfico
+
+
+        ((TextView) findViewById(R.id.textViewsalud_siPorcentaje)).setText(String.format("%.2f%%", porcentajesalud_si));
+        ((TextView) findViewById(R.id.textViewsalud_si)).setText("Salud mental");
+
+
+        ((TextView) findViewById(R.id.textViewsalud_noPorcentaje)).setText(String.format("%.2f%%", porcentajesalud_no));
+        ((TextView) findViewById(R.id.textViewsalud_no)).setText("Sin salud mental");
+
     }
 }

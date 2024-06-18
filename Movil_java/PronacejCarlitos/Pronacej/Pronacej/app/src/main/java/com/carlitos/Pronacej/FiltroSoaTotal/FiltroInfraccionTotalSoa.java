@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -58,6 +59,7 @@ public class FiltroInfraccionTotalSoa extends AppCompatActivity {
     private String selectedDateInicio;
     private String selectedDateFinal;
     private SoaService soaService;
+    private CheckBox cbIncluirEstadoIng;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,14 +75,20 @@ public class FiltroInfraccionTotalSoa extends AppCompatActivity {
         tvErrorFecha = findViewById(R.id.tvErrorFecha);
         btnGenerarGrafico = findViewById(R.id.btnEnviar);
         soaService = Apis.getSoaService();
+        cbIncluirEstadoIng = findViewById(R.id.cbIncluirEstadoIng);
 
         btnGenerarGrafico.setOnClickListener(view -> {
             String fechaInicio = showSelectedDateInicio(dateButtonInicio).toString().trim();
             String fechaFin = showSelectedDateFinal(dateButtonFinal).toString().trim();
+            boolean incluirEstadoIng = cbIncluirEstadoIng.isChecked();
 
             if (validarFechaFormato(fechaInicio) && (fechaFin.isEmpty() || validarFechaFormato(fechaFin))) {
                 tvErrorFecha.setVisibility(View.GONE);
-                llamarEndPoint(fechaInicio, fechaFin.isEmpty() ? null : fechaFin);
+                if (fechaFin.isEmpty()) {
+                    fechaFin = fechaInicio;
+                    dateButtonFinal.setText(fechaInicio);
+                }
+                llamarEndPoint(fechaInicio, fechaFin, incluirEstadoIng);
             } else {
                 tvErrorFecha.setVisibility(View.VISIBLE);
             }
@@ -92,8 +100,8 @@ public class FiltroInfraccionTotalSoa extends AppCompatActivity {
         return fecha.matches(pattern);
     }
 
-    private void llamarEndPoint(String fechaInicio, @Nullable String fechaFin)  {
-        Call<List<Map<String, Object>>> call = soaService.obtenerIC(fechaInicio, fechaFin);
+    private void llamarEndPoint(String fechaInicio, @Nullable String fechaFin, boolean incluirEstadoIng) {
+        Call<List<Map<String, Object>>> call = soaService.obtenerIC(fechaInicio, fechaFin, incluirEstadoIng);
         call.enqueue(new Callback<List<Map<String, Object>>>() {
             @Override
             public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
@@ -103,20 +111,20 @@ public class FiltroInfraccionTotalSoa extends AppCompatActivity {
                     if (data != null && !data.isEmpty()) {
 
                         Map<String, Object> firstElement = data.get(0);
-                        autoaborto = ((Double) firstElement.get("autoaborto")).intValue();
-                        exposicion_peligro = ((Double) firstElement.get("exposicion_peligro")).intValue();
-                        feminicidio = ((Double) firstElement.get("feminicidio")).intValue();
-                        homicidio_c = ((Double) firstElement.get("homicidio_c")).intValue();
-                        homicidio_s = ((Double) firstElement.get("homicidio_s")).intValue();
-                        lesiones_g = ((Double) firstElement.get("lesiones_g")).intValue();
-                        lesiones_l = ((Double) firstElement.get("lesiones_l")).intValue();
-                        parricidio = ((Double) firstElement.get("parricidio")).intValue();
-                        sicariato = ((Double) firstElement.get("sicariato")).intValue();
-                        otros = ((Double) firstElement.get("otros")).intValue();
-                        juridica_sentenciado = ((Double) firstElement.get("juridica_sentenciado")).intValue();
-                        juridica_procesado = ((Double) firstElement.get("juridica_procesado")).intValue();
-                        ingreso_sentenciado = ((Double) firstElement.get("ingreso_sentenciado")).intValue();
-                        ingreso_procesado = ((Double) firstElement.get("ingreso_procesado")).intValue();
+                        autoaborto = getIntValue(firstElement, "autoaborto");
+                        exposicion_peligro = getIntValue(firstElement, "exposicion_peligro");
+                        feminicidio = getIntValue(firstElement, "feminicidio");
+                        homicidio_c = getIntValue(firstElement, "homicidio_c");
+                        homicidio_s = getIntValue(firstElement, "homicidio_s");
+                        lesiones_g = getIntValue(firstElement, "lesiones_g");
+                        lesiones_l = getIntValue(firstElement, "lesiones_l");
+                        parricidio = getIntValue(firstElement, "parricidio");
+                        sicariato = getIntValue(firstElement, "sicariato");
+                        otros = getIntValue(firstElement, "otros");
+                        juridica_sentenciado = getIntValue(firstElement, "juridica_sentenciado");
+                        juridica_procesado = getIntValue(firstElement, "juridica_procesado");
+                        ingreso_sentenciado = getIntValue(firstElement, "ingreso_sentenciado");
+                        ingreso_procesado = getIntValue(firstElement, "ingreso_procesado");
 
                         // Crear el Intent y añadir los extras
                         Intent intent = new Intent(FiltroInfraccionTotalSoa.this, InfraccionesCometidasSoaActivity.class);
@@ -149,13 +157,16 @@ public class FiltroInfraccionTotalSoa extends AppCompatActivity {
         });
     }
 
-
-
-
-
-
-
-
+    private int getIntValue(Map<String, Object> map, String key) {
+        Object value = map.get(key);
+        if (value instanceof Double) {
+            return ((Double) value).intValue();
+        } else if (value instanceof Integer) {
+            return (Integer) value;
+        } else {
+            return 0; // O cualquier valor por defecto que consideres adecuado
+        }
+    }
 
     private String getTodaysDate() {
         Calendar cal = Calendar.getInstance();
@@ -177,6 +188,8 @@ public class FiltroInfraccionTotalSoa extends AppCompatActivity {
                 month = month + 1;
                 selectedDateInicio = makeDateString(dayOfMonth, month, year);
                 dateButtonInicio.setText(selectedDateInicio);
+                selectedDateFinal = selectedDateInicio;
+                dateButtonFinal.setText(selectedDateFinal);
             }
         };
 

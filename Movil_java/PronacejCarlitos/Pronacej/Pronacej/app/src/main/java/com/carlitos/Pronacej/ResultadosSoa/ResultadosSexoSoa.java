@@ -3,6 +3,7 @@ package com.carlitos.Pronacej.ResultadosSoa;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,10 +27,21 @@ public class ResultadosSexoSoa extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resultado_sexo_soa);
 
-        // Obtener los valores de ingresoSentenciado y ingresoProcesado
+        // Obtener los valores de sexo masculino y sexo femenino
         Intent intent = getIntent();
         sexo_masculino = intent.getIntExtra("sexo_masculino", 0);
         sexo_femenino = intent.getIntExtra("sexo_femenino", 0);
+
+        // Calcular el total de participantes
+        int totalParticipantes = sexo_masculino + sexo_femenino;
+
+        // Calcular los porcentajes
+        double porcentajeMasculino = (double) sexo_masculino / totalParticipantes * 100;
+        double porcentajeFemenino = (double) sexo_femenino / totalParticipantes * 100;
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.Pronacej1));
+        colors.add(getResources().getColor(R.color.Pronacej2));
 
         // Crear una lista de entradas de datos para el gráfico de barras
         List<BarEntry> entries = new ArrayList<>();
@@ -38,7 +50,11 @@ public class ResultadosSexoSoa extends AppCompatActivity {
 
         // Crear un conjunto de datos para el gráfico de barras
         BarDataSet dataSet = new BarDataSet(entries, "Sexo");
-        dataSet.setColors(new int[]{Color.BLUE, Color.RED}); // Colores de las barras
+
+        // Configurar los nombres de las columnas en la leyenda
+        String[] columnNames = new String[]{"Masculino", "Femenino"};
+        dataSet.setStackLabels(columnNames);
+        dataSet.setColors(colors); // Colores de las barras
 
         // Configurar el gráfico de barras
         BarChart chart = findViewById(R.id.chart);
@@ -52,19 +68,22 @@ public class ResultadosSexoSoa extends AppCompatActivity {
 
         // Establecer los datos en el gráfico
         chart.setData(barData);
+        chart.invalidate();
 
         // Configurar la leyenda
         Legend legend = chart.getLegend();
-        legend.setEnabled(true); // Habilitar la leyenda
+        legend.setForm(Legend.LegendForm.SQUARE);
         legend.setTextSize(12f);
         legend.setTextColor(Color.BLACK);
-        legend.setForm(Legend.LegendForm.SQUARE);
-        legend.setFormSize(12f);
-        legend.setXEntrySpace(10f);
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setDrawInside(false);
 
-        chart.invalidate();
+        ((TextView) findViewById(R.id.textViewsexo_masculinoPorcentaje)).setText(String.format("%.2f%%", porcentajeMasculino));
+        ((TextView) findViewById(R.id.textViewsexo_masculino)).setText("Masculino");
+        ((TextView) findViewById(R.id.textViewsexo_femeninoPorcentaje)).setText(String.format("%.2f%%", porcentajeFemenino));
+        ((TextView) findViewById(R.id.textViewsexo_femenino)).setText("Femenino");
+
     }
 }

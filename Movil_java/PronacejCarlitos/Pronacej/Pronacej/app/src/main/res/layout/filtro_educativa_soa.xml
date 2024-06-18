@@ -56,6 +56,11 @@
             android:drawableTint="@color/bluePronacej"
             />
 
+        <CheckBox
+            android:id="@+id/cbIncluirEstadoIng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Incluir solo Estado ING" />
 
         -->
         <Button

@@ -2,6 +2,7 @@ package com.carlitos.Pronacej.ResultadosSoa;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +22,7 @@ public class ResultadosSeguroMedicoSoa extends AppCompatActivity {
     private int seguro_essalud;
     private int seguro_particular;
     private int seguro_ninguno;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,26 @@ public class ResultadosSeguroMedicoSoa extends AppCompatActivity {
         seguro_essalud = getIntent().getIntExtra("seguro_essalud", 0);
         seguro_particular = getIntent().getIntExtra("seguro_particular", 0);
         seguro_ninguno = getIntent().getIntExtra("seguro_ninguno", 0);
+
+        int totalSeguro = seguro_essalud + seguro_ninguno + seguro_particular + seguro_sis;
+
+        // Calcular los porcentajes
+        double porcentajesis = (double) seguro_sis / totalSeguro * 100;
+        double porcentajeessalud = (double) seguro_essalud / totalSeguro * 100;
+        double porcentajeparticular = (double) seguro_particular / totalSeguro * 100;
+        double porcentajeninguno = (double) seguro_ninguno / totalSeguro * 100;
+
+        ((TextView) findViewById(R.id.textViewseguro_sisPorcentaje)).setText(String.format("%.2f%%", porcentajesis));
+        ((TextView) findViewById(R.id.textViewseguro_sis)).setText("SIS");
+
+        ((TextView) findViewById(R.id.textViewseguro_essaludPorcentaje)).setText(String.format("%.2f%%", porcentajeessalud));
+        ((TextView) findViewById(R.id.textViewseguro_essalud)).setText("Essalud");
+
+        ((TextView) findViewById(R.id.textViewseguro_ningunoPorcentaje)).setText(String.format("%.2f%%", porcentajeninguno));
+        ((TextView) findViewById(R.id.textViewseguro_ninguno)).setText("Ninguno");
+
+        ((TextView) findViewById(R.id.textViewseguro_particularPorcentaje)).setText(String.format("%.2f%%", porcentajeparticular));
+        ((TextView) findViewById(R.id.textViewseguro_particular)).setText("Particular");
 
         // Configurar el gráfico de barras
         BarChart barChart = findViewById(R.id.barChart);
@@ -43,30 +65,31 @@ public class ResultadosSeguroMedicoSoa extends AppCompatActivity {
         entries.add(new BarEntry(2f, seguro_particular));
         entries.add(new BarEntry(3f, seguro_ninguno));
 
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.Pronacej7));
+        colors.add(getResources().getColor(R.color.Pronacej5));
+        colors.add(getResources().getColor(R.color.Pronacej2));
+        colors.add(getResources().getColor(R.color.Pronacej4));
+
         // Crear el conjunto de datos del gráfico de barras
-        BarDataSet dataSet = new BarDataSet(entries, "");
-        dataSet.setColors(new int[]{Color.BLUE, Color.GREEN, Color.RED, Color.GRAY});
+        BarDataSet dataSet = new BarDataSet(entries, "Seguro Médico");
+        dataSet.setColors(colors);
         dataSet.setValueTextColor(Color.WHITE);
         dataSet.setValueTextSize(12f);
 
         // Configurar la leyenda
         Legend legend = barChart.getLegend();
-        legend.setEnabled(true);
-        legend.setTextSize(12f);
-        legend.setTextColor(Color.BLACK);
-        legend.setForm(Legend.LegendForm.SQUARE);
-        legend.setFormSize(12f);
-        legend.setXEntrySpace(10f);
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setEnabled(true); // Habilitar la leyenda
 
-        // Deshabilitar el eje X
-        barChart.getXAxis().setEnabled(false);
+        // Configurar el eje X
+        barChart.getXAxis().setEnabled(true); // Habilitar el eje X
 
         // Agregar los datos al gráfico de barras
         BarData data = new BarData(dataSet);
         barChart.setData(data);
         barChart.invalidate(); // Refrescar el gráfico
+
+
     }
 }

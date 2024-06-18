@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,6 +51,7 @@ public class FiltroLaboralTotalCjdr extends AppCompatActivity {
     private Button dateButtonFinal;
     private String selectedDateInicio;
     private String selectedDateFinal;
+    private CheckBox cbIncluirEstadoIng;
 
 
     @Override
@@ -63,7 +65,7 @@ public class FiltroLaboralTotalCjdr extends AppCompatActivity {
         initDatePickerFinal();
         selectedDateInicio = getTodaysDate();
         selectedDateFinal = getTodaysDate();
-
+        cbIncluirEstadoIng = findViewById(R.id.cbIncluirEstadoIng);
 
         tvErrorFecha = findViewById(R.id.tvErrorFecha);
         btnGenerarGrafico = findViewById(R.id.btnEnviar);
@@ -72,10 +74,15 @@ public class FiltroLaboralTotalCjdr extends AppCompatActivity {
         btnGenerarGrafico.setOnClickListener(view -> {
             String fechaInicio = showSelectedDateInicio(dateButtonInicio).toString().trim();
             String fechaFin = showSelectedDateFinal(dateButtonFinal).toString().trim();
+            boolean incluirEstadoIng = cbIncluirEstadoIng.isChecked();
 
             if (validarFechaFormato(fechaInicio) && (fechaFin.isEmpty() || validarFechaFormato(fechaFin))) {
                 tvErrorFecha.setVisibility(View.GONE);
-                llamarEndPoint(fechaInicio, fechaFin.isEmpty() ? null : fechaFin);
+                if (fechaFin.isEmpty()) {
+                    fechaFin = fechaInicio;
+                    dateButtonFinal.setText(fechaInicio);
+                }
+                llamarEndPoint(fechaInicio, fechaFin, incluirEstadoIng);
             } else {
                 tvErrorFecha.setVisibility(View.VISIBLE);
             }
@@ -87,24 +94,22 @@ public class FiltroLaboralTotalCjdr extends AppCompatActivity {
         return fecha.matches(pattern);
     }
 
-    private void llamarEndPoint(String fechaInicio, @Nullable String fechaFin) {
-        Call<List<Map<String, Object>>> call = cjdrService.obtenerIL(fechaInicio, fechaFin);
+    private void llamarEndPoint(String fechaInicio, @Nullable String fechaFin, boolean incluirEstadoIng) {
+        Call<List<Map<String, Object>>> call = cjdrService.obtenerIL(fechaInicio, fechaFin, incluirEstadoIng);
         call.enqueue(new Callback<List<Map<String, Object>>>() {
             @Override
             public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
                 if (response.isSuccessful()) {
-
                     List<Map<String, Object>> data = response.body();
                     if (data != null && !data.isEmpty()) {
-
                         Map<String, Object> firstElement = data.get(0);
-                        seguro_sis = ((Double) firstElement.get("seguro_sis")).intValue();
-                        seguro_essalud = ((Double) firstElement.get("seguro_essalud")).intValue();
-                        seguro_particular = ((Double) firstElement.get("seguro_particular")).intValue();
-                        seguro_ninguno = ((Double) firstElement.get("seguro_ninguno")).intValue();
-                        inser_labo_interna = ((Double) firstElement.get("inser_labo_interna")).intValue();
-                        inser_labo_externa = ((Double) firstElement.get("inser_labo_externa")).intValue();
-                        no_trabaja = ((Double) firstElement.get("no_trabaja")).intValue();
+                        seguro_sis = getIntValue(firstElement, "seguro_sis");
+                        seguro_essalud = getIntValue(firstElement, "seguro_essalud");
+                        seguro_particular = getIntValue(firstElement, "seguro_particular");
+                        seguro_ninguno = getIntValue(firstElement, "seguro_ninguno");
+                        inser_labo_interna = getIntValue(firstElement, "inser_labo_interna");
+                        inser_labo_externa = getIntValue(firstElement, "inser_labo_externa");
+                        no_trabaja = getIntValue(firstElement, "no_trabaja");
 
                         // Crear el Intent y añadir los extras
                         Intent intent = new Intent(FiltroLaboralTotalCjdr.this, InsercionLaboralCjdrActivity.class);
@@ -130,11 +135,16 @@ public class FiltroLaboralTotalCjdr extends AppCompatActivity {
         });
     }
 
-
-
-
-
-
+    private int getIntValue(Map<String, Object> map, String key) {
+        Object value = map.get(key);
+        if (value instanceof Double) {
+            return ((Double) value).intValue();
+        } else if (value instanceof Integer) {
+            return (Integer) value;
+        } else {
+            return 0; // O cualquier valor por defecto que consideres adecuado
+        }
+    }
 
     private String getTodaysDate() {
         Calendar cal = Calendar.getInstance();
@@ -156,6 +166,8 @@ public class FiltroLaboralTotalCjdr extends AppCompatActivity {
                 month = month + 1;
                 selectedDateInicio = makeDateString(dayOfMonth, month, year);
                 dateButtonInicio.setText(selectedDateInicio);
+                selectedDateFinal = selectedDateInicio;
+                dateButtonFinal.setText(selectedDateFinal);
             }
         };
 

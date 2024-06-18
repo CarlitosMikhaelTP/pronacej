@@ -1,6 +1,7 @@
 package com.carlitos.Pronacej.ResultadosCjrd;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +17,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class ResultadosSituacionLaboralActualCjdr extends AppCompatActivity {
 
@@ -34,6 +34,21 @@ public class ResultadosSituacionLaboralActualCjdr extends AppCompatActivity {
         inser_labo_externa = getIntent().getIntExtra("inser_labo_externa", 0);
         no_trabaja = getIntent().getIntExtra("no_trabaja", 0);
 
+        int totalSLA = inser_labo_externa + inser_labo_interna + no_trabaja;
+
+        // Calcular los porcentajes
+        double porcentajeinser_labo_interna = (double) inser_labo_interna / totalSLA * 100;
+        double porcentajeinser_labo_externa = (double) inser_labo_externa / totalSLA * 100;
+        double porcentajeno_trabaja = (double) no_trabaja / totalSLA * 100;
+
+        ((TextView) findViewById(R.id.textViewinser_labo_internaPorcentaje)).setText(String.format("%.2f%%", porcentajeinser_labo_interna));
+        ((TextView) findViewById(R.id.textViewinser_labo_interna)).setText("Trabajo interno");
+
+        ((TextView) findViewById(R.id.textViewinser_labo_externaPorcentaje)).setText(String.format("%.2f%%", porcentajeinser_labo_externa));
+        ((TextView) findViewById(R.id.textViewinser_labo_externa)).setText("Trabajo externo");
+
+        ((TextView) findViewById(R.id.textViewno_trabajaPorcentaje)).setText(String.format("%.2f%%", porcentajeno_trabaja));
+        ((TextView) findViewById(R.id.textViewno_trabaja)).setText("No trabaja");
         // Configurar el gráfico de barras
         BarChart barChart = findViewById(R.id.barChart);
         barChart.getDescription().setEnabled(false);
@@ -43,15 +58,18 @@ public class ResultadosSituacionLaboralActualCjdr extends AppCompatActivity {
         entries.add(new BarEntry(1, inser_labo_externa));
         entries.add(new BarEntry(2, no_trabaja));
 
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.Pronacej6));
+        colors.add(getResources().getColor(R.color.Pronacej2));
+        colors.add(getResources().getColor(R.color.Pronacej3));
+
         BarDataSet dataSet = new BarDataSet(entries, "Situación Laboral Actual");
-        dataSet.setColors(new int[]{getResources().getColor(com.google.android.material.R.color.design_default_color_primary),
-                getResources().getColor(com.google.android.material.R.color.design_default_color_on_secondary),
-                getResources().getColor(com.google.android.material.R.color.design_default_color_primary_dark)});
+        dataSet.setColors(colors);
         dataSet.setValueTextSize(12f);
 
         BarData barData = new BarData(dataSet);
         barChart.setData(barData);
-        barChart.invalidate(); // Refresh the chart
+        barChart.invalidate(); // Refrescar el gráfico
 
         // Customize X axis
         XAxis xAxis = barChart.getXAxis();
@@ -82,5 +100,7 @@ public class ResultadosSituacionLaboralActualCjdr extends AppCompatActivity {
         legend.setFormSize(12f);
         legend.setXEntrySpace(10f);
         legend.setTextColor(getResources().getColor(R.color.black));
+
+
     }
 }

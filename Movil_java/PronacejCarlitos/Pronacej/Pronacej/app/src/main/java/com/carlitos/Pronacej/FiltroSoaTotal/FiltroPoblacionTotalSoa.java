@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -59,11 +60,12 @@ public class FiltroPoblacionTotalSoa extends AppCompatActivity {
     private Button dateButtonFinal;
     private String selectedDateInicio;
     private String selectedDateFinal;
+    private CheckBox cbIncluirEstadoIng;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.filtro_poblacion_total_cjdr);
+        setContentView(R.layout.filtro_poblacion_total_soa);
 
         dateButtonInicio = findViewById(R.id.etFechaInicio);
         dateButtonFinal = findViewById(R.id.etFechaFin);
@@ -76,14 +78,20 @@ public class FiltroPoblacionTotalSoa extends AppCompatActivity {
         tvErrorFecha = findViewById(R.id.tvErrorFecha);
         btnGenerarGrafico = findViewById(R.id.btnEnviar);
         soaService = Apis.getSoaService();
+        cbIncluirEstadoIng = findViewById(R.id.cbIncluirEstadoIng);
 
         btnGenerarGrafico.setOnClickListener(view -> {
             String fechaInicio = showSelectedDateInicio(dateButtonInicio).toString().trim();
             String fechaFin = showSelectedDateFinal(dateButtonFinal).toString().trim();
+            boolean incluirEstadoIng = cbIncluirEstadoIng.isChecked();
 
             if (validarFechaFormato(fechaInicio) && (fechaFin.isEmpty() || validarFechaFormato(fechaFin))) {
                 tvErrorFecha.setVisibility(View.GONE);
-                llamarEndPoint(fechaInicio, fechaFin.isEmpty() ? null : fechaFin);
+                if (fechaFin.isEmpty()) {
+                    fechaFin = fechaInicio;
+                    dateButtonFinal.setText(fechaInicio);
+                }
+                llamarEndPoint(fechaInicio, fechaFin, incluirEstadoIng);
             } else {
                 tvErrorFecha.setVisibility(View.VISIBLE);
             }
@@ -95,8 +103,8 @@ public class FiltroPoblacionTotalSoa extends AppCompatActivity {
         return fecha.matches(pattern);
     }
 
-    private void llamarEndPoint(String fechaInicio, @Nullable String fechaFin)  {
-        Call<List<Map<String, Object>>> call = soaService.obtenerePopulation(fechaInicio, fechaFin);
+    private void llamarEndPoint(String fechaInicio, @Nullable String fechaFin, boolean incluirEstadoIng) {
+        Call<List<Map<String, Object>>> call = soaService.obtenerePopulation(fechaInicio, fechaFin, incluirEstadoIng);
         call.enqueue(new Callback<List<Map<String, Object>>>() {
             @Override
             public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
@@ -104,20 +112,20 @@ public class FiltroPoblacionTotalSoa extends AppCompatActivity {
                     List<Map<String, Object>> data = response.body();
                     if (data != null && !data.isEmpty()) {
                         Map<String, Object> firstElement = data.get(0);
-                        totalRegistros = ((Double) firstElement.get("total_registros")).intValue();
-                        ingresoSentenciado = ((Double) firstElement.get("ingreso_sentenciado")).intValue();
-                        ingresoProcesado = ((Double) firstElement.get("ingreso_procesado")).intValue();
-                        estado_cierre_post = ((Double) firstElement.get("estado_cierre_post")).intValue();
-                        estado_egr = ((Double) firstElement.get("estado_egr")).intValue();
-                        estado_ing = ((Double) firstElement.get("estado_ing")).intValue();
-                        estado_ing_post = ((Double) firstElement.get("estado_ing_post")).intValue();
-                        estado_civil_casado = ((Double) firstElement.get("estado_civil_casado")).intValue();
-                        estado_civil_conviviente = ((Double) firstElement.get("estado_civil_conviviente")).intValue();
-                        estado_civil_separado = ((Double) firstElement.get("estado_civil_separado")).intValue();
-                        estado_civil_soltero = ((Double) firstElement.get("estado_civil_soltero")).intValue();
-                        estado_civil_viudo = ((Double) firstElement.get("estado_civil_viudo")).intValue();
-                        sexo_masculino = ((Double) firstElement.get("sexo_masculino")).intValue();
-                        sexo_femenino = ((Double) firstElement.get("sexo_femenino")).intValue();
+                        totalRegistros = getIntValue(firstElement, "total_registros");
+                        ingresoSentenciado = getIntValue(firstElement, "ingreso_sentenciado");
+                        ingresoProcesado = getIntValue(firstElement, "ingreso_procesado");
+                        estado_cierre_post = getIntValue(firstElement, "estado_cierre_post");
+                        estado_egr = getIntValue(firstElement, "estado_egr");
+                        estado_ing = getIntValue(firstElement, "estado_ing");
+                        estado_ing_post = getIntValue(firstElement, "estado_ing_post");
+                        estado_civil_casado = getIntValue(firstElement, "estado_civil_casado");
+                        estado_civil_conviviente = getIntValue(firstElement, "estado_civil_conviviente");
+                        estado_civil_separado = getIntValue(firstElement, "estado_civil_separado");
+                        estado_civil_soltero = getIntValue(firstElement, "estado_civil_soltero");
+                        estado_civil_viudo = getIntValue(firstElement, "estado_civil_viudo");
+                        sexo_masculino = getIntValue(firstElement, "sexo_masculino");
+                        sexo_femenino = getIntValue(firstElement, "sexo_femenino");
 
                         // Imprimir o almacenar los valores obtenidos
                         Log.d("FiltroPoblacionTotalSoa", "Total Registros: " + totalRegistros);
@@ -156,13 +164,16 @@ public class FiltroPoblacionTotalSoa extends AppCompatActivity {
         });
     }
 
-
-
-
-
-
-
-
+    private int getIntValue(Map<String, Object> map, String key) {
+        Object value = map.get(key);
+        if (value instanceof Double) {
+            return ((Double) value).intValue();
+        } else if (value instanceof Integer) {
+            return (Integer) value;
+        } else {
+            return 0; // O cualquier valor por defecto que consideres adecuado
+        }
+    }
 
     private String getTodaysDate() {
         Calendar cal = Calendar.getInstance();
@@ -184,6 +195,8 @@ public class FiltroPoblacionTotalSoa extends AppCompatActivity {
                 month = month + 1;
                 selectedDateInicio = makeDateString(dayOfMonth, month, year);
                 dateButtonInicio.setText(selectedDateInicio);
+                selectedDateFinal = selectedDateInicio;
+                dateButtonFinal.setText(selectedDateFinal);
             }
         };
 

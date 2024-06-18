@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -55,6 +56,8 @@ public class FiltroEducativaSoa extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
     private String selectedDate;
+    private CheckBox cbIncluirEstadoIng;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,15 +71,17 @@ public class FiltroEducativaSoa extends AppCompatActivity {
         tvErrorFecha = findViewById(R.id.tvErrorFecha);
         btnGenerarGrafico = findViewById(R.id.btnEnviar);
         soaService = Apis.getSoaService();
+        cbIncluirEstadoIng = findViewById(R.id.cbIncluirEstadoIng);
 
         btnGenerarGrafico.setOnClickListener(view -> {
             showSelectedDate(etFechaInicio);
 
             String fechaInicio = showSelectedDate(etFechaInicio).toString().trim();
+            boolean incluirEstadoIng = cbIncluirEstadoIng.isChecked();
 
             if (validarFechaFormato(fechaInicio)) {
                 tvErrorFecha.setVisibility(View.GONE);
-                llamarEndPoint(fechaInicio);
+                llamarEndPoint(fechaInicio, incluirEstadoIng);
             } else {
                 tvErrorFecha.setVisibility(View.VISIBLE);
             }
@@ -88,8 +93,8 @@ public class FiltroEducativaSoa extends AppCompatActivity {
         return fecha.matches(pattern);
     }
 
-    private void llamarEndPoint(String fechaInicio) {
-        Call<List<Map<String, Object>>> call = soaService.obtenerIE(fechaInicio, null);
+    private void llamarEndPoint(String fechaInicio, boolean incluirEstadoIng) {
+        Call<List<Map<String, Object>>> call = soaService.obtenerIE(fechaInicio, fechaInicio, incluirEstadoIng);
         call.enqueue(new Callback<List<Map<String, Object>>>() {
             @Override
             public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
@@ -98,21 +103,21 @@ public class FiltroEducativaSoa extends AppCompatActivity {
                     List<Map<String, Object>> data = response.body();
                     if (data != null && !data.isEmpty()) {
                         Map<String, Object> firstElement = data.get(0);
-                        sea_estudia = ((Double) firstElement.get("sea_estudia")).intValue();
-                        sea_termino_basico = ((Double) firstElement.get("sea_termino_basico")).intValue();
-                        sea_termino_no_doc = ((Double) firstElement.get("sea_termino_no_doc")).intValue();
-                        reinsercion_educativa = ((Double) firstElement.get("reinsercion_educativa")).intValue();
-                        insercion_productiva = ((Double) firstElement.get("insercion_productiva")).intValue();
-                        continuidad_edu = ((Double) firstElement.get("continuidad_edu")).intValue();
-                        apoyo_regularizar = ((Double) firstElement.get("apoyo_regularizar")).intValue();
-                        cebr = ((Double) firstElement.get("cebr")).intValue();
-                        ceba = ((Double) firstElement.get("ceba")).intValue();
-                        cepre = ((Double) firstElement.get("cepre")).intValue();
-                        academia = ((Double) firstElement.get("academia")).intValue();
-                        cetpro = ((Double) firstElement.get("cetpro")).intValue();
-                        instituto = ((Double) firstElement.get("instituto")).intValue();
-                        universidad = ((Double) firstElement.get("universidad")).intValue();
-                        ninguno = ((Double) firstElement.get("ninguno")).intValue();
+                        sea_estudia = getIntValue(firstElement, "sea_estudia");
+                        sea_termino_basico = getIntValue(firstElement, "sea_termino_basico");
+                        sea_termino_no_doc = getIntValue(firstElement, "sea_termino_no_doc");
+                        reinsercion_educativa = getIntValue(firstElement, "reinsercion_educativa");
+                        insercion_productiva = getIntValue(firstElement, "insercion_productiva");
+                        continuidad_edu = getIntValue(firstElement, "continuidad_edu");
+                        apoyo_regularizar = getIntValue(firstElement, "apoyo_regularizar");
+                        cebr = getIntValue(firstElement, "cebr");
+                        ceba = getIntValue(firstElement, "ceba");
+                        cepre = getIntValue(firstElement, "cepre");
+                        academia = getIntValue(firstElement, "academia");
+                        cetpro = getIntValue(firstElement, "cetpro");
+                        instituto = getIntValue(firstElement, "instituto");
+                        universidad = getIntValue(firstElement, "universidad");
+                        ninguno = getIntValue(firstElement, "ninguno");
 
                         // Crear el Intent y añadir los extras
                         Intent intent = new Intent(FiltroEducativaSoa.this, InsercionEducativaSoaActivity.class);
@@ -145,6 +150,17 @@ public class FiltroEducativaSoa extends AppCompatActivity {
                 // Maneja el caso de fallo de la llamada
             }
         });
+    }
+
+    private int getIntValue(Map<String, Object> map, String key) {
+        Object value = map.get(key);
+        if (value instanceof Double) {
+            return ((Double) value).intValue();
+        } else if (value instanceof Integer) {
+            return (Integer) value;
+        } else {
+            return 0; // O cualquier valor por defecto que consideres adecuado
+        }
     }
 
 

@@ -1,6 +1,7 @@
 package com.carlitos.Pronacej.ResultadosSoa;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class ResultadoCentroEducativoSoa extends AppCompatActivity {
     private int instituto;
     private int universidad;
     private int ninguno;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,45 @@ public class ResultadoCentroEducativoSoa extends AppCompatActivity {
         universidad = getIntent().getIntExtra("universidad", 0);
         ninguno = getIntent().getIntExtra("ninguno", 0);
 
+        // Calcular el total de personas
+        int totalPersonas = cebr + ceba + cepre + academia + cetpro + instituto + universidad + ninguno;
+
+        // Calcular los porcentajes
+        double porcentajeCebr = (double) cebr / totalPersonas * 100;
+        double porcentajeCeba = (double) ceba / totalPersonas * 100;
+        double porcentajeCepre = (double) cepre / totalPersonas * 100;
+        double porcentajeAcademia = (double) academia / totalPersonas * 100;
+        double porcentajeCetpro = (double) cetpro / totalPersonas * 100;
+        double porcentajeInstituto = (double) instituto / totalPersonas * 100;
+        double porcentajeUniversidad = (double) universidad / totalPersonas * 100;
+        double porcentajeNinguno = (double) ninguno / totalPersonas * 100;
+
+        // Configurar TextViews para mostrar los porcentajes y nombres
+        ((TextView) findViewById(R.id.textViewcebrPorcentaje)).setText(String.format("%.2f%%", porcentajeCebr));
+        ((TextView) findViewById(R.id.textViewcebr)).setText("CEBR");
+
+        ((TextView) findViewById(R.id.textViewcebaPorcentaje)).setText(String.format("%.2f%%", porcentajeCeba));
+        ((TextView) findViewById(R.id.textViewceba)).setText("CEBA");
+
+        ((TextView) findViewById(R.id.textViewceprePorcentaje)).setText(String.format("%.2f%%", porcentajeCepre));
+        ((TextView) findViewById(R.id.textViewcepre)).setText("CEPRE");
+
+        ((TextView) findViewById(R.id.textViewacademiaPorcentaje)).setText(String.format("%.2f%%", porcentajeAcademia));
+        ((TextView) findViewById(R.id.textViewacademia)).setText("Academia");
+
+        ((TextView) findViewById(R.id.textViewcetproPorcentaje)).setText(String.format("%.2f%%", porcentajeCetpro));
+        ((TextView) findViewById(R.id.textViewcetpro)).setText("CETPRO");
+
+        ((TextView) findViewById(R.id.textViewinstitutoPorcentaje)).setText(String.format("%.2f%%", porcentajeInstituto));
+        ((TextView) findViewById(R.id.textViewinstituto)).setText("Instituto");
+
+        ((TextView) findViewById(R.id.textViewuniversidadPorcentaje)).setText(String.format("%.2f%%", porcentajeUniversidad));
+        ((TextView) findViewById(R.id.textViewuniversidad)).setText("Universidad");
+
+        ((TextView) findViewById(R.id.textViewningunoPorcentaje)).setText(String.format("%.2f%%", porcentajeNinguno));
+        ((TextView) findViewById(R.id.textViewninguno)).setText("Ninguno");
+
+        // Configurar el gráfico de barras
         BarChart barChart = findViewById(R.id.barChart);
 
         ArrayList<BarEntry> entries = new ArrayList<>();
@@ -55,8 +96,22 @@ public class ResultadoCentroEducativoSoa extends AppCompatActivity {
         entries.add(new BarEntry(6, universidad));
         entries.add(new BarEntry(7, ninguno));
 
+        // Configurar los nombres en la leyenda
+        String[] legendLabels = {"CEBR", "CEBA", "CEPRE", "Academia", "CETPRO", "Instituto", "Universidad", "Ninguno"};
+
         BarDataSet dataSet = new BarDataSet(entries, "Centro Educativo");
-        dataSet.setColor(getResources().getColor(com.google.android.material.R.color.design_default_color_primary_dark));
+
+        // Asignar colores a las barras
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.Pronacej1));
+        colors.add(getResources().getColor(R.color.Pronacej2));
+        colors.add(getResources().getColor(R.color.Pronacej3));
+        colors.add(getResources().getColor(R.color.Pronacej4));
+        colors.add(getResources().getColor(R.color.Pronacej5));
+        colors.add(getResources().getColor(R.color.Pronacej6));
+        colors.add(getResources().getColor(R.color.Pronacej7));
+        colors.add(getResources().getColor(R.color.Pronacej8));
+        dataSet.setColors(colors);
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
         dataSets.add(dataSet);
@@ -69,7 +124,7 @@ public class ResultadoCentroEducativoSoa extends AppCompatActivity {
         XAxis xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"CEBR", "CEBA", "CEPRE", "Academia", "CETPRO", "Instituto", "Universidad", "Ninguno"}));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(legendLabels));
 
         YAxis yAxis = barChart.getAxisLeft();
         yAxis.setDrawGridLines(false);
@@ -82,7 +137,6 @@ public class ResultadoCentroEducativoSoa extends AppCompatActivity {
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
-        legend.setWordWrapEnabled(true);
 
         barChart.invalidate();
     }

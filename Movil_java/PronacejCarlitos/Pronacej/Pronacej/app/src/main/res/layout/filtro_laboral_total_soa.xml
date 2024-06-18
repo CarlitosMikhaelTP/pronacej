@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FiltroSoaTotal.FiltroLaboralTotalSoa"
-
-    >
+    tools:context=".FiltroSoaTotal.FiltroLaboralTotalSoa">
 
     <TextView
         android:id="@+id/textView"
@@ -58,6 +56,12 @@
             android:text="01 ENE 2024"
             android:textColor="@color/black"
             android:textSize="25sp" />
+
+        <CheckBox
+            android:id="@+id/cbIncluirEstadoIng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Incluir solo Estado ING" />
 
         <TextView
             android:id="@+id/textView20"

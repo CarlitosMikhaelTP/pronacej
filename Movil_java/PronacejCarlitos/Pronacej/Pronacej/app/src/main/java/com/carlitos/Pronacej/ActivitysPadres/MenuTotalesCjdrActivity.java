@@ -82,7 +82,7 @@ public class MenuTotalesCjdrActivity extends AppCompatActivity {
             }
         });
 
-        opcionCinco.setOnClickListener(new View.OnClickListener() {
+        opcionOcho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuTotalesCjdrActivity.this, FiltroSimpleCjdr.class);

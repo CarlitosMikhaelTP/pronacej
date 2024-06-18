@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -56,6 +57,7 @@ public class FiltroEducativaTotalSoa extends AppCompatActivity {
     private DatePickerDialog datePickerDialogInicio;
     private DatePickerDialog datePickerDialogFinal;
     private Button dateButtonInicio;
+    private CheckBox cbIncluirEstadoIng;
     private Button dateButtonFinal;
     private String selectedDateInicio;
     private String selectedDateFinal;
@@ -67,6 +69,7 @@ public class FiltroEducativaTotalSoa extends AppCompatActivity {
 
         dateButtonInicio = findViewById(R.id.etFechaInicio);
         dateButtonFinal = findViewById(R.id.etFechaFin);
+        cbIncluirEstadoIng = findViewById(R.id.cbIncluirEstadoIng);
         initDatePickerInicio();
         initDatePickerFinal();
         selectedDateInicio = getTodaysDate();
@@ -79,10 +82,15 @@ public class FiltroEducativaTotalSoa extends AppCompatActivity {
         btnGenerarGrafico.setOnClickListener(view -> {
             String fechaInicio = showSelectedDateInicio(dateButtonInicio).toString().trim();
             String fechaFin = showSelectedDateFinal(dateButtonFinal).toString().trim();
+            boolean incluirEstadoIng = cbIncluirEstadoIng.isChecked();
 
             if (validarFechaFormato(fechaInicio) && (fechaFin.isEmpty() || validarFechaFormato(fechaFin))) {
                 tvErrorFecha.setVisibility(View.GONE);
-                llamarEndPoint(fechaInicio, fechaFin.isEmpty() ? null : fechaFin);
+                if (fechaFin.isEmpty()) {
+                    fechaFin = fechaInicio;
+                    dateButtonFinal.setText(fechaInicio);
+                }
+                llamarEndPoint(fechaInicio, fechaFin, incluirEstadoIng);
             } else {
                 tvErrorFecha.setVisibility(View.VISIBLE);
             }
@@ -94,31 +102,30 @@ public class FiltroEducativaTotalSoa extends AppCompatActivity {
         return fecha.matches(pattern);
     }
 
-    private void llamarEndPoint(String fechaInicio, @Nullable String fechaFin){
-        Call<List<Map<String, Object>>> call = soaService.obtenerIE(fechaInicio, fechaFin);
+    private void llamarEndPoint(String fechaInicio, @Nullable String fechaFin, boolean incluirEstadoIng) {
+        Call<List<Map<String, Object>>> call = soaService.obtenerIE(fechaInicio, fechaFin, incluirEstadoIng);
         call.enqueue(new Callback<List<Map<String, Object>>>() {
             @Override
             public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
                 if (response.isSuccessful()) {
-
                     List<Map<String, Object>> data = response.body();
                     if (data != null && !data.isEmpty()) {
                         Map<String, Object> firstElement = data.get(0);
-                        sea_estudia = ((Double) firstElement.get("sea_estudia")).intValue();
-                        sea_termino_basico = ((Double) firstElement.get("sea_termino_basico")).intValue();
-                        sea_termino_no_doc = ((Double) firstElement.get("sea_termino_no_doc")).intValue();
-                        reinsercion_educativa = ((Double) firstElement.get("reinsercion_educativa")).intValue();
-                        insercion_productiva = ((Double) firstElement.get("insercion_productiva")).intValue();
-                        continuidad_edu = ((Double) firstElement.get("continuidad_edu")).intValue();
-                        apoyo_regularizar = ((Double) firstElement.get("apoyo_regularizar")).intValue();
-                        cebr = ((Double) firstElement.get("cebr")).intValue();
-                        ceba = ((Double) firstElement.get("ceba")).intValue();
-                        cepre = ((Double) firstElement.get("cepre")).intValue();
-                        academia = ((Double) firstElement.get("academia")).intValue();
-                        cetpro = ((Double) firstElement.get("cetpro")).intValue();
-                        instituto = ((Double) firstElement.get("instituto")).intValue();
-                        universidad = ((Double) firstElement.get("universidad")).intValue();
-                        ninguno = ((Double) firstElement.get("ninguno")).intValue();
+                        sea_estudia = getIntValue(firstElement, "sea_estudia");
+                        sea_termino_basico = getIntValue(firstElement, "sea_termino_basico");
+                        sea_termino_no_doc = getIntValue(firstElement, "sea_termino_no_doc");
+                        reinsercion_educativa = getIntValue(firstElement, "reinsercion_educativa");
+                        insercion_productiva = getIntValue(firstElement, "insercion_productiva");
+                        continuidad_edu = getIntValue(firstElement, "continuidad_edu");
+                        apoyo_regularizar = getIntValue(firstElement, "apoyo_regularizar");
+                        cebr = getIntValue(firstElement, "cebr");
+                        ceba = getIntValue(firstElement, "ceba");
+                        cepre = getIntValue(firstElement, "cepre");
+                        academia = getIntValue(firstElement, "academia");
+                        cetpro = getIntValue(firstElement, "cetpro");
+                        instituto = getIntValue(firstElement, "instituto");
+                        universidad = getIntValue(firstElement, "universidad");
+                        ninguno = getIntValue(firstElement, "ninguno");
 
                         // Crear el Intent y añadir los extras
                         Intent intent = new Intent(FiltroEducativaTotalSoa.this, InsercionEducativaSoaActivity.class);
@@ -153,14 +160,16 @@ public class FiltroEducativaTotalSoa extends AppCompatActivity {
         });
     }
 
-
-
-
-
-
-
-
-
+    private int getIntValue(Map<String, Object> map, String key) {
+        Object value = map.get(key);
+        if (value instanceof Double) {
+            return ((Double) value).intValue();
+        } else if (value instanceof Integer) {
+            return (Integer) value;
+        } else {
+            return 0; // O cualquier valor por defecto que consideres adecuado
+        }
+    }
 
     private String getTodaysDate() {
         Calendar cal = Calendar.getInstance();
@@ -182,6 +191,8 @@ public class FiltroEducativaTotalSoa extends AppCompatActivity {
                 month = month + 1;
                 selectedDateInicio = makeDateString(dayOfMonth, month, year);
                 dateButtonInicio.setText(selectedDateInicio);
+                selectedDateFinal = selectedDateInicio;
+                dateButtonFinal.setText(selectedDateFinal);
             }
         };
 

@@ -2,6 +2,7 @@ package com.carlitos.Pronacej.ResultadosCjrd;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +11,6 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +28,50 @@ public class ResultadosEstadoCivilCjdr extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resultado_estado_civil_cjdr);
 
-        // Obtener los valores de estado civil
+        // Obtener los valores de estado civil desde el intent
         Intent intent = getIntent();
         estado_civil_casado = intent.getIntExtra("estado_civil_casado", 0);
         estado_civil_conviviente = intent.getIntExtra("estado_civil_conviviente", 0);
         estado_civil_separado = intent.getIntExtra("estado_civil_separado", 0);
         estado_civil_soltero = intent.getIntExtra("estado_civil_soltero", 0);
         estado_civil_viudo = intent.getIntExtra("estado_civil_viudo", 0);
+
+        // Calcular el total de estados civiles
+        int totalEstadoCivil = estado_civil_casado + estado_civil_conviviente + estado_civil_separado +
+                estado_civil_soltero + estado_civil_viudo;
+
+        // Calcular los porcentajes
+        double porcentajeCasado = (double) estado_civil_casado / totalEstadoCivil * 100;
+        double porcentajeConviviente = (double) estado_civil_conviviente / totalEstadoCivil * 100;
+        double porcentajeSeparado = (double) estado_civil_separado / totalEstadoCivil * 100;
+        double porcentajeSoltero = (double) estado_civil_soltero / totalEstadoCivil * 100;
+        double porcentajeViudo = (double) estado_civil_viudo / totalEstadoCivil * 100;
+
+        // Construir el texto
+        String texto = String.format(
+                "Casado: %d personas (%.2f%%) " +
+                        "Conviviente: %d personas (%.2f%%) " +
+                        "Separado: %d personas (%.2f%%) " +
+                        "Soltero: %d personas (%.2f%%) " +
+                        "Viudo: %d personas (%.2f%%)",
+                estado_civil_casado, porcentajeCasado,
+                estado_civil_conviviente, porcentajeConviviente,
+                estado_civil_separado, porcentajeSeparado,
+                estado_civil_soltero, porcentajeSoltero,
+                estado_civil_viudo, porcentajeViudo);
+
+
+        ((TextView) findViewById(R.id.textViewAlfonsoUgartePorcentaje)).setText(String.format("%.2f%%", porcentajeCasado));
+        ((TextView) findViewById(R.id.textViewAlfonso_Ugarte)).setText("Casados");
+        ((TextView) findViewById(R.id.textViewMarcavallePorcentaje)).setText(String.format("%.2f%%", porcentajeConviviente));
+        ((TextView) findViewById(R.id.textViewMarcavalle)).setText("Convivientes");
+        ((TextView) findViewById(R.id.textViewPucallpaPorcentaje)).setText(String.format("%.2f%%", porcentajeSeparado));
+        ((TextView) findViewById(R.id.textViewPucallpa)).setText("Separado");
+        ((TextView) findViewById(R.id.textViewEl_TamboPorcentaje)).setText(String.format("%.2f%%", porcentajeSoltero));
+        ((TextView) findViewById(R.id.textViewEl_Tambo)).setText("Soltero");
+        ((TextView) findViewById(R.id.textViewTrujilloPorcentaje)).setText(String.format("%.2f%%", porcentajeViudo));
+        ((TextView) findViewById(R.id.textViewTrujillo)).setText("Viudo");
+
 
         // Crear una lista de entradas de datos para el gráfico de pastel
         List<PieEntry> entries = new ArrayList<>();
@@ -44,9 +81,17 @@ public class ResultadosEstadoCivilCjdr extends AppCompatActivity {
         entries.add(new PieEntry(estado_civil_soltero, "Soltero"));
         entries.add(new PieEntry(estado_civil_viudo, "Viudo"));
 
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.Pronacej4));
+        colors.add(getResources().getColor(R.color.Pronacej6));
+        colors.add(getResources().getColor(R.color.Pronacej5));
+        colors.add(getResources().getColor(R.color.Pronacej2));
+        colors.add(getResources().getColor(R.color.Pronacej7));
+
+
         // Crear un conjunto de datos para el gráfico de pastel
         PieDataSet dataSet = new PieDataSet(entries, "Estado Civil");
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        dataSet.setColors(colors);
 
         // Configurar el gráfico de pastel
         PieChart chart = findViewById(R.id.pieChart);

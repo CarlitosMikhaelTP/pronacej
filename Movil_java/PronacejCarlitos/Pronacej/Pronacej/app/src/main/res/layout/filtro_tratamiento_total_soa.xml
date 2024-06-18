@@ -59,6 +59,12 @@
             android:textColor="@color/black"
             android:textSize="25sp" />
 
+        <CheckBox
+            android:id="@+id/cbIncluirEstadoIng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Incluir solo Estado ING" />
+
         <TextView
             android:id="@+id/textView20"
             android:layout_width="match_parent"

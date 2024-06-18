@@ -1,10 +1,11 @@
 package com.carlitos.Pronacej.ResultadosCjrd;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.carlitos.Pronacej.R;
@@ -27,6 +28,8 @@ public class ResultadosSituacionJuridicaCjdr extends AppCompatActivity {
 
     private int ingresoSentenciado;
     private int ingresoProcesado;
+
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,13 @@ public class ResultadosSituacionJuridicaCjdr extends AppCompatActivity {
         Intent intent = getIntent();
         ingresoSentenciado = intent.getIntExtra("ingresoSentenciado", 0);
         ingresoProcesado = intent.getIntExtra("ingresoProcesado", 0);
+
+        // Calcular el total de participantes
+        int totalParticipantes = ingresoSentenciado + ingresoProcesado;
+
+        // Calcular los porcentajes
+        double porcentajeSentenciado = (double) ingresoSentenciado / totalParticipantes * 100;
+        double porcentajeProcesado = (double) ingresoProcesado / totalParticipantes * 100;
 
         // Configurar el gráfico combinado
         CombinedChart combinedChart = findViewById(R.id.barChart);
@@ -51,8 +61,8 @@ public class ResultadosSituacionJuridicaCjdr extends AppCompatActivity {
         lineEntries.add(new Entry(0, ingresoProcesado));
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "Ingreso Sentenciado");
-        barDataSet.setColor(Color.BLUE);
-        barDataSet.setValueTextColor(Color.BLUE);
+        barDataSet.setColor(getColor(R.color.Pronacej4));
+        barDataSet.setValueTextColor(getColor(R.color.black));
         barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         barDataSet.setBarShadowColor(Color.TRANSPARENT);
         barDataSet.setHighlightEnabled(false);
@@ -60,8 +70,8 @@ public class ResultadosSituacionJuridicaCjdr extends AppCompatActivity {
         barDataSet.setValueTextSize(10f);
 
         LineDataSet lineDataSet = new LineDataSet(lineEntries, "Ingreso Procesado");
-        lineDataSet.setColor(Color.RED);
-        lineDataSet.setCircleColor(Color.RED);
+        lineDataSet.setColor(getColor(R.color.Pronacej8));
+        lineDataSet.setCircleColor(getColor(R.color.Pronacej8));
         lineDataSet.setLineWidth(2.5f);
         lineDataSet.setCircleRadius(4f);
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
@@ -88,5 +98,10 @@ public class ResultadosSituacionJuridicaCjdr extends AppCompatActivity {
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
+
+        ((TextView) findViewById(R.id.textViewingresoSentenciadoPorcentaje)).setText(String.format("%.2f%%", porcentajeSentenciado));
+        ((TextView) findViewById(R.id.textViewingresoSentenciado)).setText("Sentenciado");
+        ((TextView) findViewById(R.id.textViewingresoProcesadoPorcentaje)).setText(String.format("%.2f%%", porcentajeProcesado));
+        ((TextView) findViewById(R.id.textViewingresoProcesado)).setText("Procesado");
     }
 }

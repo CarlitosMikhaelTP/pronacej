@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class FiltroLaboralCjdr extends AppCompatActivity {
     private Button dateButton;
     private String selectedDate;
     private CjdrService cjdrService;
+    private CheckBox cbIncluirEstadoIng;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class FiltroLaboralCjdr extends AppCompatActivity {
         selectedDate = getTodaysDate();
         dateButton.setText(selectedDate);
 
+        cbIncluirEstadoIng = findViewById(R.id.cbIncluirEstadoIng);
+
         tvErrorFecha = findViewById(R.id.tvErrorFecha);
         btnGenerarGrafico = findViewById(R.id.btnEnviar);
         cjdrService = Apis.getCjdrService();
@@ -67,9 +71,11 @@ public class FiltroLaboralCjdr extends AppCompatActivity {
             showSelectedDate(etFechaInicio);
 
             String fechaInicio = showSelectedDate(etFechaInicio).toString().trim();
+            boolean incluirEstadoIng = cbIncluirEstadoIng.isChecked();
+
             if (validarFechaFormato(fechaInicio)) {
                 tvErrorFecha.setVisibility(View.GONE);
-                llamarEndPoint(fechaInicio);
+                llamarEndPoint(fechaInicio, incluirEstadoIng);
             } else {
                 tvErrorFecha.setVisibility(View.VISIBLE);
             }
@@ -81,8 +87,8 @@ public class FiltroLaboralCjdr extends AppCompatActivity {
         return fecha.matches(pattern);
     }
 
-    private void llamarEndPoint(String fechaInicio) {
-        Call<List<Map<String, Object>>> call = cjdrService.obtenerIL(fechaInicio, null);
+    private void llamarEndPoint(String fechaInicio, boolean incluirEstadoIng) {
+        Call<List<Map<String, Object>>> call = cjdrService.obtenerIL(fechaInicio, fechaInicio, incluirEstadoIng);
         call.enqueue(new Callback<List<Map<String, Object>>>() {
             @Override
             public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
@@ -92,13 +98,13 @@ public class FiltroLaboralCjdr extends AppCompatActivity {
                     if (data != null && !data.isEmpty()) {
 
                         Map<String, Object> firstElement = data.get(0);
-                        seguro_sis = ((Double) firstElement.get("seguro_sis")).intValue();
-                        seguro_essalud = ((Double) firstElement.get("seguro_essalud")).intValue();
-                        seguro_particular = ((Double) firstElement.get("seguro_particular")).intValue();
-                        seguro_ninguno = ((Double) firstElement.get("seguro_ninguno")).intValue();
-                        inser_labo_interna = ((Double) firstElement.get("inser_labo_interna")).intValue();
-                        inser_labo_externa = ((Double) firstElement.get("inser_labo_externa")).intValue();
-                        no_trabaja = ((Double) firstElement.get("no_trabaja")).intValue();
+                        seguro_sis = getIntValue(firstElement, "seguro_sis");
+                        seguro_essalud = getIntValue(firstElement, "seguro_essalud");
+                        seguro_particular = getIntValue(firstElement, "seguro_particular");
+                        seguro_ninguno = getIntValue(firstElement, "seguro_ninguno");
+                        inser_labo_interna = getIntValue(firstElement, "inser_labo_interna");
+                        inser_labo_externa = getIntValue(firstElement, "inser_labo_externa");
+                        no_trabaja = getIntValue(firstElement, "no_trabaja");
 
                         // Crear el Intent y añadir los extras
                         Intent intent = new Intent(FiltroLaboralCjdr.this, InsercionLaboralCjdrActivity.class);
@@ -124,6 +130,17 @@ public class FiltroLaboralCjdr extends AppCompatActivity {
         });
     }
 
+
+    private int getIntValue(Map<String, Object> map, String key) {
+        Object value = map.get(key);
+        if (value instanceof Double) {
+            return ((Double) value).intValue();
+        } else if (value instanceof Integer) {
+            return (Integer) value;
+        } else {
+            return 0; // O cualquier valor por defecto que consideres adecuado
+        }
+    }
 
 
     private void initDatePicker() {

@@ -1,6 +1,7 @@
 package com.carlitos.Pronacej.ResultadosSoa;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,14 +31,25 @@ public class ResultadosFirmesAdelanteSoa extends AppCompatActivity {
         firmes_aplica = getIntent().getIntExtra("firmes_aplica", 0);
         firmes_no_aplica = getIntent().getIntExtra("firmes_no_aplica", 0);
 
+        int totalFirmes = firmes_aplica + firmes_no_aplica;
+
+        // Calcular los porcentajes
+        double porcentajeAplica = (double) firmes_aplica / totalFirmes * 100;
+        double porcentajeNoAplica = (double) firmes_no_aplica / totalFirmes * 100;
+
         LineChart lineChart = findViewById(R.id.lineChart);
 
         ArrayList<Entry> entries = new ArrayList<>();
         entries.add(new Entry(0, firmes_aplica));
         entries.add(new Entry(1, firmes_no_aplica));
 
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.Pronacej6));
+        colors.add(getResources().getColor(R.color.Pronacej2));
+
+
         LineDataSet dataSet = new LineDataSet(entries, "Firmes");
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        dataSet.setColors(colors);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(dataSet);
@@ -59,5 +71,11 @@ public class ResultadosFirmesAdelanteSoa extends AppCompatActivity {
         legend.setDrawInside(false);
 
         lineChart.invalidate();
+
+        ((TextView) findViewById(R.id.textViewfirmes_aplicaPorcentaje)).setText(String.format("%.2f%%", porcentajeAplica));
+        ((TextView) findViewById(R.id.textViewfirmes_aplica)).setText("Aplica");
+
+        ((TextView) findViewById(R.id.textViewfirmes_no_aplicaPorcentaje)).setText(String.format("%.2f%%", porcentajeNoAplica));
+        ((TextView) findViewById(R.id.textViewfirmes_no_aplica)).setText("No aplica");
     }
 }

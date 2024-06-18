@@ -2,6 +2,7 @@ package com.carlitos.Pronacej.ResultadosSoa;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,7 +22,6 @@ public class ResultadosSituacionJuridicaIngresoSoa extends AppCompatActivity {
 
     private int ingreso_sentenciado;
     private int ingreso_procesado;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,24 +32,43 @@ public class ResultadosSituacionJuridicaIngresoSoa extends AppCompatActivity {
         ingreso_sentenciado = intent.getIntExtra("ingreso_sentenciado", 0);
         ingreso_procesado = intent.getIntExtra("ingreso_procesado", 0);
 
-        // Configurar el gráfico barras
+        // Configurar el gráfico de barras
         BarChart barChart = findViewById(R.id.barChart);
         barChart.getDescription().setEnabled(false);
         barChart.setDrawGridBackground(false);
 
+
+
+// Calcular el total de participantes
+        int totalParticipantes = ingreso_sentenciado + ingreso_procesado;
+
+// Calcular los porcentajes
+        double porcentajeSentenciado = (double) ingreso_sentenciado / totalParticipantes * 100;
+        double porcentajeProcesado = (double) ingreso_procesado / totalParticipantes * 100;
+
+        ((TextView) findViewById(R.id.textViewingreso_sentenciadoPorcentaje)).setText(String.format("%.2f%%", porcentajeSentenciado));
+        ((TextView) findViewById(R.id.textViewingreso_sentenciado)).setText("Ingreso de sentenciado");
+
+        ((TextView) findViewById(R.id.textViewingreso_procesadoPorcentaje)).setText(String.format("%.2f%%", porcentajeProcesado));
+        ((TextView) findViewById(R.id.textViewingreso_procesado)).setText("Ingreso de procesado");
+
+
         // Configurar los datos para el gráfico
         List<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(0f, ingreso_sentenciado));
-        entries.add(new BarEntry(0f, ingreso_procesado));
-       ;
+        entries.add(new BarEntry(1f, ingreso_procesado));
 
-        BarDataSet barDataSet = new BarDataSet(entries, "Situación Jurídica de Ingreso");
-        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.Pronacej2));
+        colors.add(getResources().getColor(R.color.Pronacej3));
+
+
+        BarDataSet barDataSet = new BarDataSet(entries, "Situación Jurídica Ingreso");
+        barDataSet.setColors(colors);
         barDataSet.setValueTextSize(12f);
 
         BarData barData = new BarData(barDataSet);
         barData.setBarWidth(0.5f);
-
 
         // Configurar ejes y leyenda
         XAxis xAxis = barChart.getXAxis();
@@ -67,5 +86,4 @@ public class ResultadosSituacionJuridicaIngresoSoa extends AppCompatActivity {
         barChart.setData(barData);
         barChart.invalidate();
     }
-
 }

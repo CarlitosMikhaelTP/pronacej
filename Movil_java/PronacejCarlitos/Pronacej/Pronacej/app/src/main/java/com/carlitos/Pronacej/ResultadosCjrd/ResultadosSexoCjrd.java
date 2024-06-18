@@ -3,6 +3,7 @@ package com.carlitos.Pronacej.ResultadosCjrd;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,6 +32,17 @@ public class ResultadosSexoCjrd extends AppCompatActivity {
         sexo_masculino = intent.getIntExtra("sexo_masculino", 0);
         sexo_femenino = intent.getIntExtra("sexo_femenino", 0);
 
+        // Calcular el total de participantes
+        int totalParticipantes = sexo_masculino + sexo_femenino;
+
+        // Calcular los porcentajes
+        double porcentajeMasculino = (double) sexo_masculino / totalParticipantes * 100;
+        double porcentajeFemenino = (double) sexo_femenino / totalParticipantes * 100;
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.Pronacej1));
+        colors.add(getResources().getColor(R.color.Pronacej2));
+
         // Crear una lista de entradas de datos para el gráfico de barras
         List<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(0, sexo_masculino));
@@ -42,7 +54,7 @@ public class ResultadosSexoCjrd extends AppCompatActivity {
         // Configurar los nombres de las columnas en la leyenda
         String[] columnNames = new String[]{"Masculino", "Femenino"};
         dataSet.setStackLabels(columnNames);
-        dataSet.setColors(new int[]{Color.BLUE, Color.RED}); // Colores de las barras
+        dataSet.setColors(colors); // Colores de las barras
 
         // Configurar el gráfico de barras
         BarChart chart = findViewById(R.id.chart);
@@ -67,5 +79,11 @@ public class ResultadosSexoCjrd extends AppCompatActivity {
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
+
+        ((TextView) findViewById(R.id.textViewsexo_masculinoPorcentaje)).setText(String.format("%.2f%%", porcentajeMasculino));
+        ((TextView) findViewById(R.id.textViewsexo_masculino)).setText("Masculino");
+        ((TextView) findViewById(R.id.textViewsexo_femeninoPorcentaje)).setText(String.format("%.2f%%", porcentajeFemenino));
+        ((TextView) findViewById(R.id.textViewsexo_femenino)).setText("Femenino");
+
     }
 }
