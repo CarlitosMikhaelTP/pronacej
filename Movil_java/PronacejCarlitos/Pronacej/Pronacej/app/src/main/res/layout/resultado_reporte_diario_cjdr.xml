@@ -46,54 +46,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
         android:paddingTop="10dp"
         android:text="Gráfico de población \nde Reportes Diarios CJDR"
-        android:textSize="34sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.github.mikephil.charting.charts.HorizontalBarChart
-        android:id="@+id/barChart"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"></com.github.mikephil.charting.charts.HorizontalBarChart>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barChart">
+        app:layout_constraintTop_toBottomOf="@+id/textView8">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/barChart"
             tools:ignore="MissingConstraints">
 
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/barChart"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="20sp"></com.github.mikephil.charting.charts.HorizontalBarChart>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="16sp"
+                android:layout_marginEnd="16sp"
                 android:layout_marginRight="0sp"
                 android:layout_marginBottom="10sp"
                 android:layout_weight="1"
@@ -123,6 +121,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="16sp"
+                android:layout_marginEnd="16sp"
                 android:layout_marginRight="0sp"
                 android:layout_marginBottom="10sp"
                 android:layout_weight="1"
@@ -152,6 +152,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="16sp"
+                android:layout_marginEnd="16sp"
                 android:layout_marginRight="0sp"
                 android:layout_marginBottom="10sp"
                 android:layout_weight="1"
@@ -181,6 +183,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="16sp"
+                android:layout_marginEnd="16sp"
                 android:layout_marginRight="0sp"
                 android:layout_marginBottom="10sp"
                 android:layout_weight="1"
@@ -210,6 +214,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="16sp"
+                android:layout_marginEnd="16sp"
                 android:layout_marginRight="0sp"
                 android:layout_marginBottom="10sp"
                 android:layout_weight="1"
@@ -239,6 +245,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="16sp"
+                android:layout_marginEnd="16sp"
                 android:layout_marginRight="0sp"
                 android:layout_marginBottom="10sp"
                 android:layout_weight="1"
@@ -268,6 +276,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16sp"
+                android:layout_marginEnd="16sp"
                 android:layout_marginRight="0sp"
                 android:layout_marginBottom="10sp"
                 android:layout_weight="1"
@@ -307,6 +317,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="16sp"
+                android:layout_marginEnd="16sp"
                 android:layout_marginRight="0sp"
                 android:layout_marginBottom="10sp"
                 android:layout_weight="0.3"
@@ -336,6 +348,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="16sp"
+                android:layout_marginEnd="16sp"
                 android:layout_marginRight="0sp"
                 android:layout_marginBottom="10sp"
                 android:layout_weight="0.3"
@@ -365,6 +379,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16sp"
+                android:layout_marginEnd="16sp"
                 android:layout_marginRight="0sp"
                 android:layout_marginBottom="30sp"
                 android:layout_weight="1"

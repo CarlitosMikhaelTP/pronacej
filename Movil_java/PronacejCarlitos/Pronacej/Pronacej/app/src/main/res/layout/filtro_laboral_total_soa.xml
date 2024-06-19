@@ -61,7 +61,7 @@
             android:id="@+id/cbIncluirEstadoIng"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Incluir solo Estado ING" />
+            android:text="Incluir solo Activos" />
 
         <TextView
             android:id="@+id/textView20"
