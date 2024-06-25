@@ -47,7 +47,7 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:paddingTop="10dp"
-        android:text="Gráfico de justicia\n terapeutica CJDR"
+        android:text="Justicia terapeutica\n  CJDR"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

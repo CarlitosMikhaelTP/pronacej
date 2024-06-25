@@ -47,7 +47,7 @@
         android:layout_marginTop="40dp"
         android:gravity="center"
         android:paddingTop="10dp"
-        android:text="Gráfico de agresores\n sexuales CJDR"
+        android:text="Agresores sexuales\n  CJDR"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

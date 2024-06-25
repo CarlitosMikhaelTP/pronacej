@@ -61,6 +61,8 @@ public class FiltroPoblacionTotalSoa extends AppCompatActivity {
     private String selectedDateInicio;
     private String selectedDateFinal;
     private CheckBox cbIncluirEstadoIng;
+    private CheckBox cbIncluirEstadoAten;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,6 +81,8 @@ public class FiltroPoblacionTotalSoa extends AppCompatActivity {
         btnGenerarGrafico = findViewById(R.id.btnEnviar);
         soaService = Apis.getSoaService();
         cbIncluirEstadoIng = findViewById(R.id.cbIncluirEstadoIng);
+        cbIncluirEstadoAten = findViewById(R.id.cbIncluirEstadoAten);
+
 
         btnGenerarGrafico.setOnClickListener(view -> {
             String fechaInicio = showSelectedDateInicio(dateButtonInicio).toString().trim();
@@ -94,6 +98,20 @@ public class FiltroPoblacionTotalSoa extends AppCompatActivity {
                 llamarEndPoint(fechaInicio, fechaFin, incluirEstadoIng);
             } else {
                 tvErrorFecha.setVisibility(View.VISIBLE);
+            }
+        });
+        setupCheckBoxListeners();
+    }
+    private void setupCheckBoxListeners() {
+        cbIncluirEstadoIng.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                cbIncluirEstadoAten.setChecked(false);
+            }
+        });
+
+        cbIncluirEstadoAten.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                cbIncluirEstadoIng.setChecked(false);
             }
         });
     }

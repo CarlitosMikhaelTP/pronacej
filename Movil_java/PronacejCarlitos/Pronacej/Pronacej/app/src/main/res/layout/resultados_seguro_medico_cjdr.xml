@@ -49,7 +49,7 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:paddingTop="10dp"
-        android:text="Gráfico de seguro\n medico CJDR"
+        android:text="Seguro médico\n  CJDR"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

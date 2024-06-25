@@ -61,6 +61,8 @@ public class FiltroTratamientoCjdr extends AppCompatActivity {
     private String selectedDate;
     private CjdrService cjdrService;
     private CheckBox cbIncluirEstadoIng;
+    private CheckBox cbIncluirEstadoAten;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +73,8 @@ public class FiltroTratamientoCjdr extends AppCompatActivity {
         dateButton.setText(selectedDate);
 
         cbIncluirEstadoIng = findViewById(R.id.cbIncluirEstadoIng);
+        cbIncluirEstadoAten = findViewById(R.id.cbIncluirEstadoAten);
+
 
         tvErrorFecha = findViewById(R.id.tvErrorFecha);
         btnGenerarGrafico = findViewById(R.id.btnEnviar);
@@ -89,7 +93,24 @@ public class FiltroTratamientoCjdr extends AppCompatActivity {
                 tvErrorFecha.setVisibility(View.VISIBLE);
             }
         });
+        setupCheckBoxListeners();
+
     }
+
+    private void setupCheckBoxListeners() {
+        cbIncluirEstadoIng.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                cbIncluirEstadoAten.setChecked(false);
+            }
+        });
+
+        cbIncluirEstadoAten.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                cbIncluirEstadoIng.setChecked(false);
+            }
+        });
+    }
+
 
     private boolean validarFechaFormato(String fecha) {
         String pattern = "^\\d{4}-\\d{2}-\\d{2}$";

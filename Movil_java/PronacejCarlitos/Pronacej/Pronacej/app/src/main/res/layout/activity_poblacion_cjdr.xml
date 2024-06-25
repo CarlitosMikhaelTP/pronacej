@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Registros\nTotales"
+                        android:text="   Población\n Centros Cjdr"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -131,7 +131,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Situación \n Jurídica"
+                        android:text="Procesados y\n Sentenciados"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -188,7 +188,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Estado"
+                        android:text="Ingresos y\n  Egresos"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -236,66 +236,11 @@
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/montserrat_bold"
                         android:gravity="center"
-                        android:text="Estado \nCivil"
+                        android:text="Mayores y\nMenores"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView60"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView90"
-                        app:layout_constraintStart_toStartOf="@+id/imageView90"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView90"
-                        tools:ignore="DuplicateIds" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24sp"
-                android:orientation="horizontal">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/Opcion5"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="24dp"
-                    android:layout_weight="0.5"
-                    android:background="@drawable/btn_background_oficial_1">
-
-                    <ImageView
-                        android:id="@+id/imageView600"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:srcCompat="@drawable/light_1" />
-
-                    <ImageView
-                        android:id="@+id/imageView90"
-                        android:layout_width="156dp"
-                        android:layout_height="75dp"
-                        android:tint="@color/white"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.44"
-                        app:srcCompat="@drawable/baseline_diversity_1_24"
-                        tools:ignore="UseAppTint" />
-
-                    <TextView
-                        android:id="@+id/textView100"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="Sexo"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/imageView90"
                         app:layout_constraintStart_toStartOf="@+id/imageView90"
                         app:layout_constraintTop_toBottomOf="@+id/imageView90"

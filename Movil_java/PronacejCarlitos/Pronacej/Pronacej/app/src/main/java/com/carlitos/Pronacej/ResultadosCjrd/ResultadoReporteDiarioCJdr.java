@@ -1,9 +1,9 @@
 package com.carlitos.Pronacej.ResultadosCjrd;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.carlitos.Pronacej.R;
@@ -12,7 +12,6 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +19,7 @@ import java.util.HashMap;
 public class ResultadoReporteDiarioCJdr extends AppCompatActivity {
 
     private HorizontalBarChart barChart;
+    private ArrayList<HashMap<String, String>> reportData;
     private TextView[] textViewsPorcentaje = new TextView[10];
     private TextView[] textViewsNombre = new TextView[10];
 
@@ -31,7 +31,8 @@ public class ResultadoReporteDiarioCJdr extends AppCompatActivity {
         barChart = findViewById(R.id.barChart);
 
         // Obtener los datos pasados desde la actividad anterior
-        ArrayList<HashMap<String, String>> reportData = (ArrayList<HashMap<String, String>>) getIntent().getSerializableExtra("reportData");
+        Intent intent = getIntent();
+        reportData = (ArrayList<HashMap<String, String>>) intent.getSerializableExtra("reportData");
 
         // Referencias a los TextView de porcentaje
         textViewsPorcentaje[9] = findViewById(R.id.textViewAlfonsoUgartePorcentaje);
@@ -78,16 +79,16 @@ public class ResultadoReporteDiarioCJdr extends AppCompatActivity {
         }
 
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(getResources().getColor(R.color.Pronacej10));
-        colors.add(getResources().getColor(R.color.Pronacej9));
-        colors.add(getResources().getColor(R.color.Pronacej8));
-        colors.add(getResources().getColor(R.color.Pronacej7));
-        colors.add(getResources().getColor(R.color.Pronacej6));
-        colors.add(getResources().getColor(R.color.Pronacej5));
-        colors.add(getResources().getColor(R.color.Pronacej4));
-        colors.add(getResources().getColor(R.color.Pronacej3));
-        colors.add(getResources().getColor(R.color.Pronacej2));
         colors.add(getResources().getColor(R.color.Pronacej1));
+        colors.add(getResources().getColor(R.color.Pronacej2));
+        colors.add(getResources().getColor(R.color.Pronacej3));
+        colors.add(getResources().getColor(R.color.Pronacej4));
+        colors.add(getResources().getColor(R.color.Pronacej5));
+        colors.add(getResources().getColor(R.color.Pronacej6));
+        colors.add(getResources().getColor(R.color.Pronacej7));
+        colors.add(getResources().getColor(R.color.Pronacej8));
+        colors.add(getResources().getColor(R.color.Pronacej9));
+        colors.add(getResources().getColor(R.color.Pronacej10));
 
         // Crear el conjunto de datos para el gráfico de barras
         BarDataSet dataSet = new BarDataSet(entries, "Población por Centro Juvenil");
@@ -112,7 +113,7 @@ public class ResultadoReporteDiarioCJdr extends AppCompatActivity {
                 return reportData.get((int) value).get("centro_cjdr");
             }
         });
-        barChart.getXAxis().setGranularity(1f);
+        barChart.getXAxis().setGranularity(3f);
         barChart.getXAxis().setGranularityEnabled(true);
 
         // Establecer los datos en el gráfico y refrescar

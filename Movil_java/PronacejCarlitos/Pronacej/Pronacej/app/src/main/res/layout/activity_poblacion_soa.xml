@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Registros\nTotales"
+                        android:text="  Población \nCentros Soa"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -131,7 +131,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Situación \n Jurídica"
+                        android:text="Varones y\n  Mujeres"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -150,157 +150,6 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:orientation="horizontal">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/Opcion3"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="12dp"
-                    android:layout_weight="0.5"
-                    android:background="@drawable/btn_background_oficial_5">
-
-                    <ImageView
-                        android:id="@+id/imageView61"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:srcCompat="@drawable/light_3"
-                        tools:ignore="DuplicateIds" />
-
-                    <ImageView
-                        android:id="@+id/imageView91"
-                        android:layout_width="0dp"
-                        android:layout_height="71dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.44"
-                        app:srcCompat="@drawable/baseline_co_present_24"
-                        app:tint="@color/white"
-                        tools:ignore="DuplicateIds" />
-
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="Estado"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView91"
-                        app:layout_constraintStart_toStartOf="@+id/imageView91"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView91"
-                        tools:ignore="DuplicateIds" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/Opcion4"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="24dp"
-                    android:layout_weight="0.5"
-                    android:background="@drawable/btn_background_oficial_6">
-
-                    <ImageView
-                        android:id="@+id/imageView60"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:srcCompat="@drawable/light_4" />
-
-                    <ImageView
-                        android:id="@+id/imageView90"
-                        android:layout_width="156dp"
-                        android:layout_height="75dp"
-                        android:tint="@color/white"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.44"
-                        app:srcCompat="@drawable/baseline_contact_page_24"
-                        tools:ignore="UseAppTint" />
-
-                    <TextView
-                        android:id="@+id/textView100"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:gravity="center"
-                        android:text="Estado \nCivil"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView60"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView90"
-                        app:layout_constraintStart_toStartOf="@+id/imageView90"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView90"
-                        tools:ignore="DuplicateIds" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24sp"
-                android:orientation="horizontal">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/Opcion5"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="24dp"
-                    android:layout_weight="0.5"
-                    android:background="@drawable/btn_background_oficial_1">
-
-                    <ImageView
-                        android:id="@+id/imageView600"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:srcCompat="@drawable/light_1" />
-
-                    <ImageView
-                        android:id="@+id/imageView90"
-                        android:layout_width="156dp"
-                        android:layout_height="75dp"
-                        android:tint="@color/white"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.44"
-                        app:srcCompat="@drawable/baseline_diversity_1_24"
-                        tools:ignore="UseAppTint" />
-
-                    <TextView
-                        android:id="@+id/textView100"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="Sexo"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView90"
-                        app:layout_constraintStart_toStartOf="@+id/imageView90"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView90"
-                        tools:ignore="DuplicateIds" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
         </LinearLayout>

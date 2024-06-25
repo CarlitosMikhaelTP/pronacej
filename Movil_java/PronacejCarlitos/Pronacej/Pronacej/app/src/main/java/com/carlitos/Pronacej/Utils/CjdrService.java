@@ -51,4 +51,11 @@ public interface CjdrService {
     Call<List<Map<String, Object>>> obtenerReporteDiarioCjdr(
             @Query("fecha_seleccionada")String fecha_seleccionada);
 
+    // Reporte de Edad Simple CJDR
+    @GET("/pronacej/v1/cj/showEdadSimple")
+    Call<List<Map<String,Object>>> obtenerEdadSimpleCjdr(
+            @Query("fechaInicio") String fechaInicio,
+            @Query("fechaFin") String fechafin,
+            @Query("incluirEstadoIng") Boolean incluirEstadoIng
+    );
 }

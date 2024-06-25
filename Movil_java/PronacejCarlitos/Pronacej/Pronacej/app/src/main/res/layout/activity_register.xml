@@ -11,7 +11,7 @@
         android:id="@+id/imageView10"
         android:layout_width="409dp"
         android:layout_height="300dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Registro"
+        android:text="Solicitud de Registro"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -110,6 +110,71 @@
            />
 
         <TextView
+            android:id="@+id/textView25"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/textview_background"
+            android:fontFamily="@font/montserrat_semibold"
+            android:paddingStart="40dp"
+            android:paddingTop="5dp"
+            android:text="Entidad"
+            android:textColor="#7a797f" />
+
+        <EditText
+            android:id="@+id/etEntity"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_background"
+            android:drawableStart="@drawable/baseline_contact_page_24"
+            android:drawableTint="@color/bluePronacej"
+            android:ems="10"
+            android:inputType="text"
+            android:paddingStart="16dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/textview_background"
+            android:fontFamily="@font/montserrat_semibold"
+            android:paddingStart="40dp"
+            android:paddingTop="5dp"
+            android:text="N° de Dni"
+            android:textColor="#7a797f" />
+
+        <EditText
+            android:id="@+id/etDni"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_background"
+            android:drawableStart="@drawable/baseline_contact_page_24"
+            android:drawableTint="@color/bluePronacej"
+            android:ems="10"
+            android:inputType="text"
+            android:paddingStart="16dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+
+
+        <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -141,53 +206,6 @@
             android:textStyle="bold"
             />
 
-        <TextView
-            android:id="@+id/txtContraseña"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/textview_background"
-            android:fontFamily="@font/montserrat_semibold"
-            android:paddingStart="40dp"
-            android:paddingTop="5dp"
-            android:text="Contraseña"
-            android:textColor="#7a797f" />
-
-        <com.google.android.material.textfield.TextInputLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="0dp"
-            android:padding="0dp"
-            app:hintEnabled="false"
-            app:passwordToggleEnabled="true">
-
-            <EditText
-                android:id="@+id/etPassword"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/edittext_background"
-                android:drawableStart="@drawable/baseline_lock"
-                android:drawableTint="@color/bluePronacej"
-                android:ems="10"
-                android:inputType="textPassword"
-                android:paddingStart="16dp"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/black"
-
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:inputType="textPassword"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
@@ -196,7 +214,7 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/button_background"
             android:fontFamily="@font/ubuntu_bold"
-            android:text="Registrar"
+            android:text="Enviar"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp" />

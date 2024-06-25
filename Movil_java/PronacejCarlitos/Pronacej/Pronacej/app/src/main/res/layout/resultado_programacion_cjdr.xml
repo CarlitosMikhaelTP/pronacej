@@ -48,7 +48,7 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:paddingTop="10dp"
-        android:text="Gráfico de los\n Programas CJDR"
+        android:text="Programas CJDR"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

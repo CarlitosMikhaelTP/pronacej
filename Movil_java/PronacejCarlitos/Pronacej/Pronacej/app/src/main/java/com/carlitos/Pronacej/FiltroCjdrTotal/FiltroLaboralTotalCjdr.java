@@ -52,6 +52,8 @@ public class FiltroLaboralTotalCjdr extends AppCompatActivity {
     private String selectedDateInicio;
     private String selectedDateFinal;
     private CheckBox cbIncluirEstadoIng;
+    private CheckBox cbIncluirEstadoAten;
+
 
 
     @Override
@@ -66,6 +68,8 @@ public class FiltroLaboralTotalCjdr extends AppCompatActivity {
         selectedDateInicio = getTodaysDate();
         selectedDateFinal = getTodaysDate();
         cbIncluirEstadoIng = findViewById(R.id.cbIncluirEstadoIng);
+        cbIncluirEstadoAten = findViewById(R.id.cbIncluirEstadoAten);
+
 
         tvErrorFecha = findViewById(R.id.tvErrorFecha);
         btnGenerarGrafico = findViewById(R.id.btnEnviar);
@@ -85,6 +89,21 @@ public class FiltroLaboralTotalCjdr extends AppCompatActivity {
                 llamarEndPoint(fechaInicio, fechaFin, incluirEstadoIng);
             } else {
                 tvErrorFecha.setVisibility(View.VISIBLE);
+            }
+        });
+        setupCheckBoxListeners();
+
+    }
+    private void setupCheckBoxListeners() {
+        cbIncluirEstadoIng.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                cbIncluirEstadoAten.setChecked(false);
+            }
+        });
+
+        cbIncluirEstadoAten.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                cbIncluirEstadoIng.setChecked(false);
             }
         });
     }

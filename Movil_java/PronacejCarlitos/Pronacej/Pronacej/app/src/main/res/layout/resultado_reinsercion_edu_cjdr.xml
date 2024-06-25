@@ -48,7 +48,7 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:paddingTop="10dp"
-        android:text="Gráfico de reinserción\n educativa CJDR"
+        android:text="Reinserción\n educativa CJDR"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

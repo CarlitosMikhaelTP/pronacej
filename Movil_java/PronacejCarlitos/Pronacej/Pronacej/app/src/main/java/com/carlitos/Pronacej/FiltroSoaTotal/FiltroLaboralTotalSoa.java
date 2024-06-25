@@ -47,6 +47,8 @@ public class FiltroLaboralTotalSoa extends AppCompatActivity {
     private Button btnGenerarGrafico;
 
     private SoaService soaService;
+    private CheckBox cbIncluirEstadoAten;
+
     private DatePickerDialog datePickerDialogInicio;
     private DatePickerDialog datePickerDialogFinal;
     private Button dateButtonInicio;
@@ -63,6 +65,8 @@ public class FiltroLaboralTotalSoa extends AppCompatActivity {
         dateButtonInicio = findViewById(R.id.etFechaInicio);
         dateButtonFinal = findViewById(R.id.etFechaFin);
         cbIncluirEstadoIng = findViewById(R.id.cbIncluirEstadoIng);
+        cbIncluirEstadoAten = findViewById(R.id.cbIncluirEstadoAten);
+
         initDatePickerInicio();
         initDatePickerFinal();
         selectedDateInicio = getTodaysDate();
@@ -88,8 +92,22 @@ public class FiltroLaboralTotalSoa extends AppCompatActivity {
                 tvErrorFecha.setVisibility(View.VISIBLE);
             }
         });
-    }
+        setupCheckBoxListeners();
 
+    }
+    private void setupCheckBoxListeners() {
+        cbIncluirEstadoIng.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                cbIncluirEstadoAten.setChecked(false);
+            }
+        });
+
+        cbIncluirEstadoAten.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                cbIncluirEstadoIng.setChecked(false);
+            }
+        });
+    }
     private boolean validarFechaFormato(String fecha) {
         String pattern = "^\\d{4}-\\d{2}-\\d{2}$";
         return fecha.matches(pattern);

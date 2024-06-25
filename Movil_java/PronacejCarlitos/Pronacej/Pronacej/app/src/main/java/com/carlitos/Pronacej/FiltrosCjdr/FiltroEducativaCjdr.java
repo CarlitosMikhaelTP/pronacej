@@ -52,6 +52,7 @@ public class FiltroEducativaCjdr extends AppCompatActivity {
     private Button dateButton;
     private String selectedDate;
     private CheckBox cbIncluirEstadoIng;
+    private CheckBox cbIncluirEstadoAten;
     private CjdrService cjdrService;
 
     @Override
@@ -65,10 +66,12 @@ public class FiltroEducativaCjdr extends AppCompatActivity {
         dateButton.setText(selectedDate);
 
         cbIncluirEstadoIng = findViewById(R.id.cbIncluirEstadoIng);
+        cbIncluirEstadoAten = findViewById(R.id.cbIncluirEstadoAten);
 
         tvErrorFecha = findViewById(R.id.tvErrorFecha);
         btnGenerarGrafico = findViewById(R.id.btnEnviar);
         cjdrService = Apis.getCjdrService();
+
 
         btnGenerarGrafico.setOnClickListener(view -> {
             showSelectedDate(etFechaInicio);
@@ -81,6 +84,21 @@ public class FiltroEducativaCjdr extends AppCompatActivity {
                 llamarEndPoint(fechaInicio, incluirEstadoIng);
             } else {
                 tvErrorFecha.setVisibility(View.VISIBLE);
+            }
+        });
+        setupCheckBoxListeners();
+    }
+
+    private void setupCheckBoxListeners() {
+        cbIncluirEstadoIng.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                cbIncluirEstadoAten.setChecked(false);
+            }
+        });
+
+        cbIncluirEstadoAten.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                cbIncluirEstadoIng.setChecked(false);
             }
         });
     }

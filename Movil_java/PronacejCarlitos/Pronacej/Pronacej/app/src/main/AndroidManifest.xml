@@ -29,6 +29,19 @@
             android:name=".ResultadosSoa.ResultadoReporteDiarioSoa"
             android:exported="false" />
         <activity
+            android:name=".FiltrosCjdr.FiltroEdadCjdr"
+            android:exported="false" />
+        <activity
+            android:name=".ResultadosCjrd.ResultadoEdadCjdr"
+            android:exported="false" />
+
+        <activity
+            android:name=".FiltrosSoa.FiltroEdadSoa"
+            android:exported="false" />
+        <activity
+            android:name=".ResultadosSoa.ResultadoEdadSoa"
+            android:exported="false" />
+        <activity
             android:name=".FiltrosCjdr.FiltroSimpleCjdr"
             android:exported="false" />
         <activity

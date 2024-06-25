@@ -59,6 +59,8 @@ public class FiltroPoblacionTotalCjdr extends AppCompatActivity {
     private String selectedDateInicio;
     private String selectedDateFinal;
     private CheckBox cbIncluirEstadoIng;
+    private CheckBox cbIncluirEstadoAten;
+
 
 
     @Override
@@ -69,6 +71,8 @@ public class FiltroPoblacionTotalCjdr extends AppCompatActivity {
         dateButtonInicio = findViewById(R.id.etFechaInicio);
         dateButtonFinal = findViewById(R.id.etFechaFin);
         cbIncluirEstadoIng = findViewById(R.id.cbIncluirEstadoIng);
+        cbIncluirEstadoAten = findViewById(R.id.cbIncluirEstadoAten);
+
         initDatePickerInicio();
         initDatePickerFinal();
         selectedDateInicio = getTodaysDate();
@@ -93,6 +97,20 @@ public class FiltroPoblacionTotalCjdr extends AppCompatActivity {
                 llamarEndPoint(fechaInicio, fechaFin, incluirEstadoIng);
             } else {
                 tvErrorFecha.setVisibility(View.VISIBLE);
+            }
+        });
+        setupCheckBoxListeners();
+    }
+    private void setupCheckBoxListeners() {
+        cbIncluirEstadoIng.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                cbIncluirEstadoAten.setChecked(false);
+            }
+        });
+
+        cbIncluirEstadoAten.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                cbIncluirEstadoIng.setChecked(false);
             }
         });
     }

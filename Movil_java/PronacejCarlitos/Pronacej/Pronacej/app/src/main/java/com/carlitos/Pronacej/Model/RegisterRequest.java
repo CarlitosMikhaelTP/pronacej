@@ -4,6 +4,9 @@ import androidx.annotation.StringRes;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class RegisterRequest {
 
     @SerializedName("typeUserId")
@@ -14,19 +17,34 @@ public class RegisterRequest {
     String lastName;
     @SerializedName("email")
     String email;
-    @SerializedName("password")
-    String password;
+
+    @SerializedName("entity")
+    String entity;
+
+    @SerializedName("expirationdate")
+    LocalDate expirationDate;
+
+    @SerializedName("state")
+    Short state;
+
+    @SerializedName("dni")
+    String dni;
 
     public RegisterRequest() {
     }
 
-    public RegisterRequest(Integer typeUserId, String name, String lastName, String email, String password) {
+    public RegisterRequest(Integer typeUserId, String name, String lastName, String email, String entity, LocalDate expirationDate, short state, String dni) {
         this.typeUserId = typeUserId;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
+        this.entity = entity;
+        this.expirationDate = expirationDate;
+        this.state = state;
+        this.dni = dni;
     }
+
+
 
     public Integer getTypeUserId() {
         return typeUserId;
@@ -60,11 +78,35 @@ public class RegisterRequest {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getEntity(){
+        return entity;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEntity(String entity){
+        this.entity = entity;
+    }
+
+    public LocalDate getExpirationDate(){
+        return expirationDate;
+    }
+
+    public void setExpirationDate(LocalDate expirationDate){
+        this.expirationDate= expirationDate;
+    }
+
+    public Short getState() {
+        return state;
+    }
+
+    public void setState(Short state) {
+        this.state = state;
+    }
+
+    public String getDni(){
+        return dni;
+    }
+
+    public void setDni(String dni){
+        this.dni= dni;
     }
 }

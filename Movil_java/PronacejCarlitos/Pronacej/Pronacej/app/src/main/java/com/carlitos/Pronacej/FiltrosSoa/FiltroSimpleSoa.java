@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.carlitos.Pronacej.FiltrosCjdr.FiltroPoblacionCjdr;
+import com.carlitos.Pronacej.OpcionesSoa.PoblacionSoaActivity;
 import com.carlitos.Pronacej.R;
 import com.carlitos.Pronacej.ResultadosCjrd.ResultadoReporteDiarioCJdr;
 import com.carlitos.Pronacej.ResultadosSoa.ResultadoReporteDiarioSoa;
@@ -95,10 +96,12 @@ public class FiltroSimpleSoa extends AppCompatActivity {
                         HashMap<String, String> entry = new HashMap<>();
                         entry.put("centro_soa", (String) reporte.get("centro_soa"));
                         entry.put("poblacion_soa", String.valueOf(reporte.get("poblacion_soa")));
+                        entry.put("varones_soa", String.valueOf(reporte.get("varones_soa")));
+                        entry.put("mujeres_soa", String.valueOf(reporte.get("mujeres_soa")));
                         reportData.add(entry);
                     }
 
-                    Intent intent = new Intent(FiltroSimpleSoa.this, ResultadoReporteDiarioSoa.class);
+                    Intent intent = new Intent(FiltroSimpleSoa.this, PoblacionSoaActivity.class);
                     intent.putExtra("reportData", reportData);
                     startActivity(intent);
                 } else {
@@ -111,22 +114,6 @@ public class FiltroSimpleSoa extends AppCompatActivity {
                 Log.e("API_ERROR", "Error en la llamada API", t);
             }
         });
-    }
-
-    private void mostrarGrafico(List<Map<String, Object>> reportes) {
-        ArrayList<PieEntry> entries = new ArrayList<>();
-        for (Map<String, Object> reporte : reportes) {
-            String nombreCentro = (String) reporte.get("centro_cjdr");
-            Double poblacion = (Double) reporte.get("poblacion_cjdr");
-            entries.add(new PieEntry(poblacion.floatValue(), nombreCentro));
-        }
-
-        PieDataSet dataSet = new PieDataSet(entries, "Población por Centro Juvenil");
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        PieData pieData = new PieData(dataSet);
-
-        pieChart.setData(pieData);
-        pieChart.invalidate(); // refresh
     }
 
     private void initDatePicker() {

@@ -15,23 +15,17 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.carlitos.Pronacej.FiltrosSoa.FiltroPoblacionSoa;
 import com.carlitos.Pronacej.OpcionesCjdr.PoblacionCjdrActivity;
-import com.carlitos.Pronacej.OpcionesSoa.PoblacionSoaActivity;
 import com.carlitos.Pronacej.R;
-import com.carlitos.Pronacej.ResultadosCjrd.ResultadoReporteDiarioCJdr;
+import com.carlitos.Pronacej.ResultadosCjrd.ResultadoEdadCjdr;
 import com.carlitos.Pronacej.Utils.Apis;
 import com.carlitos.Pronacej.Utils.CjdrService;
-import com.carlitos.Pronacej.Utils.SoaService;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.gson.Gson;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -40,23 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FiltroPoblacionCjdr extends AppCompatActivity {
-
-    private int totalRegistros;
-    private int ingresoSentenciado;
-    private int ingresoProcesado;
-    private int estado_cierre_post;
-    private int estado_egr;
-    private int estado_ing;
-    private int estado_ing_post;
-    private int estado_civil_casado;
-    private int estado_civil_conviviente;
-    private int estado_civil_separado;
-    private int estado_civil_soltero;
-    private int estado_civil_viudo;
-    private int sexo_masculino;
-    private int sexo_femenino;
-
+public class FiltroEdadCjdr extends AppCompatActivity {
     private EditText etFechaInicio;
     private TextView tvErrorFecha;
     private Button btnGenerarGrafico;
@@ -122,65 +100,43 @@ public class FiltroPoblacionCjdr extends AppCompatActivity {
     }
 
     private void llamarEndPoint(String fechaInicio, boolean incluirEstadoIng) {
-        Call<List<Map<String, Object>>> call = cjdrService.obtenerePopulation(fechaInicio, fechaInicio, incluirEstadoIng);
+        Call<List<Map<String, Object>>> call = cjdrService.obtenerEdadSimpleCjdr(fechaInicio, fechaInicio, incluirEstadoIng);
         call.enqueue(new Callback<List<Map<String, Object>>>() {
             @Override
             public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
-                if (response.isSuccessful()) {
-                    List<Map<String, Object>> data = response.body();
-                    if (data != null && !data.isEmpty()) {
-                        Map<String, Object> firstElement = data.get(0);
-                        totalRegistros = getIntValue(firstElement, "total_registros");
-                        ingresoSentenciado = getIntValue(firstElement, "ingreso_sentenciado");
-                        ingresoProcesado = getIntValue(firstElement, "ingreso_procesado");
-                        estado_cierre_post = getIntValue(firstElement, "estado_cierre_post");
-                        estado_egr = getIntValue(firstElement, "estado_egr");
-                        estado_ing = getIntValue(firstElement, "estado_ing");
-                        estado_ing_post = getIntValue(firstElement, "estado_ing_post");
-                        estado_civil_casado = getIntValue(firstElement, "estado_civil_casado");
-                        estado_civil_conviviente = getIntValue(firstElement, "estado_civil_conviviente");
-                        estado_civil_separado = getIntValue(firstElement, "estado_civil_separado");
-                        estado_civil_soltero = getIntValue(firstElement, "estado_civil_soltero");
-                        estado_civil_viudo = getIntValue(firstElement, "estado_civil_viudo");
-                        sexo_masculino = getIntValue(firstElement, "sexo_masculino");
-                        sexo_femenino = getIntValue(firstElement, "sexo_femenino");
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Map<String, Object>> datos = response.body();
 
-                        // Imprimir o almacenar los valores obtenidos
-                        Log.d("FiltroPoblacionTotalCjd", "Total Registros: " + totalRegistros);
-                        Log.d("FiltroPoblacionTotalCjd", "Ingreso Sentenciado: " + ingresoSentenciado);
-                        Log.d("FiltroPoblacionTotalCjd", "Ingreso Procesado: " + ingresoProcesado);
-
-                        // Crear el Intent y añadir los extras
-                        Intent intent = new Intent(FiltroPoblacionCjdr.this, PoblacionCjdrActivity.class);
-                        intent.putExtra("totalRegistros", totalRegistros);
-                        intent.putExtra("ingresoSentenciado", ingresoSentenciado);
-                        intent.putExtra("ingresoProcesado", ingresoProcesado);
-                        intent.putExtra("estado_cierre_post", estado_cierre_post);
-                        intent.putExtra("estado_egr", estado_egr);
-                        intent.putExtra("estado_ing", estado_ing);
-                        intent.putExtra("estado_ing_post", estado_ing_post);
-                        intent.putExtra("estado_civil_casado", estado_civil_casado);
-                        intent.putExtra("estado_civil_conviviente", estado_civil_conviviente);
-                        intent.putExtra("estado_civil_separado", estado_civil_separado);
-                        intent.putExtra("estado_civil_soltero", estado_civil_soltero);
-                        intent.putExtra("estado_civil_viudo", estado_civil_viudo);
-                        intent.putExtra("sexo_masculino", sexo_masculino);
-                        intent.putExtra("sexo_femenino", sexo_femenino);
-
-                        // Iniciar la actividad PoblacionCjdrActivity
-                        startActivity(intent);
+                    // Convertir datos a formato JSON manualmente
+                    JSONArray jsonArray = new JSONArray();
+                    for (Map<String, Object> map : datos) {
+                        JSONObject jsonObject = new JSONObject(map);
+                        jsonArray.put(jsonObject);
                     }
+                    String datosJson = jsonArray.toString();
+
+                    // Crear el Intent y añadir los extras
+                    Intent intent = new Intent(FiltroEdadCjdr.this, ResultadoEdadCjdr.class);
+                    intent.putExtra("datosEdad", datosJson);
+
+                    // Iniciar la actividad ResultadoEdadSoa
+                    startActivity(intent);
                 } else {
                     // Maneja el caso de error
+                    Log.e("FiltroEdadCjdr", "Error en la respuesta del endpoint");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Map<String, Object>>> call, Throwable t) {
                 // Maneja el caso de fallo de la llamada
+                Log.e("FiltroEdadCjdr", "Error al llamar al endpoint", t);
             }
         });
     }
+
+
+
 
     private int getIntValue(Map<String, Object> map, String key) {
         Object value = map.get(key);
@@ -283,4 +239,7 @@ public class FiltroPoblacionCjdr extends AppCompatActivity {
         int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
         return makeDateString(dayOfMonth, month, year);
     }
+
+
+
 }

@@ -54,6 +54,8 @@ public class FiltroInfraccionSoa extends AppCompatActivity {
 
     private SoaService soaService;
     private CheckBox cbIncluirEstadoIng;
+    private CheckBox cbIncluirEstadoAten;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +69,8 @@ public class FiltroInfraccionSoa extends AppCompatActivity {
         btnGenerarGrafico = findViewById(R.id.btnEnviar);
         soaService = Apis.getSoaService();
         cbIncluirEstadoIng = findViewById(R.id.cbIncluirEstadoIng);
+        cbIncluirEstadoAten = findViewById(R.id.cbIncluirEstadoAten);
+
 
         btnGenerarGrafico.setOnClickListener(view -> {
             showSelectedDate(etFechaInicio);
@@ -81,8 +85,22 @@ public class FiltroInfraccionSoa extends AppCompatActivity {
                 tvErrorFecha.setVisibility(View.VISIBLE);
             }
         });
+        setupCheckBoxListeners();
     }
 
+    private void setupCheckBoxListeners() {
+        cbIncluirEstadoIng.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                cbIncluirEstadoAten.setChecked(false);
+            }
+        });
+
+        cbIncluirEstadoAten.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                cbIncluirEstadoIng.setChecked(false);
+            }
+        });
+    }
     private boolean validarFechaFormato(String fecha) {
         String pattern = "^\\d{4}-\\d{2}-\\d{2}$";
         return fecha.matches(pattern);

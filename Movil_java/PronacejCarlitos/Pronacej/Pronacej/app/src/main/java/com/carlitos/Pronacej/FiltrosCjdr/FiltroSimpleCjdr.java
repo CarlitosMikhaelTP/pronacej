@@ -14,8 +14,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.carlitos.Pronacej.OpcionesCjdr.PoblacionCjdrActivity;
 import com.carlitos.Pronacej.R;
 import com.carlitos.Pronacej.ResultadosCjrd.ResultadoReporteDiarioCJdr;
+import com.carlitos.Pronacej.ResultadosCjrd.ResultadosTotalPoblacionCjdr;
 import com.carlitos.Pronacej.Utils.Apis;
 import com.carlitos.Pronacej.Utils.CjdrService;
 import com.github.mikephil.charting.charts.PieChart;
@@ -88,10 +90,16 @@ public class FiltroSimpleCjdr extends AppCompatActivity {
                         HashMap<String, String> entry = new HashMap<>();
                         entry.put("centro_cjdr", (String) reporte.get("centro_cjdr"));
                         entry.put("poblacion_cjdr", String.valueOf(reporte.get("poblacion_cjdr")));
+                        entry.put("sentenciados_cjdr", String.valueOf(reporte.get("sentenciados_cjdr")));
+                        entry.put("procesados_cjdr", String.valueOf(reporte.get("procesados_cjdr")));
+                        entry.put("ingresos_cjdr", String.valueOf(reporte.get("ingresos_cjdr")));
+                        entry.put("egresos_cjdr", String.valueOf(reporte.get("egresos_cjdr")));
+                        entry.put("mayores_cjdr", String.valueOf(reporte.get("mayores_cjdr")));
+                        entry.put("menores_cjdr", String.valueOf(reporte.get("menores_cjdr")));
                         reportData.add(entry);
                     }
 
-                    Intent intent = new Intent(FiltroSimpleCjdr.this, ResultadoReporteDiarioCJdr.class);
+                    Intent intent = new Intent(FiltroSimpleCjdr.this, PoblacionCjdrActivity.class);
                     intent.putExtra("reportData", reportData);
                     startActivity(intent);
                 } else {

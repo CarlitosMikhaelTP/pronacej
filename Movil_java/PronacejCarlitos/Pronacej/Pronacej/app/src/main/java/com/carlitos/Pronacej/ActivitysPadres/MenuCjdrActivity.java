@@ -6,6 +6,7 @@ import android.view.View;;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.carlitos.Pronacej.FiltrosCjdr.FiltroEdadCjdr;
 import com.carlitos.Pronacej.FiltrosCjdr.FiltroEducativaCjdr;
 import com.carlitos.Pronacej.FiltrosCjdr.FiltroInfraccionCjdr;
 import com.carlitos.Pronacej.FiltrosCjdr.FiltroLaboralCjdr;
@@ -40,7 +41,7 @@ public class MenuCjdrActivity extends AppCompatActivity {
         opcionUno.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuCjdrActivity.this, FiltroPoblacionCjdr.class);
+                Intent intent = new Intent(MenuCjdrActivity.this, FiltroEdadCjdr.class);
                 startActivity(intent);
             }
         });

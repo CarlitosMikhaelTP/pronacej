@@ -12,6 +12,7 @@ import com.carlitos.Pronacej.FiltrosCjdr.FiltroInfraccionCjdr;
 import com.carlitos.Pronacej.FiltrosCjdr.FiltroLaboralCjdr;
 import com.carlitos.Pronacej.FiltrosCjdr.FiltroPoblacionCjdr;
 import com.carlitos.Pronacej.FiltrosCjdr.FiltroTratamientoCjdr;
+import com.carlitos.Pronacej.FiltrosSoa.FiltroEdadSoa;
 import com.carlitos.Pronacej.FiltrosSoa.FiltroEducativaSoa;
 import com.carlitos.Pronacej.FiltrosSoa.FiltroInfraccionSoa;
 import com.carlitos.Pronacej.FiltrosSoa.FiltroLaboralSoa;
@@ -52,7 +53,7 @@ public class MenuSoaActivity extends AppCompatActivity {
         opcionUno.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuSoaActivity.this, FiltroPoblacionSoa.class);
+                Intent intent = new Intent(MenuSoaActivity.this, FiltroEdadSoa.class);
                 startActivity(intent);
             }
         });

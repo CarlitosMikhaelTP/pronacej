@@ -75,7 +75,7 @@ public class ResultadosSeguroMedicoSoa extends AppCompatActivity {
         // Crear el conjunto de datos del gráfico de barras
         BarDataSet dataSet = new BarDataSet(entries, "Seguro Médico");
         dataSet.setColors(colors);
-        dataSet.setValueTextColor(Color.WHITE);
+        dataSet.setValueTextColor(Color.BLACK);
         dataSet.setValueTextSize(12f);
 
         // Configurar la leyenda

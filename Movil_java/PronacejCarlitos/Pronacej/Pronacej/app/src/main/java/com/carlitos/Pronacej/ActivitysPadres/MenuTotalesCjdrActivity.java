@@ -12,6 +12,7 @@ import com.carlitos.Pronacej.FiltroCjdrTotal.FiltroInfraccionTotalCjdr;
 import com.carlitos.Pronacej.FiltroCjdrTotal.FiltroLaboralTotalCjdr;
 import com.carlitos.Pronacej.FiltroCjdrTotal.FiltroPoblacionTotalCjdr;
 import com.carlitos.Pronacej.FiltroCjdrTotal.FiltroTratamientoTotalCjdr;
+import com.carlitos.Pronacej.FiltrosCjdr.FiltroEdadCjdr;
 import com.carlitos.Pronacej.FiltrosCjdr.FiltroEducativaCjdr;
 import com.carlitos.Pronacej.FiltrosCjdr.FiltroInfraccionCjdr;
 import com.carlitos.Pronacej.FiltrosCjdr.FiltroLaboralCjdr;
@@ -45,7 +46,7 @@ public class MenuTotalesCjdrActivity extends AppCompatActivity {
         opcionUno.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuTotalesCjdrActivity.this, FiltroPoblacionTotalCjdr.class);
+                Intent intent = new Intent(MenuTotalesCjdrActivity.this, FiltroEdadCjdr.class);
                 startActivity(intent);
             }
         });

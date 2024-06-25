@@ -50,4 +50,12 @@ public interface SoaService {
     Call<List<Map<String, Object>>> obtenerReporteDiarioSoa(
             @Query("fecha_seleccionada")String fecha_seleccionada);
 
+    // Reporte de Edad Simple SOA
+    @GET("/pronacej/v1/soa/showEdadSimple")
+    Call<List<Map<String,Object>>> obtenerEdadSimpleSoa(
+            @Query("fechaInicio") String fechaInicio,
+            @Query("fechaFin") String fechafin,
+            @Query("incluirEstadoIng") Boolean incluirEstadoIng
+    );
+
 }

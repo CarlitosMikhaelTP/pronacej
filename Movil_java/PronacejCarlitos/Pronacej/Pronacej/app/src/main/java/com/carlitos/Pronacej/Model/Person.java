@@ -1,5 +1,8 @@
 package com.carlitos.Pronacej.Model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class Person {
 
     private Integer id;
@@ -9,12 +12,39 @@ public class Person {
     private String name;
 
     private String lastName;
+    private String entity;
+    private LocalDate expirationDate;
 
     private String email;
+    private String dni;
 
     private String password;
 
     private Short state;
+
+    public String getDni(){
+        return dni;
+    }
+
+    public void setDni(String dni){
+        this.dni= dni;
+    }
+
+    public String getEntity(){
+        return entity;
+    }
+
+    public void setEntity(String entity){
+        this.entity = entity;
+    }
+
+    public LocalDate getExpirationDate(){
+        return expirationDate;
+    }
+
+    public void setExpirationDate(LocalDate expirationDate){
+        this.expirationDate= expirationDate;
+    }
 
     public Integer getId() {
         return id;
